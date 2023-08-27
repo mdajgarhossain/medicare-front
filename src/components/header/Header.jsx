@@ -2,38 +2,8 @@ import SocialMediaLinks from "../common/SocialMediaIcons";
 import DesktopNav from "./DesktopNav";
 import Logo from "./Logo";
 import MobileNav from "./MobileNav";
-// import MobileMenu from "./MobileMenu";
-// import SocialIcons from "../SocialIcons/SocialIcons";
-// import { BiUserCircle } from "react-icons/bi";
-// import Logo from "../Logo/Logo";
-// import { FaCartArrowDown } from "react-icons/fa";
-// import { Link } from "react-router-dom";
-// import { useState } from "react";
-// import { useContext } from "react";
-// import { useSelector } from "react-redux";
-// import { AuthContext } from "../../context/AuthContext";
 
 const Header = () => {
-  // const state = useSelector((state) => state.cart);
-  // console.log(state);
-  // const [isOpen, setIsOpen] = useState(false);
-  // const { user, logout } = useContext(AuthContext);
-
-  // const showUserInfo = () => {
-  //   setIsOpen(!isOpen);
-  // };
-
-  // const menu = [
-  //   // Menu items
-  // ];
-
-  // const userInfo = [
-  //   // User info items
-  // ];
-
-  // const handleLogout = () => {
-  //   logout();
-  // };
 
   const menu = [
     { id: 1, label: "Home", link: "/home" },
