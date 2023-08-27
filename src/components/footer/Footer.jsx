@@ -22,15 +22,15 @@ const Footer = () => {
             {/* Footer Navigation */}
             <div className="max-w-[450px] mx-auto lg:mx-0">
               <nav className="mb-4">
-                <ul className="flex justify-between lg:block">
+                <ul className="flex justify-between gap-1 lg:block lg:gap-0">
                   {footerNavigation.map((item) => (
                     <li
                       key={item.id}
                       className="flex items-center -my-[1px] text-white"
                     >
-                      <FaCaretRight className="mr-5" />
+                      <FaCaretRight className="lg:mr-5" />
                       <Link href={item.link}>
-                        <span className="text-[16px]">{item.label}</span>
+                        <span className="lg:text-[16px] text-[14px]">{item.label}</span>
                       </Link>
                     </li>
                   ))}
