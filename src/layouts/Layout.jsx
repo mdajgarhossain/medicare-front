@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../components/common/Header/Header';
+import Header from '../components/header/Header';
 import Head from 'next/head';
 // import '@/styles/globals.css';
 // import Footer from './Footer';
