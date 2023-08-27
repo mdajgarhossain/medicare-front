@@ -13,7 +13,7 @@ import MobileNav from "./MobileNav";
 // import { useSelector } from "react-redux";
 // import { AuthContext } from "../../context/AuthContext";
 
-const Navbar = () => {
+const Header = () => {
   // const state = useSelector((state) => state.cart);
   // console.log(state);
   // const [isOpen, setIsOpen] = useState(false);
@@ -116,4 +116,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Header;
