@@ -4,15 +4,13 @@ import Logo from "./Logo";
 import MobileNav from "./MobileNav";
 
 const Header = () => {
-
   const menu = [
     { id: 1, label: "Home", link: "/home" },
     { id: 2, label: "About Us", link: "/about-us" },
     { id: 3, label: "Products", link: "/products" },
     { id: 4, label: "Services", link: "/services" },
     { id: 5, label: "Contact", link: "/contact" },
-];
-
+  ];
 
   return (
     <nav className="navbar-section sticky top-0 z-50 bg-[#242a44] px-3 md:px-5">
@@ -24,11 +22,12 @@ const Header = () => {
             </div>
             <div className="text-black">
               <div className="ml-1 text-white lg:text-center text-start lg:-ml-4">
-                <h1 className="md:text-[40px] text-[18px] capitalize lg:-mb-3 lg:-mt-2">
+                <h1 className="md:text-[40px] text-[18px] capitalize lg:-mb-3 lg:-mt-2 text-left ml-4">
                   Medicare International
                 </h1>
-                <p className="ml-2 md:text-[14px] text-[10px] lg:block font-normal capitalize text-[#81ecec]">
-                  water treatment plant & medical equipment manufacturer & supplier
+                <p className="ml-2 md:text-[14px] text-[10px] lg:block font-normal capitalize text-[#81ecec] text-left ml-4">
+                  water treatment plant & medical equipment manufacturer &
+                  supplier
                 </p>
                 <div className="flex -ml-1 flex-nowrap">
                   <DesktopNav menu={menu} />
