@@ -2,8 +2,26 @@ import { FaFacebookF, FaTwitter, FaYoutube } from "react-icons/fa";
 import { TfiLinkedin } from "react-icons/Tfi";
 
 const SocialMediaIcons = () => {
+  // const CustomButton = ({ className, title, ...props }) => {
+  //   const buttonClasses = `font-bold py-2 lg:px-4 px-2 lg:my-0 rounded ${
+  //     className ?? "bg-blue-500 hover:bg-blue-700 text-white"
+  //   }`;
+
+  //   return (
+  //     <button className={buttonClasses} {...props}>
+  //       {title}
+  //     </button>
+  //   );
+  // };
+
   return (
     <div className="justify-end gap-2 mt-2 lg:flex">
+      {/* <div>
+        <CustomButton
+          title="Sign In"
+          className="text-black bg-yellow-500 hover:bg-yellow-600 "
+        />
+      </div> */}
       <a
         href="https://www.facebook.com/profile.php?id=100063579536034"
         target="_blank"
