@@ -1,6 +1,7 @@
 import { FaCaretRight } from "react-icons/fa";
 import Link from "next/link";
 import { FiMail, FiPhoneCall } from "react-icons/fi";
+import PaymentMethodLogos from "../payments/PaymentMethodLogos";
 
 const Footer = () => {
   // Define footer navigation items
@@ -64,10 +65,9 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Additional Components */}
+            {/* Payment Options */}
             <div className="flex-col lg:flex">
-              {/* Uncomment and add your additional components here */}
-              {/* <Payments /> */}
+              <PaymentMethodLogos />
             </div>
           </div>
           <p className="text-white text-center text-[14px] mt-4 lg:mt-0">
