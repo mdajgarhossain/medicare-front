@@ -1,9 +1,9 @@
 import React from "react";
-import amexLogo from "../../../public/images/payment-method-logos/amex.png";
-import masterCardLogo from "../../../public/images/payment-method-logos/master_card.png";
-import payPalLogo from "../../../public/images/payment-method-logos/pay_pal.png";
-import visaLogo from "../../../public/images/payment-method-logos/Visa.png";
-import westernUnionLogo from "../../../public/images/payment-method-logos/western_union.png";
+import amexLogo from "@public/images/payment-method-logos/amex.png";
+import masterCardLogo from "@public/images/payment-method-logos/master_card.png";
+import payPalLogo from "@public/images/payment-method-logos/pay_pal.png";
+import visaLogo from "@public/images/payment-method-logos/Visa.png";
+import westernUnionLogo from "@public/images/payment-method-logos/western_union.png";
 
 const PaymentMethodLogos = () => {
   const paymentOptions = [
