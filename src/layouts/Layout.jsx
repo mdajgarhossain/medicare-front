@@ -1,8 +1,8 @@
-import React from 'react';
-import Header from '../components/header/Header';
-import Head from 'next/head';
+import React from "react";
+import Head from "next/head";
+import Header from "../components/header/Header";
+import Footer from "../components/footer/Footer";
 // import '@/styles/globals.css';
-// import Footer from './Footer';
 // import styles from '../styles/components/layout.module.css';
 
 const Layout = ({ children }) => {
@@ -15,6 +15,7 @@ const Layout = ({ children }) => {
       <Header />
       <main className="">{children}</main>
       {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
