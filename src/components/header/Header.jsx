@@ -5,7 +5,7 @@ import MobileNav from "./MobileNav";
 
 const Header = () => {
   const menu = [
-    { id: 1, label: "Home", link: "/home" },
+    { id: 1, label: "Home", link: "/" },
     { id: 2, label: "About Us", link: "/about-us" },
     { id: 3, label: "Products", link: "/products" },
     { id: 4, label: "Services", link: "/services" },
