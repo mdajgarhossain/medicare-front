@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
       </Head>
 
       <Header />
-      <main className="">{children}</main>
+      <main className="h-screen">{children}</main>
       <Footer />
     </div>
   );
