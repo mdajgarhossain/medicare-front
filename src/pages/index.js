@@ -110,12 +110,9 @@ export default function Home() {
     //     </a>
     //   </div>
     // </main>
-
-    <Layout>
       
       <section className='h-screen'>
         <h1>test</h1>
       </section>
-    </Layout>
   )
 }
