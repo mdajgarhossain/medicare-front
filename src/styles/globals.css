@@ -25,3 +25,28 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+/* Swiper Carousel */
+.swiper-button-next,
+.swiper-button-prev {
+  color: white !important;
+  /* background-color: #696f87; */
+  background-color: #0077b5;
+  padding: 20px;
+  border-radius: 50%;
+  height: 15px;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 20px !important;
+}
+
+.headline {
+  font-family: "Roboto", sans-serif;
+  font-size: 38px;
+  font-weight: 700;
+  text-transform: capitalize;
+  line-height: 55px;
+  text-align: center;
+}

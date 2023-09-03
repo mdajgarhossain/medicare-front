@@ -28,16 +28,16 @@ const ProductCard = ({ product }) => {
 
     <>
       <div key={product.id} className="w-full p-2">
-        <div className="border rounded-lg shadow-lg p-4 h-full">
+        <div className="border border-cyan-600 rounded-lg shadow-lg p-4 h-full">
           <img
             src={product.image}
             alt={product.name}
             className="w-full h-40 object-cover rounded-lg mb-2"
           />
-          <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
+          <h3 className="text-lg font-semibold mb-2 text-[#242A3A">{product.name}</h3>
           <a
             href={product.detailsLink}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded inline-block"
+            className="bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2 px-4 rounded inline-block"
           >
             View Details
           </a>
