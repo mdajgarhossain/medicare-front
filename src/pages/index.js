@@ -1,6 +1,7 @@
 import React from "react";
 import NewProducts from "@/components/home/NewProducts"
 import Application from "@/components/home/Application";
+import Brand from "@/components/home/Brand";
 
 function Home() {
   return (
@@ -8,7 +9,7 @@ function Home() {
       <div className="max-w-[1200px] mx-auto">
         <NewProducts />
         <Application />
-        {/* <Brand /> */}
+        <Brand />
       </div>
     </div>
   );
