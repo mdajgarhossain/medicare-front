@@ -142,7 +142,6 @@ const NewProducts = () => {
           ref={swiperRefDes}
         >
           <div className="swiper-wrapper">
-            {/* show last added 10 products */}
             {products.map((product) => (
               <SwiperSlide key={product.id}>
                 <ProductCard product={product} />
