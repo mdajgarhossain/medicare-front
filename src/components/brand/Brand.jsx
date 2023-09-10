@@ -1,4 +1,4 @@
-import SingleBrand from "./SingleBrand";
+import SingleBrand from "../home/SingleBrand";
 
 const Brand = () => {
   const brands = [

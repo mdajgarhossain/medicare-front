@@ -1,9 +1,11 @@
-import React from 'react'
+import AboutUs from "@/components/about-us/AboutUs";
 
-function AboutUs() {
+function Index() {
   return (
-    <div>AboutUs</div>
-  )
+    <div>
+      <AboutUs />
+    </div>
+  );
 }
 
-export default AboutUs
+export default Index;

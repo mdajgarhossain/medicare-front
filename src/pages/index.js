@@ -1,7 +1,7 @@
 import React from "react";
 import NewProducts from "@/components/home/NewProducts"
 import Application from "@/components/home/Application";
-import Brand from "@/components/home/Brand";
+import Brand from "@/components/brand/Brand";
 
 function Home() {
   return (
