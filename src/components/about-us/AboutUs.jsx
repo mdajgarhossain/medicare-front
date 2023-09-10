@@ -71,18 +71,18 @@ const AboutUs = () => {
             </p>
           </div>
           <div className="lg:w-2/5">
-            <div className="grid md:grid-cols-2 gap-5 lg:ml-5 lg:h-fit px-3 md:px-5 mt-4 lg:mt-0">
+            <div className="grid gap-5 px-3 mt-4 md:grid-cols-2 lg:ml-5 lg:h-fit md:px-5 lg:mt-0">
               {applicationData.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white p-4 flex justify-center items-center flex-col rounded shadow"
+                  className="flex flex-col items-center justify-center p-4 bg-white rounded shadow"
                 >
                   <img
                     src={item.img}
                     alt={item.title}
                     className="w-full h-auto mb-2"
                   />
-                  <h3 className="text-center text-lg font-bold">
+                  <h3 className="text-lg font-bold text-center">
                     {item.title}
                   </h3>
                 </div>

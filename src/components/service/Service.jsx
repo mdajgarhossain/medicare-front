@@ -11,7 +11,7 @@ const Service = () => {
         <h2 className="headline text-[#5f27cd] py-3">Service</h2>
       </div>
       <div className="max-w-[1200px] mx-auto">
-        <div className="lg:flex px-3 md:px-5">
+        <div className="px-3 lg:flex md:px-5">
           <div className="lg:w-1/2 lg:overflow-y-scroll lg:max-h-[850px] lg:mr-14">
             <div className="text-[18px] text-justify lg:pr-2">
               <span className="font-semibold"> 1. Services</span> <br />
@@ -113,14 +113,14 @@ const Service = () => {
               {serviceData.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white px-4 flex justify-center items-center rounded shadow"
+                  className="flex items-center justify-center px-4 bg-white rounded shadow"
                 >
                   <img
                     src={item.img}
                     alt={item.title}
-                    className="w-full h-auto mb-2 p-4"
+                    className="w-full h-auto p-4 mb-2"
                   />
-                  <h3 className="text-center text-lg font-bold">
+                  <h3 className="text-lg font-bold text-center">
                     {item.title}
                   </h3>
                 </div>

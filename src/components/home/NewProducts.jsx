@@ -3,10 +3,6 @@ import SwiperCore, { Autoplay, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/navigation";
 import "swiper/css/bundle";
-
-// // import "swiper/swiper-element.css";
-// import "swiper/swiper.css"; // For Swiper core styles
-// // import "swiper/navigation.css";
 import ProductCard from "./ProductCard";
 
 SwiperCore.use([Navigation]);
@@ -132,7 +128,7 @@ const NewProducts = () => {
   }, []);
 
   return (
-    <div className="pt-4 px-3 md:px-5 lg:px-0">
+    <div className="px-3 pt-4 md:px-5 lg:px-0">
       <div className="text-center max-w-[600px] mx-auto">
         <h2 className="headline">New Products</h2>
       </div>
