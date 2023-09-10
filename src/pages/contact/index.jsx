@@ -1,9 +1,11 @@
-import React from 'react'
+import ContactForm from "@/components/contact/ContactForm";
 
-function Contact() {
+function Index() {
   return (
-    <div>Contact</div>
-  )
+    <div>
+      <ContactForm />
+    </div>
+  );
 }
 
-export default Contact
+export default Index;
