@@ -20,7 +20,7 @@ const AboutUs = () => {
     <div className="bg-[#bdc3c7] ">
       <div className="pt-3">
         <div className=" bg-[#bdc3c7]">
-          <h2 className="headline text-[#5f27cd]">About us</h2>
+          <h2 className="headline text-[#5f27cd] py-2">About us</h2>
         </div>
       </div>
       <div className="max-w-[1200px] mx-auto mt-3 lg:pb-10">

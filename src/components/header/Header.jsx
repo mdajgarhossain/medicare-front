@@ -8,7 +8,7 @@ const Header = () => {
     { id: 1, label: "Home", link: "/" },
     { id: 2, label: "About Us", link: "/about-us" },
     { id: 3, label: "Products", link: "/products" },
-    { id: 4, label: "Services", link: "/services" },
+    { id: 4, label: "Service", link: "/service" },
     { id: 5, label: "Contact", link: "/contact" },
   ];
 
