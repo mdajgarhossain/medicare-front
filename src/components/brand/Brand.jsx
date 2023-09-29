@@ -20,7 +20,7 @@ const Brand = () => {
       <div className="py-6">
         <div className="pb-4">
           <div className="pb-4 text-center max-w-[600px] mx-auto">
-            <h2 className="headline">Our Brands</h2>
+            <h2 className="headline text-[#5f27cd]">Our Brands</h2>
           </div>
           <div className="grid grid-cols-4 bg-[#a67ba1] rounded-md px-3 md:px-5 md:grid-cols-6 gap-4 py-3 lg:flex items-center justify-center">
             {brands.map((brand) => (

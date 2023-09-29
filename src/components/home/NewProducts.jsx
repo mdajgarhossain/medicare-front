@@ -130,7 +130,7 @@ const NewProducts = () => {
   return (
     <div className="px-3 pt-4 md:px-5 lg:px-0">
       <div className="text-center max-w-[600px] mx-auto">
-        <h2 className="headline">New Products</h2>
+        <h2 className="headline text-[#5f27cd]">New Products</h2>
       </div>
       <div className="mt-4">
         <Swiper

@@ -17,7 +17,7 @@ const Application = () => {
   return (
     <div>
       <div className="text-center max-w-[600px] mx-auto mt-6">
-        <h2 className="mb-6 headline">Application</h2>
+        <h2 className="mb-6 headline text-[#5f27cd]">Application</h2>
       </div>
       <div className="grid grid-cols-1 gap-3 px-3 md:grid-cols-2 md:px-5 lg:px-0 lg:grid-cols-4 justify-justify-between">
         {applicationData.map((item) => (
