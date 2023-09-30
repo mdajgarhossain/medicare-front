@@ -38,7 +38,7 @@ const CategoryList = ({ categories, onCategoryClick }) => {
 
   return (
     <div className="flex" onMouseLeave={handleMouseLeave}>
-      <div className="w-1/4 p-2 bg-white rounded border border-gray-300">
+      <div className="p-2 bg-white rounded border border-gray-300 w-72">
         {/* <h2 className="text-2xl font-bold mb-4">Categories</h2> */}
         <ul>
           {categories.map((category, index) => (
@@ -61,7 +61,16 @@ const CategoryList = ({ categories, onCategoryClick }) => {
       </div>
       {/* Subcategory section */}
       {hoveredCategory && (
-        <div className="w-1/4 p-2 bg-white rounded border border-gray-300">
+        <div 
+          className="p-2 bg-white rounded border border-gray-300 w-72"
+          style={{
+            position: 'absolute',
+            zIndex: 1,
+            top: '30.5%',
+            left: '30%',
+            marginTop: '0px',
+          }}
+        >
           {/* <h2 className="text-2xl font-bold mb-4">Subcategories</h2> */}
           <ul>
             {hoveredCategory.subCategories.map((subCategory, index) => (

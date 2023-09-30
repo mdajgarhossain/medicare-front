@@ -27,12 +27,16 @@ function Products() {
   return (
     <div className="max-w-[1200px] mx-auto mt-3 lg:pb-10">
       <h2 className="headline text-[#5f27cd] py-2">Product</h2>
-      <div className="container mx-auto mt-2 p-2">
-        <CategoryList
-          categories={demoCategories}
-          onCategoryClick={handleCategoryClick}
-        />
-        <ProductList products={products} />
+      <div className="container mx-auto mt-2 p-2 flex">
+        <div className="w-1/4 pr-2">
+          <CategoryList
+            categories={demoCategories}
+            onCategoryClick={handleCategoryClick}
+          />
+        </div>
+        <div className="w-2/3 pl-2">
+          <ProductList products={products} />
+        </div>
       </div>
     </div>
   );
