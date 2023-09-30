@@ -60,7 +60,7 @@ const CategoryList = ({ categories, onCategoryClick }) => {
         </ul>
       </div>
       {/* Subcategory section */}
-      {hoveredCategory && (
+      {hoveredCategory && hoveredCategory.subCategories && (
         <div 
           className="p-2 bg-white rounded border border-gray-300 w-72 h-[345px]"
           style={{
