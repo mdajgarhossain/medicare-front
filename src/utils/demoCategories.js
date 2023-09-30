@@ -1,6 +1,6 @@
 
 const demoCategories = [
-  // { mainCategory: "E-sell" },
+  { mainCategory: "E-sell" },
   {
     mainCategory: "Medical equipment",
     subCategories: [
