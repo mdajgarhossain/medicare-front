@@ -9,7 +9,44 @@ function Products() {
   //   <div>Products</div>
   // )
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([
+    {
+      id: 1,
+      name: "Product 1",
+      image: "images/new-products/product-1.jpeg",
+      detailsLink: "/product/1", // Replace with actual product details link
+    },
+    {
+      id: 2,
+      name: "Product 2",
+      image: "images/new-products/product-2.jpeg",
+      detailsLink: "/product/2", // Replace with actual product details link
+    },
+    {
+      id: 3,
+      name: "Product 3",
+      image: "images/new-products/product-3.jpeg",
+      detailsLink: "/product/3", // Replace with actual product details link
+    },
+    {
+      id: 4,
+      name: "Product 4",
+      image: "images/new-products/product-4.jpeg",
+      detailsLink: "/product/3", // Replace with actual product details link
+    },
+    {
+      id: 5,
+      name: "Product 5",
+      image: "images/new-products/product-5.jpeg",
+      detailsLink: "/product/3", // Replace with actual product details link
+    },
+    {
+      id: 6,
+      name: "Product 6",
+      image: "images/new-products/product-6.jpeg",
+      detailsLink: "/product/3", // Replace with actual product details link
+    },
+  ]);
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -17,9 +54,35 @@ function Products() {
     // Update the 'products' state with the fetched data
     // For now, you can use placeholder data
     const placeholderProducts = [
-      { name: "Product 1" },
-      { name: "Product 2" },
-      { name: "Product 3" },
+      // { name: "Product 1" },
+      // { name: "Product 2" },
+      // { name: "Product 3" },
+
+      
+      {
+        id: 7,
+        name: "Product 7",
+        image: "images/new-products/product-7.jpeg",
+        detailsLink: "/product/3", // Replace with actual product details link
+      },
+      {
+        id: 8,
+        name: "Product 8",
+        image: "images/new-products/product-8.jpeg",
+        detailsLink: "/product/3", // Replace with actual product details link
+      },
+      {
+        id: 9,
+        name: "Product 9",
+        image: "images/demo-product-images/demoImage.jpg",
+        detailsLink: "/product/3", // Replace with actual product details link
+      },
+      {
+        id: 10,
+        name: "Product 10",
+        image: "images/demo-product-images/demoImage.jpg",
+        detailsLink: "/product/3", // Replace with actual product details link
+      },
     ];
     setProducts(placeholderProducts);
   };
