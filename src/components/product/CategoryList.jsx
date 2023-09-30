@@ -6,6 +6,11 @@ const CategoryList = ({ categories, onCategoryClick }) => {
 
   const handleCategoryClick = (category) => {
     if (hoveredCategory === category) {
+      console.log("category", category);
+      if(category.mainCategory === 'E-sell') {
+        setHoveredCategory(category);
+        onCategoryClick(category);
+      }
       // Clicking the same category again, close it
       setHoveredCategory(null);
       setHoveredSubcategory(null);
