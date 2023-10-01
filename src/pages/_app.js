@@ -1,17 +1,15 @@
 import '../styles/globals.css';
 import { useRouter } from "next/router";
 import Layout from "@/layouts/Layout.jsx"
+import Dashboard from '@/components/dashboard/Dashboard';
 
 function RoutingComponent(props) {
   const router = props.router;
   if (
-    router.pathname == "/login" ||
-    router.pathname == "/reset-password" ||
-    router.pathname == "/landing-page-two" ||
-    router.pathname == "/landing-page"
+    router.pathname == "/admin"
   ) {
     // return <Fullpage className="fullPage">{props.children}</Fullpage>
-    return
+    return <Dashboard />
   } else {
     return (
       <>
