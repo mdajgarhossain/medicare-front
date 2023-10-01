@@ -76,15 +76,28 @@ const SignIn = () => {
               Log in
             </button>
           </form>
-          <div className="flex justify-between mt-4">
+          <div className="flex justify-center gap-2 mt-4">
             <p className="text-md text-center dark:text-gray-500">
               Don't have an account yet?
             </p>
             <Link
               href="/sign-up"
-              className="hover:underline text-blue-500 hover:text-violet-400 font-medium"
+              className="hover:underline text-blue-500 font-medium"
             >
-              Sign up
+              <span className="flex">
+                Create Account
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="26"
+                  height="26"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="text-blue-500"
+                >
+                  <path d="M0 0h24v24H0z" fill="none" />
+                  <path d="M9.29 6.71a.996.996 0 0 0 0 1.41L13.17 12l-3.88 3.88a.996.996 0 1 0 1.41 1.41l4.59-4.59a.996.996 0 0 0 0-1.41L10.7 6.7c-.38-.38-1.02-.38-1.41.01z" />
+                </svg>
+              </span>
             </Link>
           </div>
         </div>
