@@ -1,25 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { HomeIcon, CubeIcon, FolderIcon, TagIcon, UserIcon } from '@heroicons/react/solid';
 
 const Sidebar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
+  // Define an array of menu items
+  const menuItems = [
+    { icon: <HomeIcon className="w-6 h-6 mr-2" />, text: 'Home' },
+    { icon: <CubeIcon className="w-6 h-6 mr-2" />, text: 'Products' },
+    { icon: <FolderIcon className="w-6 h-6 mr-2" />, text: 'Categories' },
+    { icon: <TagIcon className="w-6 h-6 mr-2" />, text: 'Subcategories' },
+    { icon: <UserIcon className="w-6 h-6 mr-2" />, text: 'Users' },
+  ];
+
   return (
-    <div className="bg-[#242a44] text-white w-1/4 p-4">
-      <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
+    <div
+      className={`bg-[#242a44] text-white w-1/4 p-4 min-h-screen transform transition-transform ${isOpen ? 'translate-x-0' : '-translate-x-full'
+      } lg:translate-x-0`}
+    >
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold">Dashboard</h2>
+        <button onClick={toggleSidebar} className="lg:hidden">
+          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
       <ul>
-        <li>
-          <a href="#" className="text-lg block mb-2">Home</a>
-        </li>
-        <li>
-          <a href="#" className="text-lg block mb-2">Products</a>
-        </li>
-        <li>
-          <a href="#" className="text-lg block mb-2">Categories</a>
-        </li>
-        <li>
-          <a href="#" className="text-lg block mb-2">Subcategories</a>
-        </li>
-        <li>
-          <a href="#" className="text-lg block mb-2">Users</a>
-        </li>
+        {menuItems.map((item, index) => (
+          <li key={index} className="mb-2 border rounded-md p-2">
+            <a href="#" className="text-lg flex items-center" onClick={toggleSidebar}>
+              {item.icon}
+              {item.text}
+            </a>
+          </li>
+        ))}
       </ul>
     </div>
   );
