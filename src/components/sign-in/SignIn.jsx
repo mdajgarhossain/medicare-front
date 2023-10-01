@@ -81,7 +81,7 @@ const SignIn = () => {
               Don't have an account yet?
             </p>
             <Link
-              href="/sign-up"
+              href="/create-account"
               className="hover:underline text-blue-500 font-medium"
             >
               <span className="flex">
