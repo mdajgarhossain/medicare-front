@@ -6,9 +6,9 @@ import PaymentMethodLogos from "../payments/PaymentMethodLogos";
 const Footer = () => {
   // Define footer navigation items
   const footerNavigation = [
-    { id: 1, label: "Home", link: "home" },
+    { id: 1, label: "Home", link: "/" },
     { id: 2, label: "About Us", link: "about-us" },
-    { id: 3, label: "Product", link: "product" },
+    { id: 3, label: "Product", link: "products" },
     { id: 4, label: "Service", link: "service" },
     { id: 5, label: "Contact", link: "contact" },
   ];
