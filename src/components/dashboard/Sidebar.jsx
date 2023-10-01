@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { HomeIcon, CubeIcon, FolderIcon, TagIcon, UserIcon } from '@heroicons/react/solid';
+import Link from 'next/link';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,11 +11,11 @@ const Sidebar = () => {
 
   // Define an array of menu items
   const menuItems = [
-    { icon: <HomeIcon className="w-6 h-6 mr-2" />, text: 'Home' },
-    { icon: <CubeIcon className="w-6 h-6 mr-2" />, text: 'Products' },
-    { icon: <FolderIcon className="w-6 h-6 mr-2" />, text: 'Categories' },
-    { icon: <TagIcon className="w-6 h-6 mr-2" />, text: 'Subcategories' },
-    { icon: <UserIcon className="w-6 h-6 mr-2" />, text: 'Users' },
+    { icon: <HomeIcon className="w-6 h-6 mr-2" />, text: 'Home', link: '/' },
+    { icon: <CubeIcon className="w-6 h-6 mr-2" />, text: 'Products', link: '/' },
+    { icon: <FolderIcon className="w-6 h-6 mr-2" />, text: 'Categories', link: '/' },
+    { icon: <TagIcon className="w-6 h-6 mr-2" />, text: 'Subcategories', link: '/' },
+    { icon: <UserIcon className="w-6 h-6 mr-2" />, text: 'Users', link: '/' },
   ];
 
   return (
@@ -33,10 +34,10 @@ const Sidebar = () => {
       <ul>
         {menuItems.map((item, index) => (
           <li key={index} className="mb-2 border rounded-md p-2">
-            <a href="#" className="text-lg flex items-center" onClick={toggleSidebar}>
+            <Link href={item.link} className="text-lg flex items-center" onClick={toggleSidebar}>
               {item.icon}
               {item.text}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
