@@ -12,7 +12,7 @@ const Sidebar = () => {
   // Define an array of menu items
   const menuItems = [
     { icon: <HomeIcon className="w-6 h-6 mr-2" />, text: 'Home', link: '/' },
-    { icon: <CubeIcon className="w-6 h-6 mr-2" />, text: 'Products', link: '/' },
+    { icon: <CubeIcon className="w-6 h-6 mr-2" />, text: 'Products', link: '/admin/products' },
     { icon: <FolderIcon className="w-6 h-6 mr-2" />, text: 'Categories', link: '/' },
     { icon: <TagIcon className="w-6 h-6 mr-2" />, text: 'Subcategories', link: '/' },
     { icon: <UserIcon className="w-6 h-6 mr-2" />, text: 'Users', link: '/' },
@@ -24,7 +24,7 @@ const Sidebar = () => {
       } lg:translate-x-0`}
     >
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Dashboard</h2>
+        <Link href="/admin" className="text-2xl font-bold">Dashboard</Link>
         <button onClick={toggleSidebar} className="lg:hidden">
           <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>

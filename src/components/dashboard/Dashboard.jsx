@@ -5,8 +5,8 @@ import { UserIcon, CubeIcon, ViewListIcon, CurrencyDollarIcon } from '@heroicons
 
 const Dashboard = () => {
   return (
-    <div className="flex h-screen">
-      <Sidebar />
+    // <div className="flex h-screen">
+    //   <Sidebar />
       <div className="flex-1 p-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card title="Total Users" value="100" icon={<UserIcon className="w-6 h-6" />} />
@@ -15,7 +15,7 @@ const Dashboard = () => {
           <Card title="Total Sales Amount" value="$10,000" icon={<CurrencyDollarIcon className="w-6 h-6" />} />
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 
