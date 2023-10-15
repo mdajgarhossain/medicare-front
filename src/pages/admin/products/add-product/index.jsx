@@ -4,6 +4,8 @@ import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import ImageUpload from "@/components/common/ImageUpload";
+import { XCircleIcon } from "@heroicons/react/outline";
 
 const AddProduct = () => {
   const [processing, setProcessing] = useState(false);
@@ -23,6 +25,10 @@ const AddProduct = () => {
   ]);
   const [subCategoryLoading, setSubCategoryLoading] = useState(false);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+
+  // Image state
+  const [images, setImages] = useState([]);
+  const [previewImages, setPreviewImages] = useState([]);
 
   const schema = yup.object().shape({
     name: yup.string().required("Name is required"),
@@ -56,7 +62,9 @@ const AddProduct = () => {
   useEffect(() => {
     setValue("category", selectedCategory?.id ?? null);
     setValue("subCategory", selectedSubCategory?.id ?? null);
-  }, [selectedCategory, selectedSubCategory]);
+    setValue("images", images);
+    setValue("preview_images", previewImages);
+  }, [selectedCategory, selectedSubCategory, images, previewImages]);
 
   /**
    * Retrieve categories.
@@ -121,16 +129,42 @@ const AddProduct = () => {
   }
 
   /**
-   * Add product item.
+   * Set image.
   */
+  function handleImageUpload(data) {
+    setPreviewImages(data?.previewImages ?? []);
+    setImages(data?.images ?? []);
+
+    // Revalidate the discount type
+    setTimeout(() => {
+      trigger("preview_images");
+    }, 500);
+  }
+
+  /**
+  * Remove image.
+  */
+  function removeImage() {
+    setPreviewImages([]);
+    setImages([]);
+
+    setTimeout(() => {
+      trigger("preview_images");
+    }, 500);
+  }
+
+  /**
+   * Add product item.
+   */
   function addProduct(data) {
-    console.log({data});
+    console.log({ data });
     // setProcessing(true);
     let formData = new FormData();
     formData.append("name", data.name);
     formData.append("categoryId", data.category);
     formData.append("subCategoryId", data.subCategory);
     formData.append("details", data.details);
+    formData.append("image", data.images[0]);
 
     console.log("formData", formData);
 
@@ -152,11 +186,14 @@ const AddProduct = () => {
    * Reset all data form inputs.
    */
   function resetAllValue() {
-    setValue("category",  null);
+    setValue("category", null);
     setSelectedCategory(null);
 
-    setValue("subCategory",  null);
+    setValue("subCategory", null);
     setSelectedSubCategory(null);
+
+    setPreviewImages([])
+    setImages([])
 
     reset({
       name: null,
@@ -325,6 +362,42 @@ const AddProduct = () => {
                     className="w-full px-4 py-2 text-base border border-gray-300 rounded focus:outline-primary focus:ring-primary focus:border-primary"
                   />
                 </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 mt-8 md:grid-cols-2 gap-x-6 gap-y-8">
+              <div className="sm:col-span-4">
+                <label
+                  htmlFor="productImage"
+                  className="block text-sm font-medium leading-6 text-gray-900 mb-1"
+                >
+                  Product Image
+                </label>
+                {previewImages.length >= 1 ? (
+                  <div className="w-6/12">
+                    <div className="relative inline-block">
+                      <button
+                        onClick={() => removeImage()}
+                        className="absolute right-0.75 rounded-full bg-gray-100 w-8 h-8"
+                      >
+                        <XCircleIcon
+                          className="w-8 h-8 text-red-600 cursor-pointer"
+                          aria-hidden="true"
+                        />
+                      </button>
+
+                      <img
+                        className="object-contain h-48 bg-white border border-gray-200 rounded-lg shadow-md w-96"
+                        src={previewImages[0]}
+                        alt="product image"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="w-6/12">
+                    <ImageUpload imageUploadEmit={handleImageUpload} />
+                  </div>
+                )}
               </div>
             </div>
           </div>
