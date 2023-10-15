@@ -3,7 +3,7 @@ import React from 'react'
 
 function index() {
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="min-h-screen bg-gray-100">
       <Dashboard />
     </div>
   );
