@@ -9,7 +9,7 @@ import { XCircleIcon } from "@heroicons/react/outline";
 import { medicareApi } from "@/utils/http";
 import toast from "react-hot-toast";
 
-const AddProduct = () => {
+const EditProduct = () => {
   const [processing, setProcessing] = useState(false);
   const router = useRouter();
   const [theProduct, setTheProduct] = useState({});
@@ -202,9 +202,9 @@ const AddProduct = () => {
   }
 
   /**
-   * Add product item.
+   * Edit product item.
    */
-  function addProduct(data) {
+  function editProduct(data) {
     setProcessing(true);
     let formData = new FormData();
     formData.append("name", data.name);
@@ -460,7 +460,7 @@ const AddProduct = () => {
               type="submit"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               disabled={processing}
-              onClick={handleSubmit(addProduct)}
+              onClick={handleSubmit(editProduct)}
             >
               {processing ? (
                 <div className="flex items-center">
@@ -493,4 +493,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;
