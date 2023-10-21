@@ -1,15 +1,15 @@
-import { medicareApi } from '@/utils/http';
-import { Dialog, Transition } from '@headlessui/react';
+import { medicareApi } from "@/utils/http";
+import { Dialog, Transition } from "@headlessui/react";
 // import { gqa } from '@utils/http';
 // import { ButtonSpinnerSvg } from '@utils/icons';
-import { Fragment, useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
+import { Fragment, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 function DeleteProductModal(props) {
   const [processing, setProcessing] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [modalName] = useState("deleteProductModal");
-  const [answer, setAnswer] = useState('')
+  const [answer, setAnswer] = useState("");
 
   useEffect(() => {
     if (props.modalName === modalName) {
@@ -18,45 +18,42 @@ function DeleteProductModal(props) {
   }, [setOpenModal, props.modalStatus]);
 
   function modalClose() {
-    setOpenModal(false)
+    setOpenModal(false);
     setTimeout(() => {
       props.modalClose({
         modalName: modalName,
       });
     }, 1000);
-	}
+  }
 
   function deleteData() {
     setProcessing(true);
-    if (answer === '' || answer !== 'delete') {
+    if (answer === "" || answer !== "delete") {
       setProcessing(false);
-      toast.error('To confirm deletion, type delete.',{duration: 3000})
-      return
+      toast.error("To confirm deletion, type delete.", { duration: 3000 });
+      return;
     }
 
     setProcessing(true);
     medicareApi
       .delete(`/product/${props?.product?.id}`)
       .then((response) => {
-        toast.success("Teacher is deleted", { duration: 3000 });
+        toast.success("Product is deleted", { duration: 3000 });
         props.refetchDataEmit();
-        modalClose()
+        modalClose();
       })
       .catch((error) => {
-        setProcessing(false)
+        setProcessing(false);
         if (error.response?.data?.type === "ValidationException") {
           toast.error(error?.response?.data?.errors[0]?.message, {
             duration: 3000,
           });
-        }else{
+        } else {
           toast.error(error?.response?.data?.message, {
             duration: 3000,
           });
         }
-        
       });
-
-    
   }
 
   return (
@@ -97,20 +94,31 @@ function DeleteProductModal(props) {
                       as="h3"
                       className="text-lg leading-6 font-medium text-gray-900"
                     >
-                      Delete Product - {props?.teacher?.name}
+                      Delete Product - {props?.product?.name}
                     </Dialog.Title>
                     <div className="mt-2">
                       <div>
                         <div className="mt-1 relative rounded-md shadow-sm">
-                        <label htmlFor="title" className=" mb-2 text-left block text-sm font-medium text-gray-700">To confirm deletion, type <span className='inline-flex rounded-full  px-2 text-xs font-semibold leading-5   bg-green-100 text-green-800'>delete</span> in the field: <span className="text-red-600">*</span></label>
+                          <label
+                            htmlFor="title"
+                            className=" mb-2 text-left block text-sm font-medium text-gray-700"
+                          >
+                            To confirm deletion, type{" "}
+                            <span className="inline-flex rounded-full  px-2 text-xs font-semibold leading-5   bg-green-100 text-green-800">
+                              delete
+                            </span>{" "}
+                            in the field:{" "}
+                            <span className="text-red-600">*</span>
+                          </label>
                           <input
                             type="text"
-                            className={"block w-full pr-10  sm:text-sm rounded-md focus:ring-primary placeholder-primary focus:outline-none" }
+                            className={
+                              "block w-full pr-10  sm:text-sm rounded-md focus:ring-primary placeholder-primary focus:outline-none"
+                            }
                             placeholder="delete"
                             onChange={(e) => setAnswer(e.target.value)}
                             aria-invalid="true"
                           />
-                          
                         </div>
                       </div>
                     </div>
