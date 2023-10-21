@@ -15,7 +15,6 @@ const AddProduct = () => {
   const [theProduct, setTheProduct] = useState({});
 
   // Category states
-  
 
   useEffect(() => {
     if (router.query?.id !== undefined) {
@@ -23,7 +22,7 @@ const AddProduct = () => {
       getProduct(router.query?.id);
     }
   }, [router]);
-  
+
   const [categories, setCategories] = useState([
     { id: 1, title: "E-Sell" },
     { id: 2, title: "Physical" },
@@ -74,34 +73,37 @@ const AddProduct = () => {
   // }, [router]);
 
   function getProduct(id) {
-    medicareApi.get(`/product/${id}`).then((response) => {
-      let product = response.data.product;
-      setTheProduct(product);
+    medicareApi
+      .get(`/product/${id}`)
+      .then((response) => {
+        let product = response.data.product;
+        setTheProduct(product);
 
-      // set react form data (default value).
-      setValue("name", theProduct.name);
-      setValue("category", theProduct.category?.id);
-      setValue("subCategory", theProduct.subCategory?.id);
-      setValue("details", theProduct.details);
+        // set react form data (default value).
+        setValue("name", theProduct.name);
+        setValue("category", theProduct.category?.id);
+        setValue("subCategory", theProduct.subCategory?.id);
+        setValue("details", theProduct.details);
 
-      // if(product?.image?.path && product?.image?.file) {
-      //   setImageUrl(`${process.env.NEXT_PUBLIC_IMAGE_CDN}${courseProps?.image?.path}${courseProps?.image?.file}`)
-      // }
+        // if(product?.image?.path && product?.image?.file) {
+        //   setImageUrl(`${process.env.NEXT_PUBLIC_IMAGE_CDN}${courseProps?.image?.path}${courseProps?.image?.file}`)
+        // }
 
-      if (theProduct?.image?.src) {
-        setImageUrl(`${theProduct?.image?.src}`);
-      }
-    }).catch((error) => {
-      if (error.response?.data?.type === "ValidationException") {
-        toast.error(error?.response?.data?.errors[0]?.message, {
-          duration: 3000,
-        });
-      } else{
-        toast.error(error?.response?.data?.message, {
-          duration: 3000,
-        });
-      }
-    });
+        if (theProduct?.image?.src) {
+          setImageUrl(`${theProduct?.image?.src}`);
+        }
+      })
+      .catch((error) => {
+        if (error.response?.data?.type === "ValidationException") {
+          toast.error(error?.response?.data?.errors[0]?.message, {
+            duration: 3000,
+          });
+        } else {
+          toast.error(error?.response?.data?.message, {
+            duration: 3000,
+          });
+        }
+      });
   }
 
   useEffect(() => {
@@ -175,7 +177,7 @@ const AddProduct = () => {
 
   /**
    * Set image.
-  */
+   */
   function handleImageUpload(data) {
     setPreviewImages(data?.previewImages ?? []);
     setImages(data?.images ?? []);
@@ -187,8 +189,8 @@ const AddProduct = () => {
   }
 
   /**
-  * Remove image.
-  */
+   * Remove image.
+   */
   function removeImage() {
     setPreviewImages([]);
     setImages([]);
@@ -215,7 +217,7 @@ const AddProduct = () => {
       .put(`/product/${theProduct?.id}`, formData)
       .then((response) => {
         toast.success("Product is updated", { duration: 3000 });
-        resetAllValue()
+        resetAllValue();
         // router.push("/restaurant/food");
       })
       .catch((error) => {
@@ -236,8 +238,8 @@ const AddProduct = () => {
     setValue("subCategory", null);
     setSelectedSubCategory(null);
 
-    setPreviewImages([])
-    setImages([])
+    setPreviewImages([]);
+    setImages([]);
 
     reset({
       name: null,
@@ -454,14 +456,6 @@ const AddProduct = () => {
             </button>
           </div> */}
           <div className="flex items-center justify-end gap-x-6 px-4 py-4 sm:px-8 mt-4">
-            <button
-              type="button"
-              className="text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100 border-2 py-2 px-4 rounded"
-              onClick={resetAllValue}
-            >
-              Reset
-            </button>
-
             <button
               type="submit"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

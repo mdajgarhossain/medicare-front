@@ -116,7 +116,7 @@ const AllProducts = () => {
     // if (searchInput) {
     //   params = { ...params, query: searchInput };
     // }
-    // params.type = "teacher";
+    // params.type = "product";
 
     medicareApi
       .get("/product", {
@@ -137,14 +137,13 @@ const AllProducts = () => {
    * Handle Paroduct Emit (refetch data).
    */
   function handleProductEmit() {
-    fetchCourses();
+    fetchProduct();
   }
 
   /**
    * Edit Product
    */
   function goToEdit(data) {
-    console.log("data", data);
     router.push(`/admin/products/${data?.id}/edit`);
   }
 
@@ -159,15 +158,26 @@ const AllProducts = () => {
     }));
   }
 
+  /**
+   * Modal close emit
+   * Common for all typeof modal.
+  */
+  function modalCloseEmit(data) {
+    setModals((prevState) => ({
+      ...prevState,
+      [data.modalName]: false,
+    }));
+  }
+
   return (
     <Fragment>
       {modals?.deleteProductModal && (
         <DeleteProductModal
           modalName="deleteProductModal"
           modalStatus={modals?.deleteProductModal}
-          teacher={selectedProduct}
+          product={selectedProduct}
           modalClose={modalCloseEmit}
-          refetchDataEmit={handleTeacherEmit}
+          refetchDataEmit={handleProductEmit}
         />
       )}
       <div className="px-4 sm:px-6 lg:px-8 mt-14">
