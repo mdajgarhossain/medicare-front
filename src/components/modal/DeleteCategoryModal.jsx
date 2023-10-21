@@ -4,10 +4,10 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-function DeleteProductModal(props) {
+function DeleteCategoryModal(props) {
   const [processing, setProcessing] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const [modalName] = useState("deleteProductModal");
+  const [modalName] = useState("deleteCategoryModal");
   const [answer, setAnswer] = useState("");
 
   useEffect(() => {
@@ -35,9 +35,9 @@ function DeleteProductModal(props) {
 
     setProcessing(true);
     medicareApi
-      .delete(`/product/${props?.product?.id}`)
+      .delete(`/category/${props?.category?.id}`)
       .then((response) => {
-        toast.success("Product is deleted", { duration: 3000 });
+        toast.success("Category is deleted", { duration: 3000 });
         props.refetchDataEmit();
         modalClose();
       })
@@ -93,7 +93,7 @@ function DeleteProductModal(props) {
                       as="h3"
                       className="text-lg leading-6 font-medium text-gray-900"
                     >
-                      Delete Product - {props?.product?.name}
+                      Delete Category - {props?.category?.name}
                     </Dialog.Title>
                     <div className="mt-2">
                       <div>
@@ -112,7 +112,7 @@ function DeleteProductModal(props) {
                           <input
                             type="text"
                             className={
-                              "block w-full p-2 sm:text-sm rounded-md focus:ring-primary placeholder-primary focus:outline-none border border-gray-300"
+                              "block w-full p-2  sm:text-sm rounded-md focus:ring-primary placeholder-primary focus:outline-none border border-gray-300"
                             }
                             placeholder="delete"
                             onChange={(e) => setAnswer(e.target.value)}
@@ -160,4 +160,4 @@ function DeleteProductModal(props) {
   );
 }
 
-export default DeleteProductModal;
+export default DeleteCategoryModal;
