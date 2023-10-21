@@ -12,7 +12,18 @@ import toast from "react-hot-toast";
 const AddProduct = () => {
   const [processing, setProcessing] = useState(false);
   const router = useRouter();
+  const [theProduct, setTheProduct] = useState({});
+
   // Category states
+  
+
+  useEffect(() => {
+    if (router.query?.id !== undefined) {
+      // getCategory();
+      getProduct(router.query?.id);
+    }
+  }, [router]);
+  
   const [categories, setCategories] = useState([
     { id: 1, title: "E-Sell" },
     { id: 2, title: "Physical" },
@@ -31,6 +42,7 @@ const AddProduct = () => {
   // Image state
   const [images, setImages] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
+  const [imageUrl, setImageUrl] = useState("");
 
   const schema = yup.object().shape({
     name: yup.string().required("Name is required"),
@@ -60,6 +72,37 @@ const AddProduct = () => {
   // useEffect(() => {
   //   getSubCategory();
   // }, [router]);
+
+  function getProduct(id) {
+    medicareApi.get(`/product/${id}`).then((response) => {
+      let product = response.data.product;
+      setTheProduct(product);
+
+      // set react form data (default value).
+      setValue("name", theProduct.name);
+      setValue("category", theProduct.category?.id);
+      setValue("subCategory", theProduct.subCategory?.id);
+      setValue("details", theProduct.details);
+
+      // if(product?.image?.path && product?.image?.file) {
+      //   setImageUrl(`${process.env.NEXT_PUBLIC_IMAGE_CDN}${courseProps?.image?.path}${courseProps?.image?.file}`)
+      // }
+
+      if (theProduct?.image?.src) {
+        setImageUrl(`${theProduct?.image?.src}`);
+      }
+    }).catch((error) => {
+      if (error.response?.data?.type === "ValidationException") {
+        toast.error(error?.response?.data?.errors[0]?.message, {
+          duration: 3000,
+        });
+      } else{
+        toast.error(error?.response?.data?.message, {
+          duration: 3000,
+        });
+      }
+    });
+  }
 
   useEffect(() => {
     setValue("category", selectedCategory?.id ?? null);
@@ -149,6 +192,7 @@ const AddProduct = () => {
   function removeImage() {
     setPreviewImages([]);
     setImages([]);
+    setImageUrl("");
 
     setTimeout(() => {
       trigger("preview_images");
@@ -168,9 +212,10 @@ const AddProduct = () => {
     formData.append("image", data.images[0]);
 
     medicareApi
-      .post("/product", formData)
+      .put(`/product/${theProduct?.id}`, formData)
       .then((response) => {
-        toast.success("Product is added", { duration: 3000 });
+        toast.success("Product is updated", { duration: 3000 });
+        resetAllValue()
         // router.push("/restaurant/food");
       })
       .catch((error) => {
@@ -208,7 +253,7 @@ const AddProduct = () => {
         </h1> */}
         <form className="bg-white shadow-sm ring-1 ring-gray-900/5">
           <h1 className="px-4 py-2 sm:py-2 sm:px-6 mt-4 text-lg font-semibold leading-6 text-gray-900">
-            Add Product
+            Edit Product
           </h1>
           <span className="px-4 sm:px-6">
             The fields labels marked with
@@ -372,7 +417,7 @@ const AddProduct = () => {
                 >
                   Product Image
                 </label>
-                {previewImages.length >= 1 ? (
+                {previewImages.length >= 1 || imageUrl ? (
                   <div className="w-6/12">
                     <div className="relative inline-block">
                       <button
@@ -387,7 +432,7 @@ const AddProduct = () => {
 
                       <img
                         className="object-contain h-48 bg-white border border-gray-200 rounded-lg shadow-md w-96"
-                        src={previewImages[0]}
+                        src={previewImages[0] || imageUrl}
                         alt="product image"
                       />
                     </div>
@@ -444,7 +489,7 @@ const AddProduct = () => {
                   Processing...
                 </div>
               ) : (
-                "Submit"
+                "Update"
               )}
             </button>
           </div>

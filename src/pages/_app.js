@@ -6,11 +6,21 @@ import DashboardLayout from '@/layouts/DashboardLayout';
 
 function RoutingComponent(props) {
   const router = props.router;
-  if (
-    router.pathname == "/admin" || router.pathname == "/admin/products" || router.pathname == "/admin/products/add-product"
-  ) {
-    // return <Fullpage className="fullPage">{props.children}</Fullpage>
-    return <DashboardLayout>{props.children}</DashboardLayout>
+  // if (
+  //   router.pathname == "/admin" || router.pathname == "/admin/products" || router.pathname == "/admin/products/add-product"
+  // ) {
+  //   // return <Fullpage className="fullPage">{props.children}</Fullpage>
+  //   return <DashboardLayout>{props.children}</DashboardLayout>
+  // } else {
+  //   return (
+  //     <>
+  //       <Layout>{props.children}</Layout>
+  //     </>
+  //   );
+  // }
+
+  if (router.pathname.startsWith("/admin")) {
+    return <DashboardLayout>{props.children}</DashboardLayout>;
   } else {
     return (
       <>
@@ -18,6 +28,7 @@ function RoutingComponent(props) {
       </>
     );
   }
+  
 }
 
 // function MyApp({ Component, pageProps }) {

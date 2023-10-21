@@ -1,9 +1,17 @@
 import Pagination from "@/components/common/table/Pagination";
+import TheMenu from "@/components/common/table/TheMenu";
+import DeleteProductModal from "@/components/modal/DeleteProductModal";
+import { DeleteActiveIcon, DeleteInactiveIcon, EditActiveIcon, EditInactiveIcon } from "@/utils/icons";
+import { Menu } from "@headlessui/react";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 
 const AllProducts = () => {
   const router = useRouter();
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [modals, setModals] = useState({
+    deleteTeacherModal: false,
+  });
   const [thePagination, setThePagination] = useState({
     current_page: 1,
     last_page: 2,
@@ -74,8 +82,36 @@ const AllProducts = () => {
     });
   }
 
+  /**
+   * Edit Product
+  */
+  function goToEdit(data) {
+    console.log("data", data);
+    router.push( `/admin/products/${data?.id}/edit`);
+  }
+
+  /**
+   * Display Delete Product modal
+  */
+  function deleteTeacherModalOpen(data) {
+    setSelectedProduct(data);
+    setModals((prevState) => ({
+      ...prevState,
+      deleteTeacherModal: true,
+    }));
+  }
+
   return (
     <Fragment>
+      {modals?.deleteTeacherModal && (
+        <DeleteProductModal
+          modalName="deleteProductModal"
+          modalStatus={modals?.deleteTeacherModal}
+          teacher={selectedTeacher}
+          modalClose={modalCloseEmit}
+          refetchDataEmit={handleTeacherEmit}
+        />
+      )}
       <div className="px-4 sm:px-6 lg:px-8 mt-14">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
@@ -110,12 +146,12 @@ const AllProducts = () => {
                           {column?.title}
                         </th>
                       ))}
-                      {/* <th
-                          scope="col"
-                          className="relative py-3.5 pl-3 pr-4 sm:pr-6 text-sm font-semibold"
-                        >
-                          Action
-                        </th> */}
+                      <th
+                        scope="col"
+                        className="relative py-3.5 pl-3 pr-4 sm:pr-6 text-sm font-semibold"
+                      >
+                        Action
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
@@ -129,6 +165,74 @@ const AllProducts = () => {
                         </td>
                         <td className="whitespace-normal px-3 py-4 text-sm text-gray-500">
                           {item.category ?? "-"}
+                        </td>
+                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-center text-sm font-medium sm:pr-6">
+                          <TheMenu
+                            strategy={item.length < 3 ? "fixed" : "absolute"}
+                          >
+                            <Menu.Items className=" z-50 absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                              <div className="px-1 py-1 ">
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        goToEdit(item);
+                                      }}
+                                      className={`${
+                                        active
+                                          ? "bg-violet-500 text-white"
+                                          : "text-gray-900"
+                                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                    >
+                                      {active ? (
+                                        <EditActiveIcon
+                                          className="mr-2 h-5 w-5"
+                                          aria-hidden="true"
+                                        />
+                                      ) : (
+                                        <EditInactiveIcon
+                                          className="mr-2 h-5 w-5"
+                                          aria-hidden="true"
+                                        />
+                                      )}
+                                      Edit
+                                    </button>
+                                  )}
+                                </Menu.Item>
+                              </div>
+                              <div className="px-1 py-1">
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        deleteTeacherModalOpen(item);
+                                      }}
+                                      className={`${
+                                        active
+                                          ? "bg-violet-500 text-white"
+                                          : "text-gray-900"
+                                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                    >
+                                      {active ? (
+                                        <DeleteActiveIcon
+                                          className="mr-2 h-5 w-5 text-violet-400"
+                                          aria-hidden="true"
+                                        />
+                                      ) : (
+                                        <DeleteInactiveIcon
+                                          className="mr-2 h-5 w-5 text-violet-400"
+                                          aria-hidden="true"
+                                        />
+                                      )}
+                                      Delete
+                                    </button>
+                                  )}
+                                </Menu.Item>
+                              </div>
+                            </Menu.Items>
+                          </TheMenu>
                         </td>
                       </tr>
                     ))}
