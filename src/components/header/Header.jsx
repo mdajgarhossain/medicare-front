@@ -1,9 +1,13 @@
+import Link from "next/link";
 import SocialMediaLinks from "../common/SocialMediaIcons";
 import DesktopNav from "./DesktopNav";
 import Logo from "./Logo";
 import MobileNav from "./MobileNav";
+import { FaCartArrowDown } from "react-icons/fa";
+import { useCart } from "@/context/CartContext";
 
 const Header = () => {
+  const { cart } = useCart();
   const menu = [
     { id: 1, label: "Home", link: "/" },
     { id: 2, label: "About Us", link: "/about-us" },
@@ -42,12 +46,12 @@ const Header = () => {
             <SocialMediaLinks />
           </div>
           <div className="items-end justify-end hidden lg:flex">
-            {/* <Link to={"my-carts"} className="relative w-10 h-8 mt-5">
+            <Link href='/cart' className="relative w-10 h-8 mt-5">
               <FaCartArrowDown className="w-8 h-8 text-white" />
               <span className="absolute -top-3 right-0 w-5 h-5 text-[12px] justify-center items-center flex text-white rounded-full bg-[#EA2027]">
-                {state?.length}
+                {cart?.length}
               </span>
-            </Link> */}
+            </Link>
             {/* {user?._id && (
               <BiUserCircle
                 className="w-8 h-8 ml-1 text-white cursor-pointer"

@@ -1,12 +1,15 @@
+import { useCart } from "@/context/CartContext";
 import { medicareApi } from "@/utils/http";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
 const ProductDetails = () => {
+  const { cart, addToCart } = useCart();
   const router = useRouter();
   const [quantity, setQuantity] = useState(1);
   const [theProduct, setTheProduct] = useState({
+    id: router.query?.id,
     name: "Sample Product",
     price: 19.99,
     description: "This is a sample product description.",
@@ -39,9 +42,26 @@ const ProductDetails = () => {
       });
   }
 
-  const addToCart = () => {
-    // Implement your cart functionality here, e.g., add the product to a global state.
-    console.log(`Added ${quantity} ${theProduct.name} to the cart`);
+  const handleAddToCart = () => {
+    const itemInCart = cart.find((item) => item.id === theProduct.id);
+
+    if (itemInCart) {
+      // If the item is already in the cart, update its quantity
+      itemInCart.quantity = quantity;
+      alert("Item has already added to the cart!");
+    } else {
+      // If the item is not in the cart, add it with the specified quantity
+      theProduct.quantity = quantity;
+      addToCart(theProduct);
+    }
+
+    // Reset the quantity input
+    // setQuantity(1);
+
+    // Optionally, show a toast message to indicate success
+    // toast.success('Item added to cart!', {
+    //   duration: 3000,
+    // });
   };
 
   return (
@@ -51,13 +71,13 @@ const ProductDetails = () => {
           <img
             src={theProduct.image}
             alt={theProduct.name}
-            className="object-cover w-full rounded-lg"
+            className="object-cover w-full h-full rounded-lg"
           />
         </div>
         <div className="w-2/3 p-6">
           <h1 className="text-3xl font-bold mb-4">{theProduct.name}</h1>
           <p className="text-gray-600 mb-4">{theProduct.description}</p>
-          <p className="text-2xl font-bold">${theProduct.price}</p>
+          <p className="text-2xl font-bold">${theProduct.price.toFixed(2)}</p>
           <div className="">
             <label htmlFor="quantity" className="block mt-4 text-lg">
               Quantity:
@@ -72,7 +92,7 @@ const ProductDetails = () => {
           </div>
           <div className="mt-3">
             <button
-              onClick={addToCart}
+              onClick={handleAddToCart}
               className="bg-[#464e6e] text-white px-6 py-2 mt-4 hover:bg-[#353c57]"
             >
               Add to Cart

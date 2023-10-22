@@ -1,8 +1,9 @@
-import '../styles/globals.css';
+import "../styles/globals.css";
 import { useRouter } from "next/router";
-import Layout from "@/layouts/Layout.jsx"
-import Dashboard from '@/components/dashboard/Dashboard';
-import DashboardLayout from '@/layouts/DashboardLayout';
+import Layout from "@/layouts/Layout.jsx";
+import Dashboard from "@/components/dashboard/Dashboard";
+import DashboardLayout from "@/layouts/DashboardLayout";
+import { CartProvider } from "@/context/CartContext";
 
 function RoutingComponent(props) {
   const router = props.router;
@@ -28,7 +29,6 @@ function RoutingComponent(props) {
       </>
     );
   }
-  
 }
 
 // function MyApp({ Component, pageProps }) {
@@ -41,8 +41,10 @@ export default function App({ Component, pageProps: { ...pageProps } }) {
   const router = useRouter();
 
   return (
-    <RoutingComponent router={router}>
-      <Component {...pageProps} />
-    </RoutingComponent>
+    <CartProvider>
+      <RoutingComponent router={router}>
+        <Component {...pageProps} />
+      </RoutingComponent>
+    </CartProvider>
   );
 }
