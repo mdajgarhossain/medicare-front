@@ -12,6 +12,8 @@ const EditCategory = () => {
   const router = useRouter();
   const [theCategory, setTheCategory] = useState({});
 
+  // console.log("theCategory", theCategory);
+
   useEffect(() => {
     if (router.query?.id !== undefined) {
       // getCategory();
@@ -43,12 +45,13 @@ const EditCategory = () => {
     medicareApi
       .get(`/category/${id}`)
       .then((response) => {
-        let category = response.data.category;
+        console.log("response.data", response.data);
+        let category = response.data;
         setTheCategory(category);
 
         // set react form data (default value).
-        setValue("name", theCategory.name);
-        setValue("description", theCategory.description);
+        setValue("name", category.name);
+        setValue("description", category.description);
       })
       .catch((error) => {
         if (error.response?.data?.type === "ValidationException") {

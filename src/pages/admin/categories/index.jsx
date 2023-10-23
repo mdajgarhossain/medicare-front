@@ -66,7 +66,6 @@ const AllCategories = () => {
 
   // Table columns attributes.
   let columns = [
-    { title: "ID", slug: "id", sorting: true },
     { title: "Name", slug: "name", sorting: true },
     { title: "Description", slug: "description", sorting: true },
   ];
@@ -241,9 +240,6 @@ const AllCategories = () => {
                     <tbody className="divide-y divide-gray-200 bg-white">
                       {categories?.map((item, id) => (
                         <tr key={item.id}>
-                          <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                            {item.id}
-                          </td>
                           <td className="whitespace-normal px-3 py-4 text-sm text-gray-500">
                             {item.name}
                           </td>
