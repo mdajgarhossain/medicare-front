@@ -56,7 +56,7 @@ const Students = () => {
     if (veryFirstLoad) {
       let query = router.query;
       let getPage = query?.page ? parseInt(query?.page) : thePage;
-      let getPerPage = query?.per_page ? parseInt(query?.per_page) : thePerPage;
+      let getPerPage = query?.limit ? parseInt(query?.limit) : thePerPage;
       setThePage(getPage);
       setThePerPage(getPerPage);
       fetchPlansData(getPage);
@@ -93,7 +93,7 @@ const Students = () => {
   function handlePerPage(data) {
     setThePerPage(data.value);
     router.push({
-      query: { ...query, per_page: data.value },
+      query: { ...query, limit: data.value },
     });
   }
 

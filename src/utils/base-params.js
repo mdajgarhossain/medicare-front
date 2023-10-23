@@ -1,6 +1,6 @@
 function getBaseParams(router, thePerPage, page) {
   let params = {
-    per_page: thePerPage,
+    limit: thePerPage,
     page: page,
   };
 

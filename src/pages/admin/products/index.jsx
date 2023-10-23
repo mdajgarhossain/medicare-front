@@ -25,7 +25,7 @@ const AllProducts = () => {
     from: 1,
     to: 10,
     total: 13,
-    per_page: 10,
+    limit: 10,
   });
   const [thePage, setThePage] = useState(1);
   const [thePerPage, setThePerPage] = useState(10);
@@ -88,7 +88,7 @@ const AllProducts = () => {
   function handlePerPage(data) {
     setThePerPage(data.value);
     router.push({
-      query: { ...query, per_page: data.value },
+      query: { ...query, limit: data.value },
     });
   }
 
@@ -101,7 +101,7 @@ const AllProducts = () => {
     if (veryFirstLoad) {
       let query = router.query;
       let getPage = query?.page ? parseInt(query?.page) : thePage;
-      let getPerPage = query?.per_page ? parseInt(query?.per_page) : thePerPage;
+      let getPerPage = query?.limit ? parseInt(query?.limit) : thePerPage;
       setThePage(getPage);
       setThePerPage(getPerPage);
       fetchProduct(getPage);

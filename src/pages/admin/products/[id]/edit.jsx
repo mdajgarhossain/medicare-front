@@ -120,7 +120,7 @@ const EditProduct = () => {
     dokaneApi
       .get("/restaurant/food-categories", {
         params: {
-          per_page: 60,
+          limit: 60,
         },
       })
       .then((response) => {
@@ -139,7 +139,7 @@ const EditProduct = () => {
     dokaneApi
       .get("/restaurant/food-categories", {
         params: {
-          per_page: 60,
+          limit: 60,
         },
       })
       .then((response) => {
