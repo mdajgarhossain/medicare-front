@@ -44,21 +44,31 @@ const Header = () => {
           </div>
           <div className="hidden lg:block">
             <SocialMediaLinks />
+
+            {/* Cart */}
+            <div className="items-end justify-end hidden lg:flex">
+              <Link href="/cart" className="relative w-10 h-8 mt-6">
+                <FaCartArrowDown className="w-8 h-8 text-white" />
+                <span className="absolute -top-3 right-0 w-5 h-5 text-[12px] justify-center items-center flex text-white rounded-full bg-[#EA2027]">
+                  {cart?.length}
+                </span>
+              </Link>
+            </div>
           </div>
-          <div className="items-end justify-end hidden lg:flex">
-            <Link href='/cart' className="relative w-10 h-8 mt-5">
+          {/* <div className="items-end justify-end hidden lg:flex"> */}
+          {/* <Link href='/cart' className="relative w-10 h-8 mt-5">
               <FaCartArrowDown className="w-8 h-8 text-white" />
               <span className="absolute -top-3 right-0 w-5 h-5 text-[12px] justify-center items-center flex text-white rounded-full bg-[#EA2027]">
                 {cart?.length}
               </span>
-            </Link>
-            {/* {user?._id && (
+            </Link> */}
+          {/* {user?._id && (
               <BiUserCircle
                 className="w-8 h-8 ml-1 text-white cursor-pointer"
                 onClick={showUserInfo}
               />
             )} */}
-            {/* {user?._id && (
+          {/* {user?._id && (
               <div
                 className={`${
                   isOpen ? "absolute" : "hidden"
@@ -82,7 +92,7 @@ const Header = () => {
                 </p>
               </div>
             )} */}
-          </div>
+          {/* </div> */}
         </div>
       </div>
     </nav>
