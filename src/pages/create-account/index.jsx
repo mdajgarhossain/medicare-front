@@ -18,7 +18,7 @@ const CreateAccount = () => {
           <form onSubmit={() => {}}>
             <div className="mb-4">
               <label className="block mb-2 font-medium">
-                Full Name <span className="text-[red]">*</span>
+                Name <span className="text-[red]">*</span>
               </label>
               <input
                 type="text"
@@ -28,16 +28,6 @@ const CreateAccount = () => {
               />
             </div>
 
-            <div className="mb-4">
-              <label className="block mb-2 font-medium">
-                Phone <span className="text-[red]">*</span>
-              </label>
-              <input
-                type="text"
-                className={`outline-none w-full p-2 border border-gray-300 rounded-md`}
-                placeholder="+880 088 8888 888"
-              />
-            </div>
             <div className="mb-4">
               <label className="block mb-2 font-medium">
                 Email <span className="text-[red]">*</span>
@@ -100,7 +90,18 @@ const CreateAccount = () => {
 
             <div className="mb-4">
               <label className="block mb-2 font-medium">
-                Address <span className="text-[red]">*</span>
+                Phone
+              </label>
+              <input
+                type="text"
+                className={`outline-none w-full p-2 border border-gray-300 rounded-md`}
+                placeholder="+880 088 8888 888"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block mb-2 font-medium">
+                Address
               </label>
               <input
                 type="text"
