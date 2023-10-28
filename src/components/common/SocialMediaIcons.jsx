@@ -1,9 +1,11 @@
+import cookies from "@/utils/cookies";
 import { useRouter } from "next/router";
 import { FaFacebookF, FaTwitter, FaYoutube } from "react-icons/fa";
 import { TfiLinkedin } from "react-icons/Tfi";
 
 const SocialMediaIcons = () => {
   const router = useRouter();
+  const loggedInUser = cookies.get("user_info");
 
   const CustomButton = ({ className, title, ...props }) => {
     const buttonClasses = `font-bold py-2 lg:px-4 px-2 lg:my-0 rounded ${
@@ -17,14 +19,32 @@ const SocialMediaIcons = () => {
     );
   };
 
+  const handleLogout = () => {
+    // Remove authentication data from cookies
+    cookies.remove("token", { path: "/", expires: new Date(0) });
+    cookies.remove("user_info", { path: "/", expires: new Date(0) });
+
+    setTimeout(() => {
+      router.replace("/sign-in");
+    }, 500);
+  };
+
   return (
     <div className="justify-end gap-2 mt-2 lg:flex">
       <div className="hidden lg:block">
-        <CustomButton
-          title="Sign In"
-          className="text-black bg-yellow-500 hover:bg-yellow-600 "
-          onClick={() => router.push('/sign-in')}
-        />
+        {loggedInUser?.id ? (
+          <CustomButton
+            title="Logout"
+            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-base px-5 py-2 text-center mr-2 mb-2"
+            onClick={handleLogout}
+          />
+        ) : (
+          <CustomButton
+            title="Sign In"
+            className="text-black bg-yellow-500 hover:bg-yellow-600"
+            onClick={() => router.push("/sign-in")}
+          />
+        )}
       </div>
       <a
         href="https://www.facebook.com/profile.php?id=100063579536034"

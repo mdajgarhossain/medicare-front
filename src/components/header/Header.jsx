@@ -5,9 +5,14 @@ import Logo from "./Logo";
 import MobileNav from "./MobileNav";
 import { FaCartArrowDown } from "react-icons/fa";
 import { useCart } from "@/context/CartContext";
+import cookies from "@/utils/cookies";
+import { UserIcon } from "@heroicons/react/solid";
 
 const Header = () => {
   const { cart } = useCart();
+  const loggedInUser = cookies.get("user_info");
+  console.log("loggedInUser", loggedInUser);
+
   const menu = [
     { id: 1, label: "Home", link: "/" },
     { id: 2, label: "About Us", link: "/about-us" },
@@ -46,7 +51,22 @@ const Header = () => {
             <SocialMediaLinks />
 
             {/* Cart */}
-            <div className="items-end justify-end hidden lg:flex">
+            <div
+              className={`items-end ${
+                loggedInUser?.id ? "justify-between" : "justify-end"
+              } hidden lg:flex`}
+            >
+              {loggedInUser?.id && (
+                <div className="flex gap-3">
+                  <UserIcon
+                    className="w-8 h-8 ml-1 text-white cursor-pointer"
+                    // onClick={showUserInfo}
+                  />
+                  <h2 className="text-xl text-white font-semibold sm:text-2xl">
+                    {loggedInUser?.name}
+                  </h2>
+                </div>
+              )}
               <Link href="/cart" className="relative w-10 h-8 mt-6">
                 <FaCartArrowDown className="w-8 h-8 text-white" />
                 <span className="absolute -top-3 right-0 w-5 h-5 text-[12px] justify-center items-center flex text-white rounded-full bg-[#EA2027]">
