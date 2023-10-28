@@ -7,10 +7,12 @@ import { FaCartArrowDown } from "react-icons/fa";
 import { useCart } from "@/context/CartContext";
 import cookies from "@/utils/cookies";
 import { UserIcon } from "@heroicons/react/solid";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const { cart } = useCart();
   const loggedInUser = cookies.get("user_info");
+  const router = useRouter()
   console.log("loggedInUser", loggedInUser);
 
   const menu = [
@@ -57,12 +59,12 @@ const Header = () => {
               } hidden lg:flex`}
             >
               {loggedInUser?.id && (
-                <div className="flex gap-3">
+                <div className="flex gap-2" onClick={() => router.push("/profile")}>
                   <UserIcon
                     className="w-8 h-8 ml-1 text-white cursor-pointer"
                     // onClick={showUserInfo}
                   />
-                  <h2 className="text-xl text-white font-semibold sm:text-2xl">
+                  <h2 className="capitalize text-xl text-white font-semibold sm:text-2xl hover:underline hover:cursor-pointer">
                     {loggedInUser?.name}
                   </h2>
                 </div>
