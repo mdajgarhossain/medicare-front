@@ -53,9 +53,9 @@ const AddProduct = () => {
     resolver: yupResolver(schema),
   });
 
-  // useEffect(() => {
-  //   getCategory();
-  // }, [router]);
+  useEffect(() => {
+    getCategory();
+  }, []);
 
   // useEffect(() => {
   //   getSubCategory();
@@ -72,14 +72,14 @@ const AddProduct = () => {
    * Retrieve categories.
    */
   function getCategory() {
-    dokaneApi
-      .get("/restaurant/food-categories", {
+    medicareApi
+      .get("/category", {
         params: {
           limit: 60,
         },
       })
       .then((response) => {
-        setCategories(response.data.food_categories);
+        setCategories(response.data.data);
         setCategoryLoading(false);
       })
       .catch((error) => {
@@ -162,10 +162,12 @@ const AddProduct = () => {
     setProcessing(true);
     let formData = new FormData();
     formData.append("name", data.name);
-    formData.append("categoryId", data.category);
-    formData.append("subCategoryId", data.subCategory);
-    formData.append("details", data.details);
-    formData.append("image", data.images[0]);
+    // formData.append("categoryId", data.category);
+    formData.append("categories[]", data.category);
+    formData.append("subcategoryId", data.subCategory);
+    formData.append("description", data.details);
+    formData.append("attachments[]", "1");
+    formData.append("brandId", "1");
 
     medicareApi
       .post("/product", formData)
@@ -275,7 +277,7 @@ const AddProduct = () => {
                         : false
                     }
                     getOptionValue={(item) => item.id}
-                    getOptionLabel={(item) => `${item?.title}`}
+                    getOptionLabel={(item) => `${item?.name}`}
                     isClearable={true}
                     isLoading={categoryLoading}
                     placeholder={
@@ -349,7 +351,7 @@ const AddProduct = () => {
                   htmlFor="details"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Details
+                  Description
                 </label>
                 <div className="mt-2">
                   <input
