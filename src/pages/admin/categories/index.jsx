@@ -109,7 +109,7 @@ const AllCategories = () => {
     // if (searchInput) {
     //   params = { ...params, query: searchInput };
     // }
-    // params.type = "product";
+    params.sortDirection = "desc";
 
     medicareApi
       .get("/category", {
