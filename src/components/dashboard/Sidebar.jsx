@@ -14,7 +14,7 @@ const Sidebar = () => {
     { icon: <HomeIcon className="w-6 h-6 mr-2" />, text: 'Home', link: '/' },
     { icon: <CubeIcon className="w-6 h-6 mr-2" />, text: 'Products', link: '/admin/products' },
     { icon: <FolderIcon className="w-6 h-6 mr-2" />, text: 'Categories', link: '/admin/categories' },
-    { icon: <TagIcon className="w-6 h-6 mr-2" />, text: 'Subcategories', link: '/' },
+    { icon: <TagIcon className="w-6 h-6 mr-2" />, text: 'Subcategories', link: '/admin/sub-categories' },
     { icon: <UserIcon className="w-6 h-6 mr-2" />, text: 'Users', link: '/' },
   ];
 
