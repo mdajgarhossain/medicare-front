@@ -80,6 +80,7 @@ const SubCategories = () => {
     // if (searchInput) {
     //   params = { ...params, query: searchInput };
     // }
+    params.sortDirection = "desc";
     params.include = "sc.category";
 
     medicareApi
