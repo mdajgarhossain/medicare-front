@@ -4,6 +4,7 @@ import Layout from "@/layouts/Layout.jsx";
 import Dashboard from "@/components/dashboard/Dashboard";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import { CartProvider } from "@/context/CartContext";
+import withAuth from "@/middleware/withAuth";
 
 function RoutingComponent(props) {
   const router = props.router;
@@ -21,7 +22,12 @@ function RoutingComponent(props) {
   // }
 
   if (router.pathname.startsWith("/admin")) {
-    return <DashboardLayout>{props.children}</DashboardLayout>;
+    // Wrap the DashboardLayout with withAuth to protect the /admin route
+    const ProtectedDashboardLayout = withAuth(DashboardLayout);
+
+    return (
+      <ProtectedDashboardLayout>{props.children}</ProtectedDashboardLayout>
+    );
   } else {
     return (
       <>
