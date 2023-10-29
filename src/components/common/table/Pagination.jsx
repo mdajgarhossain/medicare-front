@@ -92,13 +92,13 @@ function Pagination({
             }}
           />
         </div>
-        <div className=" sm:block flex flex-1 ml-10">
+        {/* <div className=" sm:block flex flex-1 ml-10">
           <p className="text-sm text-gray-700">
             Showing <span className="font-medium">{pagination?.from}</span> to
             <span className="font-medium ml-1">{pagination?.to}</span> of{" "}
             <span className="font-medium">{pagination?.total}</span> results
           </p>
-        </div>
+        </div> */}
         <div className="flex flex-1 justify-between sm:justify-end">
           <p className="mt-2 mr-2">page: </p>
           <div className="mr-2">
