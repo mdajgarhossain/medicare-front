@@ -13,7 +13,7 @@ const medicareApi = axios.create({
 })
 
 // Add Authorization header if 'auth_user_token' is present in cookies
-const authUserToken = theCookies.get('auth_user_token');
+const authUserToken = theCookies.get('token');
 if (authUserToken) {
   medicareApi.defaults.headers['Authorization'] = `Bearer ${authUserToken}`;
 }
