@@ -12,8 +12,6 @@ const EditCategory = () => {
   const router = useRouter();
   const [theCategory, setTheCategory] = useState({});
 
-  // console.log("theCategory", theCategory);
-
   useEffect(() => {
     if (router.query?.id !== undefined) {
       // getCategory();
@@ -45,7 +43,6 @@ const EditCategory = () => {
     medicareApi
       .get(`/category/${id}`)
       .then((response) => {
-        console.log("response.data", response.data);
         let category = response.data;
         setTheCategory(category);
 
@@ -72,13 +69,25 @@ const EditCategory = () => {
   function editCategory(data) {
     setProcessing(true);
     let formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("description", data.description);
+
+    // Define the list of fields you want to include in the formData
+    const fieldsToInclude = ["name", "description"];
+
+    // Use a loop to append valid and non-empty fields to formData
+    fieldsToInclude.forEach((field) => {
+      if (data[field]) {
+        formData.append(field, data[field]);
+      }
+    });
 
     medicareApi
-      .put(`/category/${theCategory?.id}`, formData)
+      .patch(`/category/${theCategory?.id}`, formData)
       .then((response) => {
-        toast.success("Category is updated", { duration: 3000 });
+        // toast.success("Category is updated", { duration: 3000 });
+        setTimeout(() => {
+          setProcessing(false);
+          router.push("/admin/categories");
+        }, 1000);
       })
       .catch((error) => {
         setProcessing(false);

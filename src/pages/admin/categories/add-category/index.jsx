@@ -36,14 +36,26 @@ const AddCategory = () => {
   function addCategory(data) {
     setProcessing(true);
     let formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("description", data.description);
+
+    // Define the list of fields you want to include in the formData
+    const fieldsToInclude = ["name", "description"];
+
+    // Use a loop to append valid and non-empty fields to formData
+    fieldsToInclude.forEach((field) => {
+      if (data[field]) {
+        formData.append(field, data[field]);
+      }
+    });
 
     medicareApi
       .post("/category", formData)
       .then((response) => {
-        toast.success("Category is added", { duration: 3000 });
-        // router.push("/restaurant/food");
+        resetAllValue();
+        // toast.success("Category is added", { duration: 1000 });
+        setTimeout(() => {
+          setProcessing(false);
+          router.push("/admin/categories");
+        }, 1000);
       })
       .catch((error) => {
         setProcessing(false);
