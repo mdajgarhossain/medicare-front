@@ -8,12 +8,21 @@ import { useCart } from "@/context/CartContext";
 import cookies from "@/utils/cookies";
 import { UserIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const { cart } = useCart();
-  const loggedInUser = cookies.get("user_info");
-  const router = useRouter()
-  console.log("loggedInUser", loggedInUser);
+  const [loggedInUser, setLoggedInUser] = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const authUser = cookies.get("user_info");
+    if (authUser?.id) {
+      setLoggedInUser(authUser);
+    } else {
+      setLoggedInUser(null);
+    }
+  }, []);
 
   const menu = [
     { id: 1, label: "Home", link: "/" },
@@ -58,8 +67,11 @@ const Header = () => {
                 loggedInUser?.id ? "justify-between" : "justify-end"
               } hidden lg:flex`}
             >
-              {loggedInUser?.id && (
-                <div className="flex gap-2" onClick={() => router.push("/profile")}>
+              {loggedInUser && (
+                <div
+                  className="flex gap-2"
+                  onClick={() => router.push("/profile")}
+                >
                   <UserIcon
                     className="w-8 h-8 ml-1 text-white cursor-pointer"
                     // onClick={showUserInfo}

@@ -68,7 +68,7 @@ const SignIn = () => {
         toast.success("Sign in successfully", { duration: 3000 });
         setProcessing(false);
         // resetAllValue();
-        router.push("/");
+        window.location.replace("/")
       })
       .catch((error) => {
         setProcessing(false);
