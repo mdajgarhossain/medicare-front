@@ -13,23 +13,17 @@ const AddProduct = () => {
   const [processing, setProcessing] = useState(false);
   const router = useRouter();
   // Category states
-  const [categories, setCategories] = useState([
-    { id: 1, title: "E-Sell" },
-    { id: 2, title: "Physical" },
-  ]);
+  const [categories, setCategories] = useState([]);
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   // Sub category states
-  const [subCategories, setSubCategories] = useState([
-    { id: 1, title: "Test 1" },
-    { id: 2, title: "Test 2" },
-  ]);
+  const [subCategories, setSubCategories] = useState([]);
   const [subCategoryLoading, setSubCategoryLoading] = useState(false);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
 
   // Image state
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(null);
   const [previewImages, setPreviewImages] = useState([]);
 
   const schema = yup.object().shape({
@@ -57,9 +51,9 @@ const AddProduct = () => {
     getCategory();
   }, []);
 
-  // useEffect(() => {
-  //   getSubCategory();
-  // }, [router]);
+  useEffect(() => {
+    if (selectedCategory?.id) getSubCategory(selectedCategory.id);
+  }, [selectedCategory]);
 
   useEffect(() => {
     setValue("category", selectedCategory?.id ?? null);
@@ -90,15 +84,15 @@ const AddProduct = () => {
   /**
    * Retrieve sub categories.
    */
-  function getSubCategory() {
-    dokaneApi
-      .get("/restaurant/food-categories", {
+  function getSubCategory(categoryId) {
+    medicareApi
+      .get(`/subcategory/by/${categoryId}`, {
         params: {
           limit: 60,
         },
       })
       .then((response) => {
-        setSubCategories(response.data.food_categories);
+        setSubCategories(response.data.data);
         setSubCategoryLoading(false);
       })
       .catch((error) => {
@@ -132,7 +126,7 @@ const AddProduct = () => {
 
   /**
    * Set image.
-  */
+   */
   function handleImageUpload(data) {
     setPreviewImages(data?.previewImages ?? []);
     setImages(data?.images ?? []);
@@ -144,8 +138,8 @@ const AddProduct = () => {
   }
 
   /**
-  * Remove image.
-  */
+   * Remove image.
+   */
   function removeImage() {
     setPreviewImages([]);
     setImages([]);
@@ -155,25 +149,66 @@ const AddProduct = () => {
     }, 500);
   }
 
+  async function uploadImageAndGetId(image) {
+    const formData = new FormData();
+
+    // Convert the File object to a binary blob
+    const blob = new Blob([image], { type: image.type });
+
+    formData.append("fileSource", image);
+    formData.append("type", "product");
+
+    const headers = {
+      "Content-Type": "multipart/form-data",
+    };
+    try {
+      const response = await medicareApi.post("/attachment", formData, {
+        headers,
+      });
+      return response.data.id; // Assuming the response contains an ID field
+    } catch (error) {
+      throw new Error("Failed to upload image");
+    }
+  }
+
   /**
    * Add product item.
    */
-  function addProduct(data) {
+  async function addProduct(data) {
     setProcessing(true);
     let formData = new FormData();
     formData.append("name", data.name);
-    // formData.append("categoryId", data.category);
     formData.append("categories[]", data.category);
     formData.append("subcategoryId", data.subCategory);
     formData.append("description", data.details);
-    formData.append("attachments[]", "1");
-    formData.append("brandId", "1");
+
+    if (images && images.length > 0) {
+      const attachmentIds = [];
+
+      // Upload and get attachment IDs for each image
+      for (const image of images) {
+        try {
+          const attachmentId = await uploadImageAndGetId(image);
+          attachmentIds.push(attachmentId);
+        } catch (error) {
+          setProcessing(false);
+          toast.error("Failed to upload images", { duration: 1000 });
+          return;
+        }
+      }
+
+      formData.append("attachments[]", attachmentIds);
+    }
 
     medicareApi
       .post("/product", formData)
       .then((response) => {
-        toast.success("Product is added", { duration: 3000 });
-        // router.push("/restaurant/food");
+        // toast.success("Product is added", { duration: 1000 });
+        resetAllValue();
+        setTimeout(() => {
+          setProcessing(false);
+          router.push("/admin/products");
+        }, 1000);
       })
       .catch((error) => {
         setProcessing(false);
@@ -193,8 +228,8 @@ const AddProduct = () => {
     setValue("subCategory", null);
     setSelectedSubCategory(null);
 
-    setPreviewImages([])
-    setImages([])
+    setPreviewImages([]);
+    setImages([]);
 
     reset({
       name: null,
@@ -243,23 +278,6 @@ const AddProduct = () => {
                 </div>
               </div>
 
-              {/* <div>
-                <label
-                  htmlFor="category"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Category <span className="text-red-600">*</span>
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="category"
-                    name="category"
-                    type="text"
-                    autoComplete="category"
-                    className="w-full px-4 py-2 text-base border border-gray-300 rounded focus:outline-primary focus:ring-primary focus:border-primary"
-                  />
-                </div>
-              </div> */}
               <div>
                 <label
                   htmlFor="category"
@@ -294,24 +312,6 @@ const AddProduct = () => {
             </div>
 
             <div className="grid grid-cols-1 mt-8 md:grid-cols-2 gap-x-6 gap-y-8">
-              {/* <div>
-                <label
-                  htmlFor="category"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Sub Category <span className="text-red-600">*</span>
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="category"
-                    name="category"
-                    type="text"
-                    autoComplete="category"
-                    className="w-full px-4 py-2 text-base border border-gray-300 rounded focus:outline-primary focus:ring-primary focus:border-primary"
-                  />
-                </div>
-              </div> */}
-
               <div>
                 <label
                   htmlFor="subCategory"
@@ -329,7 +329,7 @@ const AddProduct = () => {
                         : false
                     }
                     getOptionValue={(item) => item.id}
-                    getOptionLabel={(item) => `${item?.title}`}
+                    getOptionLabel={(item) => `${item?.name}`}
                     isClearable={true}
                     isLoading={subCategoryLoading}
                     placeholder={
@@ -402,14 +402,6 @@ const AddProduct = () => {
               </div>
             </div>
           </div>
-          {/* <div className="flex flex-row-reverse items-center px-4 py-1 mb-3 sm:px-6">
-            <button
-              type="submit"
-              className="block mt-4 rounded-md bg-[#464e6e] px-6 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#464e6e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Submit
-            </button>
-          </div> */}
           <div className="flex items-center justify-end gap-x-6 px-4 py-4 sm:px-8 mt-4">
             <button
               type="button"

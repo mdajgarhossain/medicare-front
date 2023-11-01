@@ -3,6 +3,7 @@ import TheMenu from "@/components/common/table/TheMenu";
 import DeleteProductModal from "@/components/modal/DeleteProductModal";
 import { getBaseParams } from "@/utils/base-params";
 import { medicareApi } from "@/utils/http";
+import DemoImage from "public/images/demo-product-images/demoImage.jpg";
 import {
   DeleteActiveIcon,
   DeleteInactiveIcon,
@@ -28,53 +29,17 @@ const AllProducts = () => {
     limit: 10,
   });
   const [thePage, setThePage] = useState(1);
-  const [thePerPage, setThePerPage] = useState(10);
+  const [thePerPage, setThePerPage] = useState(60);
   const [veryFirstLoad, setVeryFirstLoad] = useState(true);
   const [isDataLoading, setIsDataLoading] = useState(false);
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: "Product 1",
-      image: "images/new-products/product-1.jpeg",
-      detailsLink: "/product/1", // Replace with actual product details link
-    },
-    {
-      id: 2,
-      name: "Product 2",
-      image: "images/new-products/product-2.jpeg",
-      detailsLink: "/product/2", // Replace with actual product details link
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      image: "images/new-products/product-3.jpeg",
-      detailsLink: "/product/3", // Replace with actual product details link
-    },
-    {
-      id: 4,
-      name: "Product 4",
-      image: "images/new-products/product-4.jpeg",
-      detailsLink: "/product/3", // Replace with actual product details link
-    },
-    {
-      id: 5,
-      name: "Product 5",
-      image: "images/new-products/product-5.jpeg",
-      detailsLink: "/product/3", // Replace with actual product details link
-    },
-    {
-      id: 6,
-      name: "Product 6",
-      image: "images/new-products/product-6.jpeg",
-      detailsLink: "/product/3", // Replace with actual product details link
-    },
-  ]);
+  const [products, setProducts] = useState([]);
 
   // Table columns attributes.
   let columns = [
-    { title: "ID", slug: "id", sorting: true },
+    { title: "Image", slug: "image", sorting: false },
     { title: "Name", slug: "name", sorting: true },
     { title: "Category", slug: "category", sorting: true },
+    { title: "Sub Category", slug: "subCategory", sorting: true },
   ];
 
   function handlePagination(data) {
@@ -113,10 +78,9 @@ const AllProducts = () => {
   function fetchProduct(page = thePage, searchQuery = "") {
     setIsDataLoading(true);
     let params = getBaseParams(router, thePerPage, page);
-    // if (searchInput) {
-    //   params = { ...params, query: searchInput };
-    // }
-    // params.type = "product";
+    params.sortDirection = "desc";
+    params.include =
+      "product.categories,product.attachments,product.subcategory";
 
     medicareApi
       .get("/product", {
@@ -161,13 +125,22 @@ const AllProducts = () => {
   /**
    * Modal close emit
    * Common for all typeof modal.
-  */
+   */
   function modalCloseEmit(data) {
     setModals((prevState) => ({
       ...prevState,
       [data.modalName]: false,
     }));
   }
+
+  // Populate Image to table
+  const getImage = (url, image) => {
+    if (url && image) {
+      return `${url}${image}`;
+    } else {
+      return DemoImage.src;
+    }
+  };
 
   return (
     <Fragment>
@@ -248,13 +221,27 @@ const AllProducts = () => {
                       {products?.map((item, id) => (
                         <tr key={item.id}>
                           <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                            {item.id}
+                            <img
+                              src={getImage(
+                                process.env.NEXT_PUBLIC_IMAGE_BASE_URL,
+                                item?.attachments?.data[0]?.src
+                              )}
+                              alt="product"
+                              className="object-contain w-14 h-14"
+                            />
                           </td>
                           <td className="whitespace-normal px-3 py-4 text-sm text-gray-500">
                             {item.name}
                           </td>
                           <td className="whitespace-normal px-3 py-4 text-sm text-gray-500">
-                            {item.category ?? "-"}
+                            {item?.categories?.data?.length
+                              ? item.categories.data[0].name
+                              : "-"}
+                          </td>
+                          <td className="whitespace-normal px-3 py-4 text-sm text-gray-500">
+                            {item?.subcategory?.name
+                              ? item.subcategory.name
+                              : "-"}
                           </td>
                           <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-center text-sm font-medium sm:pr-6">
                             <TheMenu
@@ -329,110 +316,6 @@ const AllProducts = () => {
                     </tbody>
                   </table>
                 )}
-                {/* <table className=" min-w-full divide-y divide-gray-300">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      {columns?.map((column) => (
-                        <th
-                          key={column?.slug}
-                          scope="col"
-                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                        >
-                          {column?.title}
-                        </th>
-                      ))}
-                      <th
-                        scope="col"
-                        className="relative py-3.5 pl-3 pr-4 sm:pr-6 text-sm font-semibold"
-                      >
-                        Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200 bg-white">
-                    {products?.map((item, id) => (
-                      <tr key={item.id}>
-                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                          {item.id}
-                        </td>
-                        <td className="whitespace-normal px-3 py-4 text-sm text-gray-500">
-                          {item.name}
-                        </td>
-                        <td className="whitespace-normal px-3 py-4 text-sm text-gray-500">
-                          {item.category ?? "-"}
-                        </td>
-                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-center text-sm font-medium sm:pr-6">
-                          <TheMenu
-                            strategy={item.length < 3 ? "fixed" : "absolute"}
-                          >
-                            <Menu.Items className=" z-50 absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                              <div className="px-1 py-1 ">
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        goToEdit(item);
-                                      }}
-                                      className={`${
-                                        active
-                                          ? "bg-violet-500 text-white"
-                                          : "text-gray-900"
-                                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                                    >
-                                      {active ? (
-                                        <EditActiveIcon
-                                          className="mr-2 h-5 w-5"
-                                          aria-hidden="true"
-                                        />
-                                      ) : (
-                                        <EditInactiveIcon
-                                          className="mr-2 h-5 w-5"
-                                          aria-hidden="true"
-                                        />
-                                      )}
-                                      Edit
-                                    </button>
-                                  )}
-                                </Menu.Item>
-                              </div>
-                              <div className="px-1 py-1">
-                                <Menu.Item>
-                                  {({ active }) => (
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        gotToDelete(item);
-                                      }}
-                                      className={`${
-                                        active
-                                          ? "bg-violet-500 text-white"
-                                          : "text-gray-900"
-                                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                                    >
-                                      {active ? (
-                                        <DeleteActiveIcon
-                                          className="mr-2 h-5 w-5 text-violet-400"
-                                          aria-hidden="true"
-                                        />
-                                      ) : (
-                                        <DeleteInactiveIcon
-                                          className="mr-2 h-5 w-5 text-violet-400"
-                                          aria-hidden="true"
-                                        />
-                                      )}
-                                      Delete
-                                    </button>
-                                  )}
-                                </Menu.Item>
-                              </div>
-                            </Menu.Items>
-                          </TheMenu>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table> */}
               </div>
             </div>
           </div>

@@ -14,27 +14,19 @@ const EditProduct = () => {
   const router = useRouter();
   const [theProduct, setTheProduct] = useState({});
 
-  // Category states
-
   useEffect(() => {
     if (router.query?.id !== undefined) {
-      // getCategory();
       getProduct(router.query?.id);
     }
   }, [router]);
 
-  const [categories, setCategories] = useState([
-    { id: 1, title: "E-Sell" },
-    { id: 2, title: "Physical" },
-  ]);
+  // Category states
+  const [categories, setCategories] = useState([]);
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   // Sub category states
-  const [subCategories, setSubCategories] = useState([
-    { id: 1, title: "Test 1" },
-    { id: 2, title: "Test 2" },
-  ]);
+  const [subCategories, setSubCategories] = useState([]);
   const [subCategoryLoading, setSubCategoryLoading] = useState(false);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
 
@@ -64,34 +56,42 @@ const EditProduct = () => {
     resolver: yupResolver(schema),
   });
 
-  // useEffect(() => {
-  //   getCategory();
-  // }, [router]);
+  useEffect(() => {
+    getCategory();
+  }, []);
 
-  // useEffect(() => {
-  //   getSubCategory();
-  // }, [router]);
+  useEffect(() => {
+    if (selectedCategory?.id) {
+      getSubCategory(selectedCategory.id);
+    }
+  }, [selectedCategory]);
 
   function getProduct(id) {
     medicareApi
-      .get(`/product/${id}`)
+      .get(
+        `/product/${id}?include=product.categories,product.attachments,product.subcategory`
+      )
       .then((response) => {
-        let product = response.data.product;
+        let product = response.data;
         setTheProduct(product);
 
         // set react form data (default value).
-        setValue("name", theProduct.name);
-        setValue("category", theProduct.category?.id);
-        setValue("subCategory", theProduct.subCategory?.id);
-        setValue("details", theProduct.details);
+        const category = product?.categories?.data.length
+          ? product?.categories.data[0]
+          : {};
+        console.log({ category });
+        setValue("name", product.name);
+        setSelectedCategory(category);
+        setSelectedSubCategory(product.subcategory);
+        setValue("details", product.description);
 
         // if(product?.image?.path && product?.image?.file) {
         //   setImageUrl(`${process.env.NEXT_PUBLIC_IMAGE_CDN}${courseProps?.image?.path}${courseProps?.image?.file}`)
         // }
 
-        if (theProduct?.image?.src) {
-          setImageUrl(`${theProduct?.image?.src}`);
-        }
+        // if (theProduct?.image?.src) {
+        //   setImageUrl(`${theProduct?.image?.src}`);
+        // }
       })
       .catch((error) => {
         if (error.response?.data?.type === "ValidationException") {
@@ -117,14 +117,14 @@ const EditProduct = () => {
    * Retrieve categories.
    */
   function getCategory() {
-    dokaneApi
-      .get("/restaurant/food-categories", {
+    medicareApi
+      .get("/category", {
         params: {
           limit: 60,
         },
       })
       .then((response) => {
-        setCategories(response.data.food_categories);
+        setCategories(response.data.data);
         setCategoryLoading(false);
       })
       .catch((error) => {
@@ -135,15 +135,15 @@ const EditProduct = () => {
   /**
    * Retrieve sub categories.
    */
-  function getSubCategory() {
-    dokaneApi
-      .get("/restaurant/food-categories", {
+  function getSubCategory(categoryId) {
+    medicareApi
+      .get(`/subcategory/by/${categoryId}`, {
         params: {
           limit: 60,
         },
       })
       .then((response) => {
-        setSubCategories(response.data.food_categories);
+        setSubCategories(response.data.data);
         setSubCategoryLoading(false);
       })
       .catch((error) => {
@@ -155,11 +155,13 @@ const EditProduct = () => {
    * Set category.
    */
   function handleCategory(data) {
+    console.log({ data });
     setSelectedCategory(data);
 
     // Revalidate the category.
     setTimeout(() => {
       trigger("category");
+      setSelectedSubCategory(null);
     }, 500);
   }
 
@@ -207,18 +209,22 @@ const EditProduct = () => {
   function editProduct(data) {
     setProcessing(true);
     let formData = new FormData();
+    // formData.append("name", data.name);
+    // formData.append("categoryId", data.category);
+    // formData.append("subCategoryId", data.subCategory);
+    // formData.append("details", data.details);
+    // formData.append("image", data.images[0]);
+
     formData.append("name", data.name);
-    formData.append("categoryId", data.category);
-    formData.append("subCategoryId", data.subCategory);
-    formData.append("details", data.details);
-    formData.append("image", data.images[0]);
+    formData.append("categories[]", data.category);
+    formData.append("subcategoryId", data.subCategory);
+    formData.append("description", data.details);
 
     medicareApi
-      .put(`/product/${theProduct?.id}`, formData)
+      .patch(`/product/${theProduct?.id}`, formData)
       .then((response) => {
         toast.success("Product is updated", { duration: 3000 });
-        resetAllValue();
-        // router.push("/restaurant/food");
+        router.push("/admin/products");
       })
       .catch((error) => {
         setProcessing(false);
@@ -287,24 +293,6 @@ const EditProduct = () => {
                   )}
                 </div>
               </div>
-
-              {/* <div>
-                <label
-                  htmlFor="category"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Category <span className="text-red-600">*</span>
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="category"
-                    name="category"
-                    type="text"
-                    autoComplete="category"
-                    className="w-full px-4 py-2 text-base border border-gray-300 rounded focus:outline-primary focus:ring-primary focus:border-primary"
-                  />
-                </div>
-              </div> */}
               <div>
                 <label
                   htmlFor="category"
@@ -322,7 +310,7 @@ const EditProduct = () => {
                         : false
                     }
                     getOptionValue={(item) => item.id}
-                    getOptionLabel={(item) => `${item?.title}`}
+                    getOptionLabel={(item) => `${item?.name}`}
                     isClearable={true}
                     isLoading={categoryLoading}
                     placeholder={
@@ -339,24 +327,6 @@ const EditProduct = () => {
             </div>
 
             <div className="grid grid-cols-1 mt-8 md:grid-cols-2 gap-x-6 gap-y-8">
-              {/* <div>
-                <label
-                  htmlFor="category"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Sub Category <span className="text-red-600">*</span>
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="category"
-                    name="category"
-                    type="text"
-                    autoComplete="category"
-                    className="w-full px-4 py-2 text-base border border-gray-300 rounded focus:outline-primary focus:ring-primary focus:border-primary"
-                  />
-                </div>
-              </div> */}
-
               <div>
                 <label
                   htmlFor="subCategory"
@@ -374,7 +344,7 @@ const EditProduct = () => {
                         : false
                     }
                     getOptionValue={(item) => item.id}
-                    getOptionLabel={(item) => `${item?.title}`}
+                    getOptionLabel={(item) => `${item?.name}`}
                     isClearable={true}
                     isLoading={subCategoryLoading}
                     placeholder={
@@ -447,14 +417,6 @@ const EditProduct = () => {
               </div>
             </div>
           </div>
-          {/* <div className="flex flex-row-reverse items-center px-4 py-1 mb-3 sm:px-6">
-            <button
-              type="submit"
-              className="block mt-4 rounded-md bg-[#464e6e] px-6 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#464e6e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Submit
-            </button>
-          </div> */}
           <div className="flex items-center justify-end gap-x-6 px-4 py-4 sm:px-8 mt-4">
             <button
               type="submit"
