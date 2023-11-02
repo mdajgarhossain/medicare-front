@@ -419,6 +419,13 @@ const EditProduct = () => {
           </div>
           <div className="flex items-center justify-end gap-x-6 px-4 py-4 sm:px-8 mt-4">
             <button
+              type="button"
+              className="text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100 border-2 py-2 px-4 rounded"
+              onClick={() => router.push("/admin/products")}
+            >
+              Back
+            </button>
+            <button
               type="submit"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               disabled={processing}

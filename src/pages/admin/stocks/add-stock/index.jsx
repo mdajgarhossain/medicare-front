@@ -1,27 +1,25 @@
+import SearchSelect from "@/components/common/SearchSelect";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { XCircleIcon } from "@heroicons/react/outline";
 import { medicareApi } from "@/utils/http";
 import toast from "react-hot-toast";
 
-const EditCategory = () => {
+const AddStock = () => {
   const [processing, setProcessing] = useState(false);
   const router = useRouter();
-  const [theCategory, setTheCategory] = useState({});
-
-  useEffect(() => {
-    if (router.query?.id !== undefined) {
-      // getCategory();
-      getCategory(router.query?.id);
-    }
-  }, [router]);
+  // Product states
+  const [products, setProducts] = useState([]);
+  const [categoryLoading, setCategoryLoading] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const schema = yup.object().shape({
-    name: yup.string().required("Name is required"),
-    description: yup.string(),
+    productId: yup.string().required("Product is required"),
+    quantity: yup.string().required("Quantity is required"),
+    purchasePrice: yup.string().required("Purchase price is required"),
+    sellingPrice: yup.string().required("Selling price is required"),
   });
 
   // Form validation hooks
@@ -38,55 +36,65 @@ const EditCategory = () => {
     resolver: yupResolver(schema),
   });
 
-  // Fetch category data
-  function getCategory(id) {
-    medicareApi
-      .get(`/category/${id}`)
-      .then((response) => {
-        let category = response.data;
-        setTheCategory(category);
+  useEffect(() => {
+    getProducts();
+  }, []);
 
-        // set react form data (default value).
-        setValue("name", category.name);
-        setValue("description", category.description);
+  useEffect(() => {
+    setValue("productId", selectedProduct?.id ?? null);
+  }, [selectedProduct]);
+
+  /**
+   * Retrieve products.
+   */
+  function getProducts() {
+    medicareApi
+      .get("/product", {
+        params: {
+          limit: 60,
+        },
+      })
+      .then((response) => {
+        setProducts(response.data.data);
+        setCategoryLoading(false);
       })
       .catch((error) => {
-        if (error.response?.data?.type === "ValidationException") {
-          toast.error(error?.response?.data?.errors[0]?.message, {
-            duration: 3000,
-          });
-        } else {
-          toast.error(error?.response?.data?.message, {
-            duration: 3000,
-          });
-        }
+        setCategoryLoading(false);
       });
   }
 
   /**
-   * Add category item.
+   * Set product.
    */
-  function editCategory(data) {
+  function selectProduct(data) {
+    setSelectedProduct(data);
+
+    // Revalidate the category.
+    setTimeout(() => {
+      trigger("productId");
+    }, 500);
+  }
+
+  /**
+   * Add stock.
+   */
+  async function addStock(data) {
     setProcessing(true);
     let formData = new FormData();
-
-    // Define the list of fields you want to include in the formData
-    const fieldsToInclude = ["name", "description"];
-
-    // Use a loop to append valid and non-empty fields to formData
-    fieldsToInclude.forEach((field) => {
-      if (data[field]) {
-        formData.append(field, data[field]);
-      }
-    });
+    formData.append("productId", data.productId);
+    formData.append("quantity", data.quantity);
+    formData.append("purchasePrice", data.purchasePrice);
+    formData.append("sellingPrice", data.sellingPrice);
+    formData.append("status", "In-Stock");
 
     medicareApi
-      .patch(`/category/${theCategory?.id}`, formData)
+      .post("/stock", formData)
       .then((response) => {
-        // toast.success("Category is updated", { duration: 3000 });
+        // toast.success("Stock is added", { duration: 1000 });
+        resetAllValue();
         setTimeout(() => {
           setProcessing(false);
-          router.push("/admin/categories");
+          router.push("/admin/stocks");
         }, 1000);
       })
       .catch((error) => {
@@ -101,9 +109,13 @@ const EditCategory = () => {
    * Reset all data form inputs.
    */
   function resetAllValue() {
+    setSelectedProduct(null);
+
+
     reset({
-      name: null,
-      description: null,
+      quantity: null,
+      purchasePrice: null,
+      sellingPrice: null
     });
   }
 
@@ -112,7 +124,7 @@ const EditCategory = () => {
       <div className="grid p-4 mt-2 gap-y-8">
         <form className="bg-white shadow-sm ring-1 ring-gray-900/5">
           <h1 className="px-4 py-2 sm:py-2 sm:px-6 mt-4 text-lg font-semibold leading-6 text-gray-900">
-            Edit Category
+            Add Stock
           </h1>
           <span className="px-4 sm:px-6">
             The fields labels marked with
@@ -123,43 +135,110 @@ const EditCategory = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8">
               <div>
                 <label
-                  htmlFor="name"
+                  htmlFor="product"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Name <span className="text-red-600">*</span>
+                  Select Product <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
-                  <input
-                    {...register("name")}
-                    type="text"
-                    name="name"
-                    id="name"
-                    autoComplete="given-name"
-                    className="w-full px-4 py-2 text-base border border-gray-300 rounded focus:outline-primary focus:ring-primary focus:border-primary"
+                  <SearchSelect
+                    options={products}
+                    onChange={(data) => selectProduct(data)}
+                    value={
+                      JSON.stringify(selectedProduct) !== "{}"
+                        ? selectedProduct
+                        : false
+                    }
+                    getOptionValue={(item) => item.id}
+                    getOptionLabel={(item) => `${item?.name}`}
+                    isClearable={true}
+                    isLoading={categoryLoading}
+                    placeholder={
+                      categoryLoading ? "Fetching data" : "Select Product"
+                    }
                   />
-                  {errors.name && (
+                  {errors.productId && (
                     <p className="text-sm text-red-500">
-                      {errors.name?.message}
+                      {errors.productId?.message}
                     </p>
                   )}
                 </div>
               </div>
+
               <div>
                 <label
-                  htmlFor="description"
+                  htmlFor="quantity"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Description
+                  Quantity <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <input
-                    {...register("description")}
-                    id="description"
-                    name="description"
-                    type="text"
-                    autoComplete="description"
+                    {...register("quantity")}
+                    type="number"
+                    name="quantity"
+                    id="quantity"
+                    autoComplete="given-name"
+                    min={1}
                     className="w-full px-4 py-2 text-base border border-gray-300 rounded focus:outline-primary focus:ring-primary focus:border-primary"
                   />
+                  {errors.quantity && (
+                    <p className="text-sm text-red-500">
+                      {errors.quantity?.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 mt-8 md:grid-cols-2 gap-x-6 gap-y-8">
+              <div>
+                <label
+                  htmlFor="purchasePrice"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Purchase Price <span className="text-red-600">*</span>
+                </label>
+                <div className="mt-2">
+                  <input
+                    {...register("purchasePrice")}
+                    type="number"
+                    name="purchasePrice"
+                    id="purchasePrice"
+                    min={0}
+                    autoComplete="given-name"
+                    className="w-full px-4 py-2 text-base border border-gray-300 rounded focus:outline-primary focus:ring-primary focus:border-primary"
+                  />
+                  {errors.purchasePrice && (
+                    <p className="text-sm text-red-500">
+                      {errors.purchasePrice?.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="sellingPrice"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Selling Price <span className="text-red-600">*</span>
+                </label>
+                <div className="mt-2">
+                  <input
+                    {...register("sellingPrice")}
+                    type="number"
+                    name="sellingPrice"
+                    id="sellingPrice"
+                    min={0}
+                    autoComplete="given-name"
+                    className="w-full px-4 py-2 text-base border border-gray-300 rounded focus:outline-primary focus:ring-primary focus:border-primary"
+                  />
+                  {errors.sellingPrice && (
+                    <p className="text-sm text-red-500">
+                      {errors.sellingPrice?.message}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -168,15 +247,16 @@ const EditCategory = () => {
             <button
               type="button"
               className="text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100 border-2 py-2 px-4 rounded"
-              onClick={() => router.push("/admin/categories")}
+              onClick={resetAllValue}
             >
-              Back
+              Reset
             </button>
+
             <button
               type="submit"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               disabled={processing}
-              onClick={handleSubmit(editCategory)}
+              onClick={handleSubmit(addStock)}
             >
               {processing ? (
                 <div className="flex items-center">
@@ -199,7 +279,7 @@ const EditCategory = () => {
                   Processing...
                 </div>
               ) : (
-                "Update"
+                "Submit"
               )}
             </button>
           </div>
@@ -209,4 +289,4 @@ const EditCategory = () => {
   );
 };
 
-export default EditCategory;
+export default AddStock;

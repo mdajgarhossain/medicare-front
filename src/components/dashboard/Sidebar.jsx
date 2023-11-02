@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HomeIcon, CubeIcon, FolderIcon, TagIcon, UserIcon } from '@heroicons/react/solid';
+import { HomeIcon, CubeIcon, FolderIcon, TagIcon, UserIcon, UsersIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 
 const Sidebar = () => {
@@ -15,7 +15,8 @@ const Sidebar = () => {
     { icon: <CubeIcon className="w-6 h-6 mr-2" />, text: 'Products', link: '/admin/products' },
     { icon: <FolderIcon className="w-6 h-6 mr-2" />, text: 'Categories', link: '/admin/categories' },
     { icon: <TagIcon className="w-6 h-6 mr-2" />, text: 'Subcategories', link: '/admin/sub-categories' },
-    { icon: <UserIcon className="w-6 h-6 mr-2" />, text: 'Users', link: '/' },
+    { icon: <CubeIcon className="w-6 h-6 mr-2" />, text: 'Stock', link: '/admin/stocks' },
+    { icon: <UsersIcon className="w-6 h-6 mr-2" />, text: 'Customers', link: '/' },
   ];
 
   return (
