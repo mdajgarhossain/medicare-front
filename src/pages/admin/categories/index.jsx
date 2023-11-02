@@ -2,6 +2,7 @@ import Pagination from "@/components/common/table/Pagination";
 import TheMenu from "@/components/common/table/TheMenu";
 import DeleteCategoryModal from "@/components/modal/DeleteCategoryModal";
 import { getBaseParams } from "@/utils/base-params";
+import { DEFAULT_CATEGORY } from "@/utils/constants";
 import { medicareApi } from "@/utils/http";
 import {
   DeleteActiveIcon,
@@ -25,44 +26,13 @@ const AllCategories = () => {
     from: 1,
     to: 10,
     total: 13,
-    limit: 10,
+    limit: 60,
   });
   const [thePage, setThePage] = useState(1);
-  const [thePerPage, setThePerPage] = useState(10);
+  const [thePerPage, setThePerPage] = useState(60);
   const [veryFirstLoad, setVeryFirstLoad] = useState(true);
   const [isDataLoading, setIsDataLoading] = useState(false);
-  const [categories, setCategories] = useState([
-    {
-      id: 1,
-      name: "Product 1",
-      detailsLink: "/product/1", // Replace with actual product details link
-    },
-    {
-      id: 2,
-      name: "Product 2",
-      detailsLink: "/product/2", // Replace with actual product details link
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      detailsLink: "/product/3", // Replace with actual product details link
-    },
-    {
-      id: 4,
-      name: "Product 4",
-      detailsLink: "/product/3", // Replace with actual product details link
-    },
-    {
-      id: 5,
-      name: "Product 5",
-      detailsLink: "/product/3", // Replace with actual product details link
-    },
-    {
-      id: 6,
-      name: "Product 6",
-      detailsLink: "/product/3", // Replace with actual product details link
-    },
-  ]);
+  const [categories, setCategories] = useState([]);
 
   // Table columns attributes.
   let columns = [
@@ -116,7 +86,7 @@ const AllCategories = () => {
         params: params,
       })
       .then((response) => {
-        setCategories(response?.data?.data);
+        setCategories([DEFAULT_CATEGORY, ...response?.data?.data]);
         setThePagination(response.data?.pagination);
         setIsDataLoading(false);
       })
@@ -154,7 +124,7 @@ const AllCategories = () => {
   /**
    * Modal close emit
    * Common for all typeof modal.
-  */
+   */
   function modalCloseEmit(data) {
     setModals((prevState) => ({
       ...prevState,

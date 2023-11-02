@@ -120,10 +120,10 @@ const EditStock = () => {
     formData.append("quantity", data.quantity);
     formData.append("purchasePrice", data.purchasePrice);
     formData.append("sellingPrice", data.sellingPrice);
-    formData.append("status", "In-Stock");
+    // formData.append("status", "In-Stock");
 
     medicareApi
-      .patch("/stock", formData)
+      .patch(`/stock/${theStock?.id}`, formData)
       .then((response) => {
         // toast.success("Stock is updated", { duration: 1000 });
         setTimeout(() => {
