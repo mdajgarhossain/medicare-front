@@ -3,18 +3,15 @@ import { medicareApi } from "@/utils/http";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import DemoImage from "public/images/demo-product-images/demoImage.jpg";
 
 const ProductDetails = () => {
   const { cart, addToCart } = useCart();
   const router = useRouter();
   const [quantity, setQuantity] = useState(1);
-  const [theProduct, setTheProduct] = useState({
-    id: router.query?.id,
-    name: "Sample Product",
-    price: 19.99,
-    description: "This is a sample product description.",
-    image: "images/demo-product-images/demoImage.jpg",
-  });
+  const [theProduct, setTheProduct] = useState({});
+
+  console.log({theProduct});
 
   useEffect(() => {
     if (router.query?.id !== undefined) {
@@ -24,9 +21,11 @@ const ProductDetails = () => {
 
   function getProduct(id) {
     medicareApi
-      .get(`/product/${id}`)
+      .get(
+        `/product/${id}?include=product.categories,product.subcategory,product.stocks,product.attachments`
+      )
       .then((response) => {
-        let product = response.data.product;
+        let product = response.data;
         setTheProduct(product);
       })
       .catch((error) => {
@@ -64,20 +63,33 @@ const ProductDetails = () => {
     // });
   };
 
+  // Populate Image
+  const getImage = (url, image) => {
+    if (url && image) {
+      return `${url}${image}`;
+    } else {
+      return DemoImage.src;
+    }
+  };
+
   return (
     <div className="max-w-2xl mx-auto my-10 p-6 rounded-lg shadow-lg bg-gray-100">
       <div className="flex gap-3">
-        <div className="w-1/3">
+        <div className="w-1/2">
           <img
-            src={theProduct.image}
+            src={getImage(
+              process.env.NEXT_PUBLIC_IMAGE_BASE_URL,
+              theProduct?.attachments?.data[0]?.src
+            )}
             alt={theProduct.name}
             className="object-cover w-full h-full rounded-lg"
           />
         </div>
         <div className="w-2/3 p-6">
-          <h1 className="text-3xl font-bold mb-4">{theProduct.name}</h1>
-          <p className="text-gray-600 mb-4">{theProduct.description}</p>
-          <p className="text-2xl font-bold">${theProduct.price.toFixed(2)}</p>
+          <h1 className="text-3xl font-semibold mb-4">{theProduct.name}</h1>
+          <p className="text-gray-600 mb-2"><span className="font-medium">Description: </span> {theProduct.description ?? "N/A"}</p>
+          <p className="text-gray-600 mb-2"><span className="font-medium">Stock: </span> {theProduct.stock ?? ""}</p>
+          <p className="text-gray-600 mb-2"><span className="font-medium">Price: </span>${theProduct.price}</p>
           <div className="">
             <label htmlFor="quantity" className="block mt-4 text-lg">
               Quantity:

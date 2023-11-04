@@ -2,7 +2,6 @@ import Pagination from "@/components/common/table/Pagination";
 import TheMenu from "@/components/common/table/TheMenu";
 import DeleteCategoryModal from "@/components/modal/DeleteCategoryModal";
 import { getBaseParams } from "@/utils/base-params";
-import { DEFAULT_CATEGORY } from "@/utils/constants";
 import { medicareApi } from "@/utils/http";
 import {
   DeleteActiveIcon,
@@ -86,7 +85,7 @@ const AllCategories = () => {
         params: params,
       })
       .then((response) => {
-        setCategories([DEFAULT_CATEGORY, ...response?.data?.data]);
+        setCategories(response?.data?.data);
         setThePagination(response.data?.pagination);
         setIsDataLoading(false);
       })

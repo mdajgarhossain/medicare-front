@@ -1,5 +1,6 @@
 import { useCart } from "@/context/CartContext";
 import React from "react";
+import DemoImage from "public/images/demo-product-images/demoImage.jpg";
 
 const shippingCost = 10; // Define the constant shipping cost
 
@@ -8,12 +9,26 @@ const Cart = () => {
     useCart();
 
   // Calculate the total price of all items in the cart
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  // const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const total = cart.reduce((acc, item) => {
+    const price = item.price || 0; // Use 0 as a default price if undefined
+    const quantity = item.quantity || 0; // Use 0 as a default quantity if undefined
+    return acc + price * quantity;
+  }, 0);
 
   // Function to handle the checkout
   const checkout = () => {
     // Implement your checkout logic here
     // This function will be called when the "Checkout" button is clicked
+  };
+
+  // Populate Image
+  const getImage = (url, image) => {
+    if (url && image) {
+      return `${url}${image}`;
+    } else {
+      return DemoImage.src;
+    }
   };
 
   return (
@@ -26,15 +41,20 @@ const Cart = () => {
             className="flex items-center space-x-4 border-b pb-4"
           >
             <img
-              src={item.image}
+              src={getImage(
+                process.env.NEXT_PUBLIC_IMAGE_BASE_URL,
+                item?.attachments?.data[0]?.src
+              )}
               alt={item.name}
               className="w-16 h-16 object-cover rounded"
             />
             <div className="flex-grow">
               <p className="text-lg font-semibold">{item.name}</p>
               <p className="text-gray-600">
-                Quantity: {item.quantity} x ${item.price.toFixed(2)} = $
-                {(item.quantity * item.price).toFixed(2)}
+                {/* Quantity: {item.quantity} x ${item.price.toFixed(2)} = $
+                {(item.quantity * item.price).toFixed(2)} */}
+                Quantity: {item.quantity} x ${item.price?.toFixed(2) || 0} = $
+                {(item.quantity * (item.price || 0)).toFixed(2)}
               </p>
             </div>
             <div className="flex items-center space-x-2">
