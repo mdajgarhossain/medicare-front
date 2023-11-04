@@ -79,7 +79,7 @@ const EditProduct = () => {
         const category = product?.categories?.data.length
           ? product?.categories.data[0]
           : {};
-        console.log({ category });
+        console.log({ product });
         setValue("name", product.name);
         setSelectedCategory(category);
         setSelectedSubCategory(product.subcategory);
@@ -88,6 +88,8 @@ const EditProduct = () => {
         // if(product?.image?.path && product?.image?.file) {
         //   setImageUrl(`${process.env.NEXT_PUBLIC_IMAGE_CDN}${courseProps?.image?.path}${courseProps?.image?.file}`)
         // }
+
+        if(product?.attachments?.data[0]?.src) setImageUrl(`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${product?.attachments?.data[0]?.src}`)
 
         // if (theProduct?.image?.src) {
         //   setImageUrl(`${theProduct?.image?.src}`);
