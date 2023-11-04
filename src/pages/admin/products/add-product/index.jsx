@@ -29,7 +29,7 @@ const AddProduct = () => {
   const schema = yup.object().shape({
     name: yup.string().required("Name is required"),
     category: yup.string().required("Category is required"),
-    subCategory: yup.string().required("Sub Category is required"),
+    subCategory: yup.string(),
     details: yup.string(),
   });
 
@@ -57,7 +57,7 @@ const AddProduct = () => {
 
   useEffect(() => {
     setValue("category", selectedCategory?.id ?? null);
-    setValue("subCategory", selectedSubCategory?.id ?? null);
+    setValue("subCategory", selectedSubCategory?.id ?? "");
     setValue("images", images);
     setValue("preview_images", previewImages);
   }, [selectedCategory, selectedSubCategory, images, previewImages]);
@@ -179,8 +179,9 @@ const AddProduct = () => {
     let formData = new FormData();
     formData.append("name", data.name);
     formData.append("categories[]", data.category);
-    formData.append("subcategoryId", data.subCategory);
     formData.append("description", data.details);
+
+    if(data.subCategory) formData.append("subcategoryId", data.subCategory);
 
     if (images && images.length > 0) {
       const attachmentIds = [];
@@ -317,7 +318,7 @@ const AddProduct = () => {
                   htmlFor="subCategory"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Sub Category <span className="text-red-600">*</span>
+                  Sub Category
                 </label>
                 <div className="mt-2">
                   <SearchSelect

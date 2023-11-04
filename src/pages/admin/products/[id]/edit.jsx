@@ -38,7 +38,7 @@ const EditProduct = () => {
   const schema = yup.object().shape({
     name: yup.string().required("Name is required"),
     category: yup.string().required("Category is required"),
-    subCategory: yup.string().required("Sub Category is required"),
+    subCategory: yup.string(),
     details: yup.string(),
   });
 
@@ -108,7 +108,7 @@ const EditProduct = () => {
 
   useEffect(() => {
     setValue("category", selectedCategory?.id ?? null);
-    setValue("subCategory", selectedSubCategory?.id ?? null);
+    setValue("subCategory", selectedSubCategory?.id ?? "");
     setValue("images", images);
     setValue("preview_images", previewImages);
   }, [selectedCategory, selectedSubCategory, images, previewImages]);
@@ -217,8 +217,9 @@ const EditProduct = () => {
 
     formData.append("name", data.name);
     formData.append("categories[]", data.category);
-    formData.append("subcategoryId", data.subCategory);
     formData.append("description", data.details);
+
+    if(data.subCategory) formData.append("subcategoryId", data.subCategory);
 
     medicareApi
       .patch(`/product/${theProduct?.id}`, formData)
@@ -332,7 +333,7 @@ const EditProduct = () => {
                   htmlFor="subCategory"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Sub Category <span className="text-red-600">*</span>
+                  Sub Category
                 </label>
                 <div className="mt-2">
                   <SearchSelect
