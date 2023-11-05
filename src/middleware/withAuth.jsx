@@ -1,9 +1,8 @@
-// This is a custom HOC for route protection
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import cookies from "@/utils/cookies";
 
-function withAuth(Component) {
+function withAuth(Component, allowedUserType = "admin") {
   return (props) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
@@ -18,7 +17,13 @@ function withAuth(Component) {
       if (!isAuthenticated) {
         router.push("/sign-in");
       } else {
-        setIsLoading(false); // Authentication check is complete
+        // Check the user type
+        if (loggedInUser.type !== allowedUserType) {
+          // Redirect to Next.js's default 404 page
+          router.push("/404");
+        } else {
+          setIsLoading(false); // Authentication check is complete
+        }
       }
     }, []);
 
