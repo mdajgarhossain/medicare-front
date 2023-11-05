@@ -171,7 +171,7 @@ const Checkout = () => {
 
       <button
         onClick={placeOrder}
-        className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 mt-4 flex items-center"
+        className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 mt-3 flex items-center"
       >
         {processing ? (
           <div className="flex items-center">
@@ -210,19 +210,6 @@ const Checkout = () => {
             </svg>
           </>
         )}
-        {/* Place Order
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 ml-2"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fillRule="evenodd"
-            d="M16.293 4.293a1 1 0 00-1.414 0L11 8.586V2a1 1 0 10-2 0v6.586l-3.293-3.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0l5-5a1 1 0 000-1.414z"
-            clipRule="evenodd"
-          />
-        </svg> */}
       </button>
     </div>
   );
