@@ -8,10 +8,12 @@ const Cart = () => {
   const { cart, removeFromCart, increaseQuantity, decreaseQuantity } =
     useCart();
 
+  console.log({ cart });
+
   // Calculate the total price of all items in the cart
   // const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const total = cart.reduce((acc, item) => {
-    const price = item.price || 0; // Use 0 as a default price if undefined
+    const price = item?.stocks?.data[0].sellingPrice || 0; // Use 0 as a default price if undefined
     const quantity = item.quantity || 0; // Use 0 as a default quantity if undefined
     return acc + price * quantity;
   }, 0);
@@ -53,8 +55,11 @@ const Cart = () => {
               <p className="text-gray-600">
                 {/* Quantity: {item.quantity} x ${item.price.toFixed(2)} = $
                 {(item.quantity * item.price).toFixed(2)} */}
-                Quantity: {item.quantity} x ${item.price?.toFixed(2) || 0} = $
-                {(item.quantity * (item.price || 0)).toFixed(2)}
+                Quantity: {item.quantity} x $
+                {item?.stocks?.data[0].sellingPrice.toFixed(2) || 0} = $
+                {(
+                  item.quantity * (item.stocks?.data[0].sellingPrice || 0)
+                ).toFixed(2)}
               </p>
             </div>
             <div className="flex items-center space-x-2">
