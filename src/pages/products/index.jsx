@@ -29,51 +29,6 @@ function Products() {
       .catch((error) => {});
   }
 
-  // useEffect(() => {
-  //   if (selectedCategory.name === "E-sell") {
-  //     setProducts([
-  //       {
-  //         id: 1,
-  //         name: "Product 1",
-  //         image: "images/new-products/product-1.jpeg",
-  //         detailsLink: "/product/1", // Replace with actual product details link
-  //       },
-  //       {
-  //         id: 2,
-  //         name: "Product 2",
-  //         image: "images/new-products/product-2.jpeg",
-  //         detailsLink: "/product/2", // Replace with actual product details link
-  //       },
-  //       {
-  //         id: 3,
-  //         name: "Product 3",
-  //         image: "images/new-products/product-3.jpeg",
-  //         detailsLink: "/product/3", // Replace with actual product details link
-  //       },
-  //       {
-  //         id: 4,
-  //         name: "Product 4",
-  //         image: "images/new-products/product-4.jpeg",
-  //         detailsLink: "/product/3", // Replace with actual product details link
-  //       },
-  //       {
-  //         id: 5,
-  //         name: "Product 5",
-  //         image: "images/new-products/product-5.jpeg",
-  //         detailsLink: "/product/3", // Replace with actual product details link
-  //       },
-  //       {
-  //         id: 6,
-  //         name: "Product 6",
-  //         image: "images/new-products/product-6.jpeg",
-  //         detailsLink: "/product/3", // Replace with actual product details link
-  //       },
-  //     ]);
-  //   }
-  // }, [selectedCategory]);
-
-  // console.log("selectedCategory", selectedCategory);
-
   /** Fetch products from api */
   const fetchProducts = (categoryId, type) => {
     let params = {
