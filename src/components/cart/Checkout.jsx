@@ -64,20 +64,19 @@ const Checkout = () => {
       .post("/order", formData)
       .then((response) => {
         console.log({ response });
-        if (response?.data?.id) {
+        if (response?.data?.url) {
+          setTimeout(() => {
+            setProcessing(false);
+            localStorage.removeItem("cart");
+            window.location.replace(response?.data?.url);
+          }, 500);
+        } else {
           setTimeout(() => {
             setProcessing(false);
             localStorage.removeItem("cart");
             window.location.replace("/order-success");
           }, 500);
         }
-
-        // resetAllValue();
-        // toast.success("Category is added", { duration: 1000 });
-        // setTimeout(() => {
-        //   setProcessing(false);
-        //   router.push("/admin/categories");
-        // }, 1000);
       })
       .catch((error) => {
         setProcessing(false);

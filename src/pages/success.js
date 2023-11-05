@@ -1,6 +1,36 @@
+import { medicareApi } from "@/utils/http";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const SuccessfulPayment = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.query?.orderId !== undefined) {
+      confirmOrder(router.query?.orderId);
+    }
+  }, [router]);
+
+  /**
+   * Confirm order.
+   */
+  function confirmOrder(id) {
+    let formData = {
+      orderStatus: "confirmed",
+      paymentStatus: "paid",
+    };
+    medicareApi
+      .patch(`/order/${id}`, formData)
+      .then((response) => {})
+      .catch((error) => {
+        setProcessing(false);
+        if (error.response?.data?.type === "ValidationException") {
+          toast.error(error?.response?.errors[0]?.message, { duration: 3000 });
+        }
+      });
+  }
+
   return (
     <>
       <section className="h-screen flex flex-col justify-center items-center">

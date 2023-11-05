@@ -10,7 +10,7 @@ const SuccessfulPayment = () => {
               <img src="/images/payment-success.svg" alt="" />
             </figure>
             <h4 className="text-[20px] leading-[28px] font-poppins mb-[6px] font-bold mt-[20px] text-[#201D1D]">
-              Your order is sucessful
+              Your order is pending.
             </h4>
             <p className="mb-[25px] text-[14px] leading-[22px] text-[#515151] text-center">
               Thank you for placing order. We will get back to you soon.
