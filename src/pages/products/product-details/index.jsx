@@ -11,8 +11,6 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [theProduct, setTheProduct] = useState({});
 
-  console.log({ theProduct });
-
   useEffect(() => {
     if (router.query?.id !== undefined) {
       getProduct(router.query?.id);
@@ -74,8 +72,6 @@ const ProductDetails = () => {
       return DemoImage.src;
     }
   };
-
-  console.log("theProduct?.stocks?.data", theProduct?.stocks?.data);
 
   return (
     <div className="max-w-2xl mx-auto my-10 p-6 rounded-lg shadow-lg bg-gray-100">
