@@ -2,7 +2,6 @@ import { medicareApi } from "@/utils/http";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import cookies from "@/utils/cookies";
@@ -11,8 +10,8 @@ import toast from "react-hot-toast";
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [processing, setProcessing] = useState(false);
-  const router = useRouter();
 
+  // Form Fields Schema
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -42,7 +41,6 @@ const SignIn = () => {
    * Sign in to acoount.
    */
   function signIn(data) {
-    console.log({ data });
     setProcessing(true);
     let formData = new FormData();
 
@@ -59,16 +57,19 @@ const SignIn = () => {
     medicareApi
       .post("/user/login", formData)
       .then((response) => {
-        console.log("response", response);
+        // Set auth data to cookies
         cookies.set("token", response?.data?.token, { path: "/", expires: "" });
         cookies.set("user_info", response?.data?.user, {
           path: "/",
           expires: "",
         });
-        toast.success("Sign in successfully", { duration: 3000 });
-        setProcessing(false);
-        // resetAllValue();
-        window.location.replace("/")
+
+        // Redirect to home page after succesfully signing in
+        setTimeout(() => {
+          setProcessing(false);
+          resetAllValue();
+          window.location.replace("/");
+        }, 500);
       })
       .catch((error) => {
         setProcessing(false);
@@ -83,8 +84,8 @@ const SignIn = () => {
    */
   function resetAllValue() {
     reset({
-      name: null,
-      email: null,
+      email: "",
+      password: "",
     });
   }
 
@@ -167,10 +168,12 @@ const SignIn = () => {
               onClick={handleSubmit(signIn)}
               disabled={processing}
               type="submit"
-              className="w-full py-2 px-4 bg-blue-500 text-white font-medium hover:bg-blue-600 rounded-md mt-4"
+              className={`w-full py-2 px-4 bg-blue-500 text-white font-medium hover:bg-blue-600 rounded-md mt-4 ${
+                processing ? "opacity-50" : ""
+              }`}
             >
               {processing ? (
-                <div className="flex items-center">
+                <div className="flex items-center justify-center">
                   <svg
                     aria-hidden="true"
                     className="w-5 h-5 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
