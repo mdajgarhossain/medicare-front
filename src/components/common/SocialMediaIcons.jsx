@@ -53,7 +53,7 @@ const SocialMediaIcons = () => {
         {loggedInUser ? (
           <button
             title="Logout"
-            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:outline-none font-medium rounded-lg text-base px-5 py-2 text-center mr-2 mb-2"
+            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:outline-none font-medium rounded-lg text-base text-center py-2 lg:px-4 px-2 lg:my-0"
             disabled={processing}
             onClick={handleLogout}
           >
