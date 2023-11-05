@@ -1,26 +1,17 @@
 import CategoryList from "@/components/product/CategoryList";
 import ProductList from "@/components/product/ProductList";
-import categories from "@/utils/categories";
-import demoCategories from "@/utils/demoCategories";
 import { medicareApi } from "@/utils/http";
 import React, { useEffect, useState } from "react";
 
 function Products() {
-  // return (
-  //   <div>Products</div>
-  // )
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  // console.log({ categories });
-
-  // console.log({products});
 
   useEffect(() => {
     getCategory();
-    fetchProducts()
+    fetchProducts();
   }, []);
-  
 
   /**
    * Retrieve categories.
@@ -87,7 +78,8 @@ function Products() {
   const fetchProducts = (categoryId, type) => {
     let params = {
       limit: 100,
-      include: "product.stocks,product.attachments,product.category,product.subcategory",
+      include:
+        "product.stocks,product.attachments,product.category,product.subcategory",
     };
     if (type === "category") params.categoryId = categoryId;
     if (type === "subcategory") params.subcategoryId = categoryId;
@@ -107,43 +99,8 @@ function Products() {
   console.log({ selectedCategory });
 
   const handleCategoryClick = (category, type) => {
-    console.log("handleCategoryClick", category, type);
     setSelectedCategory(category);
     fetchProducts(category?.id, type);
-    // Fetch products from your API based on the selected category/subcategory
-    // Update the 'products' state with the fetched data
-    // For now, you can use placeholder data
-    // const placeholderProducts = [
-    //   // { name: "Product 1" },
-    //   // { name: "Product 2" },
-    //   // { name: "Product 3" },
-
-    //   {
-    //     id: 7,
-    //     name: "Product 7",
-    //     image: "images/new-products/product-7.jpeg",
-    //     detailsLink: "/product/3", // Replace with actual product details link
-    //   },
-    //   {
-    //     id: 8,
-    //     name: "Product 8",
-    //     image: "images/new-products/product-8.jpeg",
-    //     detailsLink: "/product/3", // Replace with actual product details link
-    //   },
-    //   {
-    //     id: 9,
-    //     name: "Product 9",
-    //     image: "images/demo-product-images/demoImage.jpg",
-    //     detailsLink: "/product/3", // Replace with actual product details link
-    //   },
-    //   {
-    //     id: 10,
-    //     name: "Product 10",
-    //     image: "images/demo-product-images/demoImage.jpg",
-    //     detailsLink: "/product/3", // Replace with actual product details link
-    //   },
-    // ];
-    // setProducts(placeholderProducts);
   };
 
   return (
