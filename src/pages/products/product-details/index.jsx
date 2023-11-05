@@ -11,7 +11,7 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [theProduct, setTheProduct] = useState({});
 
-  console.log({theProduct});
+  console.log({ theProduct });
 
   useEffect(() => {
     if (router.query?.id !== undefined) {
@@ -21,11 +21,14 @@ const ProductDetails = () => {
 
   function getProduct(id) {
     medicareApi
+      // .get(
+      //   `/product/${id}?include=product.categories,product.subcategory,product.stocks,product.attachments`
+      // )
       .get(
-        `/product/${id}?include=product.categories,product.subcategory,product.stocks,product.attachments`
+        `/product?include=product.category,product.subcategory,product.stocks,product.attachments&productId=${id}`
       )
       .then((response) => {
-        let product = response.data;
+        let product = response.data.data[0];
         setTheProduct(product);
       })
       .catch((error) => {
@@ -72,6 +75,8 @@ const ProductDetails = () => {
     }
   };
 
+  console.log("theProduct?.stocks?.data", theProduct?.stocks?.data);
+
   return (
     <div className="max-w-2xl mx-auto my-10 p-6 rounded-lg shadow-lg bg-gray-100">
       <div className="flex gap-3">
@@ -87,9 +92,18 @@ const ProductDetails = () => {
         </div>
         <div className="w-2/3 p-6">
           <h1 className="text-3xl font-semibold mb-4">{theProduct.name}</h1>
-          <p className="text-gray-600 mb-2"><span className="font-medium">Description: </span> {theProduct.description ?? "N/A"}</p>
-          <p className="text-gray-600 mb-2"><span className="font-medium">Stock: </span> {theProduct.stock ?? ""}</p>
-          <p className="text-gray-600 mb-2"><span className="font-medium">Price: </span>${theProduct.price}</p>
+          <p className="text-gray-600 mb-2">
+            <span className="font-medium">Description: </span>{" "}
+            {theProduct.description ? theProduct.description : "N/A"}
+          </p>
+          <p className="text-gray-600 mb-2">
+            <span className="font-medium">Stock: </span>{" "}
+            {theProduct?.stocks?.data[0]?.quantity ?? "No Stock"}
+          </p>
+          <p className="text-gray-600 mb-2">
+            <span className="font-medium">Price: </span>$
+            {theProduct?.stocks?.data[0]?.sellingPrice ?? "0"}
+          </p>
           <div className="">
             <label htmlFor="quantity" className="block mt-4 text-lg">
               Quantity:
@@ -105,7 +119,10 @@ const ProductDetails = () => {
           <div className="mt-3">
             <button
               onClick={handleAddToCart}
-              className="bg-[#464e6e] text-white px-6 py-2 mt-4 hover:bg-[#353c57]"
+              disabled={!theProduct?.stocks?.data.length ? true : false}
+              className={`bg-[#464e6e] text-white px-6 py-2 mt-4 hover:bg-[#353c57] ${
+                !theProduct?.stocks?.data.length ? "opacity-50" : ""
+              }`}
             >
               Add to Cart
             </button>
