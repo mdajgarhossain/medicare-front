@@ -8,7 +8,6 @@ import { medicareApi } from "@/utils/http";
 const Checkout = () => {
   const { cart } = useCart();
   const shippingCost = SHIPPING_COST;
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState("cash");
   const [shippingAddress, setShippingAddress] = useState("");
   const [billingAddress, setBillingAddress] = useState("");
