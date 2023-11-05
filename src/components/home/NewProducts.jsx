@@ -4,89 +4,40 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/navigation";
 import "swiper/css/bundle";
 import ProductCard from "./ProductCard";
+import { medicareApi } from "@/utils/http";
 
 SwiperCore.use([Navigation]);
 
 const NewProducts = () => {
-  const [products, setProduct] = useState([
-    {
-      id: 1,
-      name: "Product 1",
-      image: "images/new-products/product-1.jpeg",
-      detailsLink: "/product/1", // Replace with actual product details link
-    },
-    {
-      id: 2,
-      name: "Product 2",
-      image: "images/new-products/product-2.jpeg",
-      detailsLink: "/product/2", // Replace with actual product details link
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      image: "images/new-products/product-3.jpeg",
-      detailsLink: "/product/3", // Replace with actual product details link
-    },
-    {
-      id: 4,
-      name: "Product 4",
-      image: "images/new-products/product-4.jpeg",
-      detailsLink: "/product/3", // Replace with actual product details link
-    },
-    {
-      id: 5,
-      name: "Product 5",
-      image: "images/new-products/product-5.jpeg",
-      detailsLink: "/product/3", // Replace with actual product details link
-    },
-    {
-      id: 6,
-      name: "Product 6",
-      image: "images/new-products/product-6.jpeg",
-      detailsLink: "/product/3", // Replace with actual product details link
-    },
-    {
-      id: 7,
-      name: "Product 7",
-      image: "images/new-products/product-7.jpeg",
-      detailsLink: "/product/3", // Replace with actual product details link
-    },
-    {
-      id: 8,
-      name: "Product 8",
-      image: "images/new-products/product-8.jpeg",
-      detailsLink: "/product/3", // Replace with actual product details link
-    },
-    {
-      id: 9,
-      name: "Product 9",
-      image: "images/demo-product-images/demoImage.jpg",
-      detailsLink: "/product/3", // Replace with actual product details link
-    },
-    {
-      id: 10,
-      name: "Product 10",
-      image: "images/demo-product-images/demoImage.jpg",
-      detailsLink: "/product/3", // Replace with actual product details link
-    },
-    // Add more demo products as needed
-  ]);
-  console.log(products);
+  const [isDataLoading, setIsDataLoading] = useState(false);
+  const [products, setProducts] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchProduct = async () => {
-  //     try {
-  //       const response = await axios.get(`/v1/product`);
-  //       console.log(response)
-  //       const slideArray = response.data.slice(0,11)
-  //       setProduct(slideArray);
-  //     } catch (error) {
-  //       console.error("Error fetching product:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
-  //   fetchProduct();
-  // }, []);
+  /** Fetch products from api */
+  const fetchProducts = () => {
+    setIsDataLoading(true);
+    let params = {
+      limit: 10,
+      sortDirection: "desc",
+      include:
+        "product.stocks,product.attachments,product.category,product.subcategory",
+    };
+
+    medicareApi
+      .get(`/product`, {
+        params: params,
+      })
+      .then((response) => {
+        setProducts(response.data.data);
+        setIsDataLoading(false);
+      })
+      .catch((error) => {
+        setIsDataLoading(false);
+      });
+  };
 
   const swiperRefDes = useRef(null);
 
@@ -137,13 +88,38 @@ const NewProducts = () => {
           className="h-full sm:h-auto md:h-full lg:h-auto xl:h-full"
           ref={swiperRefDes}
         >
-          <div className="swiper-wrapper">
-            {products.map((product) => (
-              <SwiperSlide key={product.id}>
-                <ProductCard product={product} />
-              </SwiperSlide>
-            ))}
-          </div>
+          {/* <div className="swiper-wrapper"> */}
+          {isDataLoading ? (
+            <div className="flex items-center justify-center h-96">
+              <svg
+                className="animate-spin h-16 w-16 text-gray-400"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm8 8a8 8 0 008-8h4a12 12 0 01-12 12v-4zm0-16a8 8 0 018 8H8a12 12 0 01-12-12v4z"
+                />
+              </svg>
+            </div>
+          ) : (
+            <div className="swiper-wrapper">
+              {products.map((product) => (
+                <SwiperSlide key={product.id}>
+                  <ProductCard product={product} />
+                </SwiperSlide>
+              ))}
+            </div>
+          )}
+          {/* </div> */}
           <div className="swiper-button-next"></div>
           <div className="swiper-button-prev"></div>
         </Swiper>

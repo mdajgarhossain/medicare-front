@@ -1,12 +1,28 @@
 import { useCart } from "@/context/CartContext";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DemoImage from "public/images/demo-product-images/demoImage.jpg";
+import cookies from "@/utils/cookies";
+import { useRouter } from "next/router";
+import { SHIPPING_COST } from "@/utils/constants";
 
-const shippingCost = 10; // Define the constant shipping cost
+const shippingCost = SHIPPING_COST; // Define the constant shipping cost
 
 const Cart = () => {
   const { cart, removeFromCart, increaseQuantity, decreaseQuantity } =
     useCart();
+  const router = useRouter()
+  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [checkoutErrorMsg, setCheckoutErrorMsg] = useState("")
+
+  // Get authenticated user info
+  useEffect(() => {
+    const authUser = cookies.get("user_info");
+    if (authUser?.id) {
+      setLoggedInUser(authUser);
+    } else {
+      setLoggedInUser(null); // User is not logged in
+    }
+  }, []);
 
   console.log({ cart });
 
@@ -22,6 +38,14 @@ const Cart = () => {
   const checkout = () => {
     // Implement your checkout logic here
     // This function will be called when the "Checkout" button is clicked
+    if (loggedInUser) {
+      // Redirect to the checkout page
+      router.push("/checkout");
+    } else {
+      // Show an error message
+      setCheckoutErrorMsg("Please log in to continue the checkout.")
+      // alert("Please log in to continue the checkout.");
+    }
   };
 
   // Populate Image
@@ -114,6 +138,7 @@ const Cart = () => {
               />
             </svg>
           </button>
+          <p className="text-red-500">{checkoutErrorMsg ?? ""}</p>
         </div>
       )}
     </div>
