@@ -6,6 +6,7 @@ import {
   TagIcon,
   UserIcon,
   UsersIcon,
+  CurrencyDollarIcon,
 } from "@heroicons/react/solid";
 import Link from "next/link";
 
@@ -38,6 +39,11 @@ const Sidebar = () => {
       icon: <CubeIcon className="w-6 h-6 mr-2" />,
       text: "Stock",
       link: "/admin/stocks",
+    },
+    {
+      icon: <CurrencyDollarIcon className="w-6 h-6 mr-2" />,
+      text: "Orders",
+      link: "/admin/orders",
     },
     {
       icon: <UsersIcon className="w-6 h-6 mr-2" />,
