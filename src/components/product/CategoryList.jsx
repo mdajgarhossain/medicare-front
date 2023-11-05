@@ -107,7 +107,7 @@ const CategoryList = ({ categories, onCategoryClick }) => {
           style={{
             position: "absolute",
             zIndex: 1,
-            top: "30.5%",
+            top: "32%",
             left: "30%",
             marginTop: "0px",
           }}
