@@ -1,12 +1,7 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import DemoImage from "public/images/demo-product-images/demoImage.jpg";
 
 const ProductCard = ({ product }) => {
-  const router = useRouter();
-
-  // console.log("product - card", product);
-
   // Populate Image
   const getImage = (url, image) => {
     if (url && image) {
@@ -28,7 +23,7 @@ const ProductCard = ({ product }) => {
             alt={product.name}
             className="object-cover w-full h-40 mb-2 rounded-lg"
           />
-          <h3 className="text-lg font-semibold mb-2 text-[#242A3A">
+          <h3 className="text-lg font-medium mb-2 text-[#242A3A">
             {product.name}
           </h3>
           <Link
