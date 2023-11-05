@@ -24,13 +24,19 @@ const Header = () => {
     }
   }, []);
 
+  console.log({ loggedInUser });
+
   const menu = [
-    { id: 1, label: "Home", link: "/" },
-    { id: 2, label: "About Us", link: "/about-us" },
-    { id: 3, label: "Products", link: "/products" },
-    { id: 4, label: "Service", link: "/service" },
-    { id: 5, label: "Contact", link: "/contact" },
-  ];
+    // Conditionally add "Dashboard" menu item if logged in user is an admin
+    loggedInUser?.type === "admin"
+      ? { id: 1, label: "Dashboard", link: "/admin" }
+      : null,
+    { id: 2, label: "Home", link: "/" },
+    { id: 3, label: "About Us", link: "/about-us" },
+    { id: 4, label: "Products", link: "/products" },
+    { id: 5, label: "Service", link: "/service" },
+    { id: 6, label: "Contact", link: "/contact" },
+  ].filter(Boolean); // Filter out any null elements
 
   return (
     <nav className="navbar-section sticky top-0 z-50 bg-[#242a44] px-3 md:px-5">
