@@ -94,7 +94,9 @@ const ProductDetails = () => {
           </p>
           <p className="text-gray-600 mb-2">
             <span className="font-medium">Stock: </span>{" "}
-            {theProduct?.stocks?.data[0]?.quantity ?? "No Stock"}
+            {theProduct?.stocks?.data[0]?.quantity ?? (
+              <span className="text-red-500">No Stock</span>
+            )}
           </p>
           <p className="text-gray-600 mb-2">
             <span className="font-medium">Price: </span>$
