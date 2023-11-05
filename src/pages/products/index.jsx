@@ -87,7 +87,7 @@ function Products() {
   const fetchProducts = (categoryId, type) => {
     let params = {
       limit: 100,
-      include: "product.stocks,product.attachments,product.category",
+      include: "product.stocks,product.attachments,product.category,product.subcategory",
     };
     if (type === "category") params.categoryId = categoryId;
     if (type === "subcategory") params.subcategoryId = categoryId;

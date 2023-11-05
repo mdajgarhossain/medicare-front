@@ -69,17 +69,17 @@ const EditProduct = () => {
   function getProduct(id) {
     medicareApi
       .get(
-        `/product/${id}?include=product.categories,product.attachments,product.subcategory`
+        `/product/${id}?include=product.category,product.attachments,product.subcategory`
       )
       .then((response) => {
         let product = response.data;
         setTheProduct(product);
 
         // set react form data (default value).
-        const category = product?.categories?.data.length
-          ? product?.categories.data[0]
-          : {};
-        console.log({ product });
+        // const category = product?.categories?.data.length
+        //   ? product?.categories.data[0]
+        //   : {};
+        const category = product?.category ?? {};
         setValue("name", product.name);
         setSelectedCategory(category);
         setSelectedSubCategory(product.subcategory);
@@ -89,7 +89,10 @@ const EditProduct = () => {
         //   setImageUrl(`${process.env.NEXT_PUBLIC_IMAGE_CDN}${courseProps?.image?.path}${courseProps?.image?.file}`)
         // }
 
-        if(product?.attachments?.data[0]?.src) setImageUrl(`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${product?.attachments?.data[0]?.src}`)
+        if (product?.attachments?.data[0]?.src)
+          setImageUrl(
+            `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${product?.attachments?.data[0]?.src}`
+          );
 
         // if (theProduct?.image?.src) {
         //   setImageUrl(`${theProduct?.image?.src}`);
@@ -218,10 +221,10 @@ const EditProduct = () => {
     // formData.append("image", data.images[0]);
 
     formData.append("name", data.name);
-    formData.append("categories[]", data.category);
+    formData.append("categoryId", data.category);
     formData.append("description", data.details);
 
-    if(data.subCategory) formData.append("subcategoryId", data.subCategory);
+    if (data.subCategory) formData.append("subcategoryId", data.subCategory);
 
     medicareApi
       .patch(`/product/${theProduct?.id}`, formData)

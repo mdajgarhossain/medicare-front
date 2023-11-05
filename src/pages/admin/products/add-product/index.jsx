@@ -178,7 +178,7 @@ const AddProduct = () => {
     setProcessing(true);
     let formData = new FormData();
     formData.append("name", data.name);
-    formData.append("categories[]", data.category);
+    formData.append("categoryId", data.category);
     formData.append("description", data.details);
 
     if(data.subCategory) formData.append("subcategoryId", data.subCategory);

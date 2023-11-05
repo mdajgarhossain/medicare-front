@@ -80,7 +80,7 @@ const AllProducts = () => {
     let params = getBaseParams(router, thePerPage, page);
     params.sortDirection = "desc";
     params.include =
-      "product.categories,product.attachments,product.subcategory";
+      "product.category,product.attachments,product.subcategory";
 
     medicareApi
       .get("/product", {
@@ -234,9 +234,7 @@ const AllProducts = () => {
                             {item.name}
                           </td>
                           <td className="whitespace-normal px-3 py-4 text-sm text-gray-500">
-                            {item?.categories?.data?.length
-                              ? item.categories.data[0].name
-                              : "-"}
+                            {item?.category?.name ?? "-"}
                           </td>
                           <td className="whitespace-normal px-3 py-4 text-sm text-gray-500">
                             {item?.subcategory?.name
