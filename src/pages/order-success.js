@@ -13,7 +13,7 @@ const SuccessfulPayment = () => {
               Your order is sucessful
             </h4>
             <p className="mb-[25px] text-[14px] leading-[22px] text-[#515151] text-center">
-              Thank you for placing order. We will get back to you soon
+              Thank you for placing order. We will get back to you soon.
             </p>
             <Link href="/">
               <button className="bg-[#5AA591] py-[12px] px-[30px] text-white shadow-[0_1px_20px_rgba(90,165,145,0.3)] rounded-[3px]">
