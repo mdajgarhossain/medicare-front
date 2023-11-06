@@ -74,32 +74,38 @@ const CategoryList = ({ categories, onCategoryClick }) => {
   return (
     <div className="flex" onMouseLeave={handleMouseLeave}>
       <div className="p-2 bg-white rounded border border-gray-300 w-72 h-[400px]">
-        <ul>
-          {categories.map((category, index) => (
-            <li
-              key={category.id}
-              className={`cursor-pointer relative p-1 border-x-2 ${
-                index === categories.length - 1
-                  ? "border-t-2 border-b-2"
-                  : "border-t-2"
-              }`}
-              onMouseEnter={() => handleCategoryMouseEnter(category)}
-            >
-              <div
-                className={`${
-                  hoveredCategory === category ||
-                  (hoveredSubcategory &&
-                    hoveredSubcategory.category === category)
-                    ? "text-blue-600"
-                    : ""
+        {(categories.length && (
+          <ul>
+            {categories.map((category, index) => (
+              <li
+                key={category.id}
+                className={`cursor-pointer relative p-1 border-x-2 ${
+                  index === categories.length - 1
+                    ? "border-t-2 border-b-2"
+                    : "border-t-2"
                 }`}
-                onClick={() => handleCategoryClick(category, "category")}
+                onMouseEnter={() => handleCategoryMouseEnter(category)}
               >
-                <span className="text-lg font-semibold">{category.name}</span>
-              </div>
-            </li>
-          ))}
-        </ul>
+                <div
+                  className={`${
+                    hoveredCategory === category ||
+                    (hoveredSubcategory &&
+                      hoveredSubcategory.category === category)
+                      ? "text-blue-600"
+                      : ""
+                  }`}
+                  onClick={() => handleCategoryClick(category, "category")}
+                >
+                  <span className="text-lg font-semibold">{category.name}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )) || (
+          <p className="text-base py-8 border border-gray-400 px-6">
+            Categories goes here.
+          </p>
+        )}
       </div>
       {subcategories.length > 0 && (
         <div

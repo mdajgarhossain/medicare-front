@@ -112,11 +112,18 @@ const NewProducts = () => {
             </div>
           ) : (
             <div className="swiper-wrapper">
-              {products.map((product) => (
-                <SwiperSlide key={product.id}>
-                  <ProductCard product={product} />
-                </SwiperSlide>
-              ))}
+              {(products.length &&
+                products.map((product) => (
+                  <SwiperSlide key={product.id}>
+                    <ProductCard product={product} />
+                  </SwiperSlide>
+                ))) || (
+                <div className="h-40 mx-auto flex items-center justify-center">
+                  <p className="mx-auto text-lg py-8 border border-gray-400 px-6">
+                    No products available at the moment.
+                  </p>
+                </div>
+              )}
             </div>
           )}
           {/* </div> */}
