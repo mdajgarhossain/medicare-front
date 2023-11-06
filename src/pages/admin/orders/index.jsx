@@ -10,6 +10,7 @@ import {
   EditInactiveIcon,
 } from "@/utils/icons";
 import { Menu } from "@headlessui/react";
+import { EyeIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 
@@ -122,6 +123,13 @@ const OrderList = () => {
     confirmOrder(data?.id);
   }
 
+  /**
+   * Go to order details page
+   */
+  function goToDetailsPage(data) {
+    router.push(`/admin/orders/order-details?id=${data.id}`);
+  }
+
   return (
     <Fragment>
       <div className="px-4 sm:px-6 lg:px-8 mt-14">
@@ -193,13 +201,11 @@ const OrderList = () => {
                           </td>
 
                           <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-center text-sm font-medium sm:pr-6">
-                            {item?.orderStatus === "pending" && (
-                              <TheMenu
-                                strategy={
-                                  item.length < 3 ? "fixed" : "absolute"
-                                }
-                              >
-                                <Menu.Items className=" z-50 absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <TheMenu
+                              strategy={item.length < 3 ? "fixed" : "absolute"}
+                            >
+                              <Menu.Items className=" z-50 absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                {item?.orderStatus === "pending" && (
                                   <div className="px-1 py-1 ">
                                     <Menu.Item>
                                       {({ active }) => (
@@ -230,9 +236,39 @@ const OrderList = () => {
                                       )}
                                     </Menu.Item>
                                   </div>
-                                </Menu.Items>
-                              </TheMenu>
-                            )}
+                                )}
+                                <div className="px-1 py-1 ">
+                                  <Menu.Item>
+                                    {({ active }) => (
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          goToDetailsPage(item);
+                                        }}
+                                        className={`${
+                                          active
+                                            ? "bg-violet-500 text-white"
+                                            : "text-gray-900"
+                                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                      >
+                                        {active ? (
+                                          <EyeIcon
+                                            className="mr-2 h-5 w-5 text-violet-400"
+                                            aria-hidden="true"
+                                          />
+                                        ) : (
+                                          <EyeIcon
+                                            className="mr-2 h-5 w-5 text-violet-400"
+                                            aria-hidden="true"
+                                          />
+                                        )}
+                                        View Details
+                                      </button>
+                                    )}
+                                  </Menu.Item>
+                                </div>
+                              </Menu.Items>
+                            </TheMenu>
                           </td>
                         </tr>
                       ))}
