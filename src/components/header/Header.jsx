@@ -6,7 +6,7 @@ import MobileNav from "./MobileNav";
 import { FaCartArrowDown } from "react-icons/fa";
 import { useCart } from "@/context/CartContext";
 import cookies from "@/utils/cookies";
-import { UserIcon } from "@heroicons/react/solid";
+import { ChevronDownIcon, UserIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -14,6 +14,7 @@ const Header = () => {
   const { cart } = useCart();
   const [loggedInUser, setLoggedInUser] = useState(null);
   const router = useRouter();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     const authUser = cookies.get("user_info");
@@ -37,6 +38,14 @@ const Header = () => {
     { id: 5, label: "Service", link: "/service" },
     { id: 6, label: "Contact", link: "/contact" },
   ].filter(Boolean); // Filter out any null elements
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const closeDropdown = () => {
+    setDropdownOpen(false);
+  };
 
   return (
     <nav className="navbar-section sticky top-0 z-50 bg-[#242a44] px-3 md:px-5">
@@ -74,17 +83,36 @@ const Header = () => {
               } hidden lg:flex`}
             >
               {loggedInUser && (
-                <div
-                  className="flex gap-2"
-                  onClick={() => router.push("/profile")}
-                >
-                  <UserIcon
-                    className="w-8 h-8 ml-1 text-white cursor-pointer"
-                    // onClick={showUserInfo}
-                  />
-                  <h2 className="capitalize text-xl text-white font-semibold sm:text-2xl hover:underline hover:cursor-pointer">
-                    {loggedInUser?.name}
-                  </h2>
+                <div className="relative" onClick={toggleDropdown}>
+                  <div className="flex gap-2 items-center cursor-pointer">
+                    <UserIcon className="w-8 h-8 ml-1 text-white" />
+                    <h2 className="capitalize text-xl text-white font-semibold sm:text-2xl hover:underline hover:cursor-pointer">
+                      {loggedInUser?.name}
+                    </h2>
+                    <ChevronDownIcon className="w-6 h-6 text-white" />
+                  </div>
+                  {dropdownOpen && (
+                    <div className="absolute right-0 top-12 bg-white shadow-md rounded-lg w-48 py-2">
+                      <div
+                        className="cursor-pointer p-2 hover:bg-gray-200"
+                        onClick={() => router.push("/profile")}
+                      >
+                        Profile
+                      </div>
+                      <div
+                        className="cursor-pointer p-2 hover:bg-gray-200"
+                        onClick={() => router.push("/order-list")}
+                      >
+                        Order List
+                      </div>
+                      {/* <div
+                        className="cursor-pointer p-2 hover:bg-gray-200"
+                        onClick={() => router.push("/change-password")}
+                      >
+                        Change Password
+                      </div> */}
+                    </div>
+                  )}
                 </div>
               )}
               <Link href="/cart" className="relative w-10 h-8 mt-6">
