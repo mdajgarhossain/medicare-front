@@ -30,7 +30,7 @@ function withAuth(Component, allowedUserType = "admin") {
     if (isLoading) {
       // Show a loading state or component while checking authentication
       return (
-        <div className="flex items-center justify-center h-96">
+        <div className="flex items-center justify-center h-screen">
           <svg
             className="animate-spin h-16 w-16 text-gray-400"
             viewBox="0 0 24 24"
