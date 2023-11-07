@@ -15,13 +15,11 @@ const OrderDetails = () => {
 
   function getSingleOrder(id) {
     medicareApi
-      .get(`/order/${id}?include=o.orderBy,o.updatedBy,o.products`)
-      // .get(
-      //   `/product?include=product.category,product.subcategory,product.stocks,product.attachments&productId=${id}`
-      // )
+      .get(`/order?include=o.orderBy,o.updatedBy,o.products&orderId=${id}`)
       .then((response) => {
-        let order = response.data.data;
-        setTheOrder(product);
+        let order = response.data.data[0];
+        console.log({order});
+        setTheOrder(order);
       })
       .catch((error) => {
         if (error.response?.data?.type === "ValidationException") {
