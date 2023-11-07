@@ -7,6 +7,7 @@ import {
   UserIcon,
   UsersIcon,
   CurrencyDollarIcon,
+  InboxInIcon,
 } from "@heroicons/react/solid";
 import Link from "next/link";
 
@@ -49,6 +50,11 @@ const Sidebar = () => {
       icon: <UsersIcon className="w-6 h-6 mr-2" />,
       text: "Customers",
       link: "/admin/customers",
+    },
+    {
+      icon: <InboxInIcon className="w-6 h-6 mr-2" />,
+      text: "Contact Info",
+      link: "/admin/contact-info",
     },
   ];
 

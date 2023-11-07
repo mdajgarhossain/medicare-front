@@ -13,7 +13,7 @@ const ContactForm = () => {
     name: yup.string().required("Name is required"),
     email: yup.string().required("Email is required"),
     phone: yup.string(),
-    message: yup.string(),
+    description: yup.string(),
   });
 
   // Form validation hooks
@@ -38,7 +38,7 @@ const ContactForm = () => {
     let formData = new FormData();
 
     // Define the list of fields you want to include in the formData
-    const fieldsToInclude = ["name", "email", "phone", "message"];
+    const fieldsToInclude = ["name", "email", "phone", "description"];
 
     // Use a loop to append valid and non-empty fields to formData
     fieldsToInclude.forEach((field) => {
@@ -52,7 +52,9 @@ const ContactForm = () => {
       .then((response) => {
         resetAllValue();
         // toast.success("Conatct info is sent", { duration: 1000 });
-        setProcessing(false);
+        setTimeout(() => {
+          setProcessing(false);
+        }, 1000);
       })
       .catch((error) => {
         setProcessing(false);
@@ -60,6 +62,18 @@ const ContactForm = () => {
           toast.error(error?.response?.errors[0]?.message, { duration: 3000 });
         }
       });
+  }
+
+  /**
+   * Reset all data form inputs.
+   */
+  function resetAllValue() {
+    reset({
+      name: null,
+      email: null,
+      phone: null,
+      description: null,
+    });
   }
 
   return (
@@ -107,15 +121,17 @@ const ContactForm = () => {
         </div>
         <div className="mb-2">
           <textarea
-            {...register("message")}
+            {...register("description")}
             className="w-full px-3 py-2 leading-tight text-gray-700 border border-gray-500 shadow appearance-none focus:outline-none focus:shadow-outline"
-            id="message"
+            id="description"
             rows="6"
             placeholder="Enter your message"
-            name="message"
+            name="description"
           ></textarea>
-          {errors.message && (
-            <p className="text-sm text-red-500">{errors.message?.message}</p>
+          {errors.description && (
+            <p className="text-sm text-red-500">
+              {errors.description?.message}
+            </p>
           )}
         </div>
         <div className="flex justify-center">
