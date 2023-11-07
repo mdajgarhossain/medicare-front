@@ -68,13 +68,13 @@ const OrderList = () => {
       let getPerPage = query?.limit ? parseInt(query?.limit) : thePerPage;
       setThePage(getPage);
       setThePerPage(getPerPage);
-      fetchCategory(getPage);
+      fetchOrder(getPage);
     } else {
-      fetchCategory();
+      fetchOrder();
     }
   }, [router?.query]);
 
-  function fetchCategory(page = thePage, searchQuery = "") {
+  function fetchOrder(page = thePage, searchQuery = "") {
     setIsDataLoading(true);
     let params = getBaseParams(router, thePerPage, page);
     params.sortDirection = "desc";
@@ -106,7 +106,7 @@ const OrderList = () => {
     medicareApi
       .patch(`/order/${id}`, formData)
       .then((response) => {
-        fetchCategory();
+        fetchOrder();
       })
       .catch((error) => {
         setProcessing(false);
