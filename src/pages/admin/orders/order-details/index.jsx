@@ -49,22 +49,22 @@ const OrderDetails = () => {
               <p>
                 <strong>Order ID:</strong> {theOrder.id}
               </p>
-              <p>
+              {/* <p>
                 <strong>Created At:</strong> {theOrder.createdAt}
-              </p>
+              </p> */}
               <p>
                 <strong>Shipping Address:</strong> {theOrder.shippingAddress}
               </p>
               <p>
                 <strong>House Address:</strong> {theOrder.billingAddress}
               </p>
-              <p>
+              <p className="capitalize">
                 <strong>Order Status:</strong> {theOrder.orderStatus}
               </p>
-              <p>
+              <p className="capitalize">
                 <strong>Payment Method:</strong> {theOrder.paymentMethod}
               </p>
-              <p>
+              <p className="capitalize">
                 <strong>Payment Status:</strong> {theOrder.paymentStatus}
               </p>
               <p>
