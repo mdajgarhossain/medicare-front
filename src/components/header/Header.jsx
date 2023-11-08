@@ -109,7 +109,9 @@ const Header = () => {
                       </div>
                       <div
                         className="cursor-pointer p-2 hover:bg-gray-200"
-                        onClick={() => router.push("/order-list")}
+                        onClick={() =>
+                          router.push(`/order-list?orderBy=${loggedInUser?.id}`)
+                        }
                       >
                         Order List
                       </div>
