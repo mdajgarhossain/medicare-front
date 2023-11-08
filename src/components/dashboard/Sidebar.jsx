@@ -48,7 +48,7 @@ const Sidebar = () => {
     },
     {
       icon: <UsersIcon className="w-6 h-6 mr-2" />,
-      text: "Customers",
+      text: "Users",
       link: "/admin/customers",
     },
     {

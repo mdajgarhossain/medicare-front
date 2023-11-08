@@ -33,6 +33,7 @@ const AllCustomers = () => {
   let columns = [
     { title: "Name", slug: "name", sorting: true },
     { title: "Email", slug: "email", sorting: true },
+    { title: "Type", slug: "type", sorting: true },
   ];
 
   function handlePagination(data) {
@@ -142,11 +143,14 @@ const AllCustomers = () => {
                     <tbody className="divide-y divide-gray-200 bg-white">
                       {customers?.map((item, id) => (
                         <tr key={item.id}>
-                          <td className="whitespace-normal px-3 py-4 text-sm text-gray-500">
+                          <td className="whitespace-normal px-3 py-4 text-sm text-gray-500 capitalize">
                             {item.name ?? "-"}
                           </td>
                           <td className="whitespace-normal px-3 py-4 text-sm text-gray-500">
                             {item.email ?? "-"}
+                          </td>
+                          <td className="whitespace-normal px-3 py-4 text-sm text-gray-500 capitalize">
+                            {item.type ?? "-"}
                           </td>
                         </tr>
                       ))}
