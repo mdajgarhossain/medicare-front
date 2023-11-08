@@ -208,23 +208,59 @@ const EditProduct = () => {
     }, 500);
   }
 
+  async function uploadImageAndGetId(image) {
+    const formData = new FormData();
+
+    // Convert the File object to a binary blob
+    const blob = new Blob([image], { type: image.type });
+
+    formData.append("fileSource", image);
+    formData.append("type", "product");
+
+    const headers = {
+      "Content-Type": "multipart/form-data",
+    };
+    
+    try {
+      const response = await medicareApi.post("/attachment", formData, {
+        headers,
+      });
+      return response.data.id; // Assuming the response contains an ID field
+    } catch (error) {
+      throw new Error("Failed to upload image");
+    }
+  }
+
   /**
    * Edit product item.
    */
-  function editProduct(data) {
+  async function editProduct(data) {
     setProcessing(true);
-    let formData = new FormData();
-    // formData.append("name", data.name);
-    // formData.append("categoryId", data.category);
-    // formData.append("subCategoryId", data.subCategory);
-    // formData.append("details", data.details);
-    // formData.append("image", data.images[0]);
 
+    let formData = new FormData();
     formData.append("name", data.name);
     formData.append("categoryId", data.category);
     formData.append("description", data.details);
 
     if (data.subCategory) formData.append("subcategoryId", data.subCategory);
+
+    if (images && images.length > 0) {
+      const attachmentIds = [];
+
+      // Upload and get attachment IDs for each image
+      for (const image of images) {
+        try {
+          const attachmentId = await uploadImageAndGetId(image);
+          attachmentIds.push(attachmentId);
+        } catch (error) {
+          setProcessing(false);
+          toast.error("Failed to upload images", { duration: 1000 });
+          return;
+        }
+      }
+
+      formData.append("attachments[]", attachmentIds);
+    }
 
     medicareApi
       .patch(`/product/${theProduct?.id}`, formData)
