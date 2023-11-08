@@ -93,6 +93,14 @@ const Header = () => {
                   </div>
                   {dropdownOpen && (
                     <div className="absolute right-0 top-12 bg-white shadow-md rounded-lg w-48 py-2">
+                      {loggedInUser?.type === "admin" && (
+                        <div
+                          className="cursor-pointer p-2 hover:bg-gray-200"
+                          onClick={() => router.push("/admin")}
+                        >
+                          Dashboard
+                        </div>
+                      )}
                       <div
                         className="cursor-pointer p-2 hover:bg-gray-200"
                         onClick={() => router.push("/profile")}
