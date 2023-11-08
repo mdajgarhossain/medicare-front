@@ -204,7 +204,7 @@ const AddProduct = () => {
     medicareApi
       .post("/product", formData)
       .then((response) => {
-        // toast.success("Product is added", { duration: 1000 });
+        toast.success("Product is added", { duration: 1500 });
         resetAllValue();
         setTimeout(() => {
           setProcessing(false);

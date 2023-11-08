@@ -48,7 +48,7 @@ const ProductDetails = () => {
     if (itemInCart) {
       // If the item is already in the cart, update its quantity
       itemInCart.quantity = quantity;
-      alert("Item has already added to the cart!");
+      toast.error("Product has already added to the cart!", { duration: 1500 });
     } else {
       // If the item is not in the cart, add it with the specified quantity
       theProduct.quantity = quantity;
@@ -57,11 +57,6 @@ const ProductDetails = () => {
 
     // Reset the quantity input
     // setQuantity(1);
-
-    // Optionally, show a toast message to indicate success
-    // toast.success('Item added to cart!', {
-    //   duration: 3000,
-    // });
   };
 
   // Populate Image

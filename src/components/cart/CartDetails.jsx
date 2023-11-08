@@ -4,6 +4,7 @@ import DemoImage from "public/images/demo-product-images/demoImage.jpg";
 import cookies from "@/utils/cookies";
 import { useRouter } from "next/router";
 import { SHIPPING_COST } from "@/utils/constants";
+import toast from "react-hot-toast";
 
 const shippingCost = SHIPPING_COST; // Define the constant shipping cost
 
@@ -44,7 +45,7 @@ const Cart = () => {
     } else {
       // Show an error message
       setCheckoutErrorMsg("Please log in to continue the checkout.")
-      // alert("Please log in to continue the checkout.");
+      toast.success("Please log in to continue the checkout.", { duration: 1000 });
     }
   };
 

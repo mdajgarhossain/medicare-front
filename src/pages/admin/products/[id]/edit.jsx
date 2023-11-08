@@ -220,7 +220,7 @@ const EditProduct = () => {
     const headers = {
       "Content-Type": "multipart/form-data",
     };
-    
+
     try {
       const response = await medicareApi.post("/attachment", formData, {
         headers,
@@ -265,7 +265,7 @@ const EditProduct = () => {
     medicareApi
       .patch(`/product/${theProduct?.id}`, formData)
       .then((response) => {
-        toast.success("Product is updated", { duration: 3000 });
+        toast.success("Product is updated", { duration: 1500 });
         router.push("/admin/products");
       })
       .catch((error) => {

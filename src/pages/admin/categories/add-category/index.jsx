@@ -51,7 +51,7 @@ const AddCategory = () => {
       .post("/category", formData)
       .then((response) => {
         resetAllValue();
-        // toast.success("Category is added", { duration: 1000 });
+        toast.success("Category is added", { duration: 1500 });
         setTimeout(() => {
           setProcessing(false);
           router.push("/admin/categories");

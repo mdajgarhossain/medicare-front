@@ -127,7 +127,7 @@ const EditSubCategory = () => {
     medicareApi
       .patch(`/subcategory/${theSubCategory?.id}`, formData)
       .then((response) => {
-        // toast.success("Sub Category is updated", { duration: 3000 });
+        toast.success("Subcategory is updated", { duration: 1500 });
         setTimeout(() => {
           setProcessing(false);
           router.push("/admin/sub-categories");

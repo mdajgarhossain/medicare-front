@@ -125,7 +125,7 @@ const EditStock = () => {
     medicareApi
       .patch(`/stock/${theStock?.id}`, formData)
       .then((response) => {
-        // toast.success("Stock is updated", { duration: 1000 });
+        toast.success("Stock is updated", { duration: 1500 });
         setTimeout(() => {
           setProcessing(false);
           router.push("/admin/stocks");

@@ -83,7 +83,7 @@ const EditCategory = () => {
     medicareApi
       .patch(`/category/${theCategory?.id}`, formData)
       .then((response) => {
-        // toast.success("Category is updated", { duration: 3000 });
+        toast.success("Category is updated", { duration: 1500 });
         setTimeout(() => {
           setProcessing(false);
           router.push("/admin/categories");

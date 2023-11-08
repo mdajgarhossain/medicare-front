@@ -90,7 +90,7 @@ const AddStock = () => {
     medicareApi
       .post("/stock", formData)
       .then((response) => {
-        // toast.success("Stock is added", { duration: 1000 });
+        toast.success("Stock is added", { duration: 1500 });
         resetAllValue();
         setTimeout(() => {
           setProcessing(false);

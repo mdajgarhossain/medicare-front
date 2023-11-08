@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { medicareApi } from "@/utils/http";
+import toast from "react-hot-toast";
 
 const ContactForm = () => {
   const [processing, setProcessing] = useState(false);
@@ -51,7 +52,7 @@ const ContactForm = () => {
       .post("/contact", formData)
       .then((response) => {
         resetAllValue();
-        // toast.success("Conatct info is sent", { duration: 1000 });
+        toast.success("Conatct info is sent", { duration: 1000 });
         setTimeout(() => {
           setProcessing(false);
         }, 1000);
@@ -59,7 +60,7 @@ const ContactForm = () => {
       .catch((error) => {
         setProcessing(false);
         if (error.response?.data?.type === "ValidationException") {
-          toast.error(error?.response?.errors[0]?.message, { duration: 3000 });
+          toast.error(error?.response?.errors[0]?.message, { duration: 1000 });
         }
       });
   }

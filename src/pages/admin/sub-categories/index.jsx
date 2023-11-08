@@ -149,10 +149,10 @@ const SubCategories = () => {
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <h1 className="text-2xl text-[#242a44] font-semibold leading-6 text-gray-900">
-              Sub Categories
+              Subcategories
             </h1>
             <p className="mt-2 text-lg text-[#242a44">
-              A list of sub-categories
+              A list of subcategories
             </p>
           </div>
           <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
@@ -161,7 +161,7 @@ const SubCategories = () => {
               className="block rounded-md bg-[#464e6e] px-3 py-2 text-center text-md font-semibold text-white shadow-sm hover:bg-[#464e6e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               onClick={() => router.push("sub-categories/add-sub-category")}
             >
-              + Add Sub Category
+              + Add Subcategory
             </button>
           </div>
         </div>

@@ -5,8 +5,21 @@ import Dashboard from "@/components/dashboard/Dashboard";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import { CartProvider } from "@/context/CartContext";
 import withAuth from "@/middleware/withAuth";
+import toast, { Toaster, useToasterStore } from "react-hot-toast";
+import { useEffect } from "react";
 
 function RoutingComponent(props) {
+  const { toasts } = useToasterStore();
+  const TOAST_LIMIT = 1;
+
+  // Enforce Limit
+  useEffect(() => {
+    toasts
+      .filter((t) => t.visible) // Only consider visible toasts
+      .filter((_, i) => i >= TOAST_LIMIT) // Is toast index over limit
+      .forEach((t) => toast.dismiss(t.id)); // Dismiss – Use toast.remove(t.id) removal without animation
+  }, [toasts]);
+
   const router = props.router;
   // if (
   //   router.pathname == "/admin" || router.pathname == "/admin/products" || router.pathname == "/admin/products/add-product"
@@ -51,6 +64,7 @@ export default function App({ Component, pageProps: { ...pageProps } }) {
       <RoutingComponent router={router}>
         <Component {...pageProps} />
       </RoutingComponent>
+      <Toaster />
     </CartProvider>
   );
 }

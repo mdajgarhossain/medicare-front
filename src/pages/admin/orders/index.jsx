@@ -13,6 +13,7 @@ import { Menu } from "@headlessui/react";
 import { EyeIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const OrderList = () => {
   const router = useRouter();
@@ -106,10 +107,14 @@ const OrderList = () => {
     medicareApi
       .patch(`/order/${id}`, formData)
       .then((response) => {
-        fetchOrder();
+        
+        setTimeout(() => {
+          toast.success("Order is confirmed", { duration: 1000 });
+          fetchOrder();
+        }, 1000);
+        
       })
       .catch((error) => {
-        setProcessing(false);
         if (error.response?.data?.type === "ValidationException") {
           toast.error(error?.response?.errors[0]?.message, { duration: 3000 });
         }

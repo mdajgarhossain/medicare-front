@@ -98,7 +98,7 @@ const AddSubCategory = () => {
       .post(`/subcategory`, formData)
       .then((response) => {
         resetAllValue();
-        // toast.success("Sub Category is added", { duration: 500 });
+        toast.success("Subcategory is added", { duration: 1500 });
         setTimeout(() => {
           setProcessing(false);
           router.push("/admin/sub-categories");
@@ -131,7 +131,7 @@ const AddSubCategory = () => {
       <div className="grid p-4 mt-2 gap-y-8">
         <form className="bg-white shadow-sm ring-1 ring-gray-900/5">
           <h1 className="px-4 py-2 sm:py-2 sm:px-6 mt-4 text-lg font-semibold leading-6 text-gray-900">
-            Add Sub Category
+            Add Subcategory
           </h1>
           <span className="px-4 sm:px-6">
             The fields labels marked with
