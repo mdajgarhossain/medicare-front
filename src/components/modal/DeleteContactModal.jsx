@@ -29,7 +29,7 @@ function DeleteContactModal(props) {
     setProcessing(true);
     if (answer === "" || answer !== "delete") {
       setProcessing(false);
-      toast.error("To confirm deletion, type delete.", { duration: 3000 });
+      toast.error("To confirm deletion, type delete.", { duration: 2000 });
       return;
     }
 
@@ -37,7 +37,7 @@ function DeleteContactModal(props) {
     medicareApi
       .delete(`/contact/${props?.contact?._id}`)
       .then((response) => {
-        toast.success("Contact is deleted", { duration: 3000 });
+        toast.success("Contact is deleted", { duration: 2000 });
         props.refetchDataEmit();
         modalClose();
       })
@@ -45,11 +45,11 @@ function DeleteContactModal(props) {
         setProcessing(false);
         if (error.response?.data?.type === "ValidationException") {
           toast.error(error?.response?.data?.errors[0]?.message, {
-            duration: 3000,
+            duration: 2000,
           });
         } else {
           toast.error(error?.response?.data?.message, {
-            duration: 3000,
+            duration: 2000,
           });
         }
       });

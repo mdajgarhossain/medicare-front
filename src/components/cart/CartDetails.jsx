@@ -45,7 +45,7 @@ const Cart = () => {
     } else {
       // Show an error message
       setCheckoutErrorMsg("Please log in to continue the checkout.")
-      toast.success("Please log in to continue the checkout.", { duration: 1000 });
+      toast.success("Please log in to continue the checkout.", { duration: 2000 });
     }
   };
 

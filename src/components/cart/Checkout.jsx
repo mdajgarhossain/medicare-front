@@ -4,6 +4,7 @@ import { useCart } from "@/context/CartContext";
 import { SHIPPING_COST } from "@/utils/constants";
 import cookies from "@/utils/cookies";
 import { medicareApi } from "@/utils/http";
+import toast from "react-hot-toast";
 
 const Checkout = () => {
   const { cart } = useCart();
@@ -44,6 +45,7 @@ const Checkout = () => {
 
     if (!shippingAddress) {
       setAddressError("Street address is required!");
+      toast.error("Street address is required!", { duration: 2000 });
       setProcessing(false);
       return;
     }
@@ -62,7 +64,6 @@ const Checkout = () => {
     medicareApi
       .post("/order", formData)
       .then((response) => {
-        console.log({ response });
         if (response?.data?.url) {
           setTimeout(() => {
             setProcessing(false);
@@ -80,7 +81,7 @@ const Checkout = () => {
       .catch((error) => {
         setProcessing(false);
         if (error.response?.data?.type === "ValidationException") {
-          toast.error(error?.response?.errors[0]?.message, { duration: 3000 });
+          toast.error(error?.response?.errors[0]?.message, { duration: 2000 });
         }
       });
   }
