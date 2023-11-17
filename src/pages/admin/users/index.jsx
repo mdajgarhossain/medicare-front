@@ -95,9 +95,9 @@ const AllCustomers = () => {
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <h1 className="text-2xl text-[#242a44] font-semibold leading-6 text-gray-900">
-              Customers
+              Users
             </h1>
-            <p className="mt-2 text-lg text-[#242a44">A list of customers</p>
+            <p className="mt-2 text-lg text-[#242a44">A list of users</p>
           </div>
         </div>
         <div className="mt-8 flow-root">

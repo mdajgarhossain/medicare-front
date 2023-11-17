@@ -49,7 +49,7 @@ const Sidebar = () => {
     {
       icon: <UsersIcon className="w-6 h-6 mr-2" />,
       text: "Users",
-      link: "/admin/customers",
+      link: "/admin/users",
     },
     {
       icon: <InboxInIcon className="w-6 h-6 mr-2" />,
