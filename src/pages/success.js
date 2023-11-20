@@ -2,6 +2,7 @@ import { medicareApi } from "@/utils/http";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 const SuccessfulPayment = () => {
   const router = useRouter();
@@ -24,9 +25,9 @@ const SuccessfulPayment = () => {
       .patch(`/order/${id}`, formData)
       .then((response) => {})
       .catch((error) => {
-        setProcessing(false);
+        console.log(error);
         if (error.response?.data?.type === "ValidationException") {
-          toast.error(error?.response?.errors[0]?.message, { duration: 3000 });
+          toast.error(error?.response?.errors[0]?.message, { duration: 2500 });
         }
       });
   }
