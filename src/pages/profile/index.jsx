@@ -1,8 +1,19 @@
 import cookies from "@/utils/cookies";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 function Profile() {
-  const loggedInUser = cookies.get("user_info");
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
+  // Get auth data from from cookies
+  useEffect(() => {
+    const authUser = cookies.get("user_info");
+    if (authUser?.id) {
+      setLoggedInUser(authUser);
+    } else {
+      setLoggedInUser(null); // User is not logged in
+    }
+  }, []);
+
   return (
     <div className="max-w-[1200px] mx-auto pb-10">
       <div className="flex mt-8 mb-8">
