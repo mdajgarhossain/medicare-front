@@ -12,7 +12,10 @@ const ContactForm = () => {
 
   const schema = yup.object().shape({
     name: yup.string().required("Name is required"),
-    email: yup.string().required("Email is required"),
+    email: yup
+      .string()
+      .email("Invalid email format")
+      .required("Email is required"),
     phone: yup.string(),
     description: yup.string(),
   });
