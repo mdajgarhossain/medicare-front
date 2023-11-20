@@ -239,7 +239,7 @@ const CreateAccount = () => {
                 )}
               </div>
               <div className="mb-4 w-full">
-                <label className="block mb-2 font-medium">State</label>
+                <label className="block mb-2 font-medium">Area</label>
                 <input
                   {...register("state")}
                   type="text"
