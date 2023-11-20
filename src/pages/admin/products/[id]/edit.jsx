@@ -160,7 +160,6 @@ const EditProduct = () => {
    * Set category.
    */
   function handleCategory(data) {
-    console.log({ data });
     setSelectedCategory(data);
 
     // Revalidate the category.
@@ -237,12 +236,17 @@ const EditProduct = () => {
   async function editProduct(data) {
     setProcessing(true);
 
-    let formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("categoryId", data.category);
-    formData.append("description", data.details);
+    let formData = {
+      name: data.name,
+      categoryId: data.category,
+      description: data.details,
+    }
 
-    if (data.subCategory) formData.append("subcategoryId", data.subCategory);
+    if (data.subCategory) {
+      formData.subcategoryId = data.subCategory;
+    } else {
+      formData.subcategoryId = null;
+    }
 
     if (images && images.length > 0) {
       const attachmentIds = [];
