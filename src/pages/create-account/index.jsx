@@ -253,7 +253,7 @@ const CreateAccount = () => {
                 )}
               </div>
               <div className="mb-4 w-full">
-                <label className="block mb-2 font-medium">Zip Code</label>
+                <label className="block mb-2 font-medium">Postal Code</label>
                 <input
                   {...register("zipCode")}
                   type="number"
