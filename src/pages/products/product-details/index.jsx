@@ -93,10 +93,12 @@ const ProductDetails = () => {
               <span className="text-red-500">No Stock</span>
             )}
           </p>
-          <p className="text-gray-600 mb-2">
-            <span className="font-medium">Price: </span>$
-            {theProduct?.stocks?.data[0]?.sellingPrice ?? "0"}
-          </p>
+          {theProduct?.category?.name === "E-sell" && (
+            <p className="text-gray-600 mb-2">
+              <span className="font-medium">Price: </span>$
+              {theProduct?.stocks?.data[0]?.sellingPrice ?? "0"}
+            </p>
+          )}
           <div className="">
             <label htmlFor="quantity" className="block mt-4 text-lg">
               Quantity:
