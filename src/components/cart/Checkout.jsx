@@ -33,7 +33,7 @@ const Checkout = () => {
     return acc + price * quantity;
   }, 0);
 
-  const grandTotal = (total + shippingCost).toFixed(2);
+  const grandTotal = parseFloat((total + shippingCost).toFixed(2));
 
   console.log({ total });
 
@@ -60,6 +60,8 @@ const Checkout = () => {
       paymentMethod: selectedPayment,
       products: cart,
     };
+
+    console.log({formData});
 
     medicareApi
       .post("/order", formData)
