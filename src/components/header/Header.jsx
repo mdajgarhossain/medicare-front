@@ -87,7 +87,7 @@ const Header = () => {
                   <div className="flex gap-2 items-center cursor-pointer">
                     <UserIcon className="w-8 h-8 ml-1 text-white" />
                     <h2 className="capitalize text-xl text-white font-semibold sm:text-2xl hover:underline hover:cursor-pointer">
-                      {loggedInUser?.name}
+                      {loggedInUser?.name.split(' ')[0]}
                     </h2>
                     <ChevronDownIcon className="w-6 h-6 text-white" />
                   </div>
