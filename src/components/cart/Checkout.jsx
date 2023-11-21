@@ -53,15 +53,13 @@ const Checkout = () => {
     let formData = {
       orderBy: loggedInUser.id,
       shippingAddress: shippingAddress,
-      billingAddress: "test",
+      billingAddress: billingAddress,
       subtotal: total,
       shippingCost: shippingCost,
       totalCost: grandTotal,
       paymentMethod: selectedPayment,
       products: cart,
     };
-
-    console.log({formData});
 
     medicareApi
       .post("/order", formData)
