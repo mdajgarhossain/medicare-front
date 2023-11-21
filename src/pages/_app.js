@@ -7,6 +7,7 @@ import { CartProvider } from "@/context/CartContext";
 import withAuth from "@/middleware/withAuth";
 import toast, { Toaster, useToasterStore } from "react-hot-toast";
 import { useEffect } from "react";
+import { ContactSellCartProvider } from "@/context/ContactSellCartContext";
 
 function RoutingComponent(props) {
   const { toasts } = useToasterStore();
@@ -21,18 +22,6 @@ function RoutingComponent(props) {
   }, [toasts]);
 
   const router = props.router;
-  // if (
-  //   router.pathname == "/admin" || router.pathname == "/admin/products" || router.pathname == "/admin/products/add-product"
-  // ) {
-  //   // return <Fullpage className="fullPage">{props.children}</Fullpage>
-  //   return <DashboardLayout>{props.children}</DashboardLayout>
-  // } else {
-  //   return (
-  //     <>
-  //       <Layout>{props.children}</Layout>
-  //     </>
-  //   );
-  // }
 
   if (router.pathname.startsWith("/admin")) {
     // Wrap the DashboardLayout with withAuth to protect the /admin route
@@ -50,21 +39,17 @@ function RoutingComponent(props) {
   }
 }
 
-// function MyApp({ Component, pageProps }) {
-//   return <Component {...pageProps} />;
-// }
-
-// export default MyApp;
-
 export default function App({ Component, pageProps: { ...pageProps } }) {
   const router = useRouter();
 
   return (
     <CartProvider>
-      <RoutingComponent router={router}>
-        <Component {...pageProps} />
-      </RoutingComponent>
-      <Toaster />
+      <ContactSellCartProvider>
+        <RoutingComponent router={router}>
+          <Component {...pageProps} />
+        </RoutingComponent>
+        <Toaster />
+      </ContactSellCartProvider>
     </CartProvider>
   );
 }

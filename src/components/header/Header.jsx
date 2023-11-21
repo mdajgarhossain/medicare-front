@@ -9,9 +9,11 @@ import cookies from "@/utils/cookies";
 import { ChevronDownIcon, UserIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useContactSellCart } from "@/context/ContactSellCartContext";
 
 const Header = () => {
   const { cart } = useCart();
+  const { cart: contactSellCart } = useContactSellCart();
   const [loggedInUser, setLoggedInUser] = useState(null);
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -24,8 +26,6 @@ const Header = () => {
       setLoggedInUser(null);
     }
   }, []);
-
-  console.log({ loggedInUser });
 
   const menu = [
     // Conditionally add "Dashboard" menu item if logged in user is an admin
@@ -87,7 +87,7 @@ const Header = () => {
                   <div className="flex gap-2 items-center cursor-pointer">
                     <UserIcon className="w-8 h-8 ml-1 text-white" />
                     <h2 className="capitalize text-xl text-white font-semibold sm:text-2xl hover:underline hover:cursor-pointer">
-                      {loggedInUser?.name.split(' ')[0]}
+                      {loggedInUser?.name.split(" ")[0]}
                     </h2>
                     <ChevronDownIcon className="w-6 h-6 text-white" />
                   </div>
@@ -115,16 +115,19 @@ const Header = () => {
                       >
                         Order List
                       </div>
-                      {/* <div
-                        className="cursor-pointer p-2 hover:bg-gray-200"
-                        onClick={() => router.push("/change-password")}
-                      >
-                        Change Password
-                      </div> */}
                     </div>
                   )}
                 </div>
               )}
+              <Link
+                href="/contact-sell-cart"
+                className="relative w-10 h-8 mt-6"
+              >
+                <FaCartArrowDown className="w-8 h-8 text-white" />
+                <span className="absolute -top-3 right-0 w-5 h-5 text-[12px] justify-center items-center flex text-white rounded-full bg-[#EA2027]">
+                  {contactSellCart?.length}
+                </span>
+              </Link>
               <Link href="/cart" className="relative w-10 h-8 mt-6">
                 <FaCartArrowDown className="w-8 h-8 text-white" />
                 <span className="absolute -top-3 right-0 w-5 h-5 text-[12px] justify-center items-center flex text-white rounded-full bg-[#EA2027]">
@@ -133,44 +136,6 @@ const Header = () => {
               </Link>
             </div>
           </div>
-          {/* <div className="items-end justify-end hidden lg:flex"> */}
-          {/* <Link href='/cart' className="relative w-10 h-8 mt-5">
-              <FaCartArrowDown className="w-8 h-8 text-white" />
-              <span className="absolute -top-3 right-0 w-5 h-5 text-[12px] justify-center items-center flex text-white rounded-full bg-[#EA2027]">
-                {cart?.length}
-              </span>
-            </Link> */}
-          {/* {user?._id && (
-              <BiUserCircle
-                className="w-8 h-8 ml-1 text-white cursor-pointer"
-                onClick={showUserInfo}
-              />
-            )} */}
-          {/* {user?._id && (
-              <div
-                className={`${
-                  isOpen ? "absolute" : "hidden"
-                } text-white bg-red-500 w-52 p-4 top-32 flex flex-col gap-2`}
-              >
-                <img
-                  src="https://source.unsplash.com/150x150/?portrait?3"
-                  alt=""
-                  className="mx-auto rounded-full w-28 h-28 dark:bg-gray-500 aspect-square"
-                />
-                <h2 className="text-xl font-semibold sm:text-2xl">
-                  {user?.name}
-                </h2>
-                {userInfo.map((item, i) => (
-                  <p className="px-2 py-1 bg-black" key={i}>
-                    {item?.name}
-                  </p>
-                ))}
-                <p className="px-2 py-1 bg-black" onClick={handleLogout}>
-                  Log out
-                </p>
-              </div>
-            )} */}
-          {/* </div> */}
         </div>
       </div>
     </nav>

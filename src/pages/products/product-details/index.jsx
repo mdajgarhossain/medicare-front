@@ -4,9 +4,12 @@ import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import DemoImage from "public/images/demo-product-images/demoImage.jpg";
+import { useContactSellCart } from "@/context/ContactSellCartContext";
 
 const ProductDetails = () => {
   const { cart, addToCart } = useCart();
+  const { cart: contactSellCart, addToCart: addToContactSellCart } =
+    useContactSellCart();
   const router = useRouter();
   const [quantity, setQuantity] = useState(1);
   const [theProduct, setTheProduct] = useState({});
@@ -44,19 +47,33 @@ const ProductDetails = () => {
 
   const handleAddToCart = () => {
     const itemInCart = cart.find((item) => item.id === theProduct.id);
+    const itemInContactSellCart = contactSellCart.find(
+      (item) => item.id === theProduct.id
+    );
 
     if (itemInCart) {
-      // If the item is already in the cart, update its quantity
+      // If the item is already in the main cart, update its quantity
       itemInCart.quantity = quantity;
-      toast.error("Product has already added to the cart!", { duration: 1500 });
+      toast.error("Product has already been added to the e-sell cart!", {
+        duration: 3000,
+      });
+    } else if (itemInContactSellCart) {
+      // If the item is already in the contact sell cart, update its quantity
+      itemInContactSellCart.quantity = quantity;
+      toast.error("Product has already been added to the contact sell cart!", {
+        duration: 3000,
+      });
     } else {
-      // If the item is not in the cart, add it with the specified quantity
+      // If the item is not in either cart, add it with the specified quantity
       theProduct.quantity = quantity;
-      addToCart(theProduct);
-    }
 
-    // Reset the quantity input
-    // setQuantity(1);
+      // Check the category and add to the appropriate cart
+      if (theProduct?.category?.name === "E-sell") {
+        addToCart(theProduct);
+      } else {
+        addToContactSellCart(theProduct);
+      }
+    }
   };
 
   // Populate Image
@@ -99,6 +116,13 @@ const ProductDetails = () => {
               {theProduct?.stocks?.data[0]?.sellingPrice ?? "0"}
             </p>
           )}
+
+          <p className="text-gray-600 mb-2">
+            <span className="font-medium">Type: </span>
+            {theProduct?.category?.name === "E-sell"
+              ? "E-sell Product"
+              : "Contact Sell Product"}
+          </p>
           <div className="">
             <label htmlFor="quantity" className="block mt-4 text-lg">
               Quantity:
