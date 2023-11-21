@@ -41,8 +41,8 @@ const ContactSellCartDetails = () => {
     } else {
       // Show an error message
       setCheckoutErrorMsg("Please log in to continue the checkout.");
-      toast.success("Please log in to continue the checkout.", {
-        duration: 2000,
+      toast.error("Please log in to continue the checkout.", {
+        duration: 3000,
       });
     }
   };
@@ -58,7 +58,7 @@ const ContactSellCartDetails = () => {
 
   return (
     <div className="bg-white p-10 border rounded shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">Your Shopping Cart</h2>
+      <h2 className="text-2xl font-semibold mb-8">Contact Sell Shopping Cart</h2>
       <div className="space-y-4">
         {cart.map((item) => (
           <div

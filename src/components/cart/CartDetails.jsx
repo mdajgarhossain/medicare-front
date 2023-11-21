@@ -28,7 +28,6 @@ const Cart = () => {
   console.log({ cart });
 
   // Calculate the total price of all items in the cart
-  // const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const total = cart.reduce((acc, item) => {
     const price = item?.stocks?.data[0].sellingPrice || 0; // Use 0 as a default price if undefined
     const quantity = item.quantity || 0; // Use 0 as a default quantity if undefined
@@ -45,7 +44,7 @@ const Cart = () => {
     } else {
       // Show an error message
       setCheckoutErrorMsg("Please log in to continue the checkout.")
-      toast.success("Please log in to continue the checkout.", { duration: 2000 });
+      toast.error("Please log in to continue the checkout.", { duration: 3000 });
     }
   };
 
@@ -60,7 +59,7 @@ const Cart = () => {
 
   return (
     <div className="bg-white p-10 border rounded shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">Your Shopping Cart</h2>
+      <h2 className="text-2xl font-semibold mb-8">E-Sell Shopping Cart</h2>
       <div className="space-y-4">
         {cart.map((item) => (
           <div
