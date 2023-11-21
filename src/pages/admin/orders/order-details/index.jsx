@@ -60,7 +60,7 @@ const OrderDetails = () => {
                 <strong>Order ID:</strong> {theOrder.id}
               </p>
               <p>
-                <strong>Created At:</strong> {formatDateString(theOrder.createdAt)}
+                <strong>Date:</strong> {formatDateString(theOrder.createdAt)}
               </p>
               <p>
                 <strong>Shipping Address:</strong> {theOrder.shippingAddress}
