@@ -34,6 +34,16 @@ const OrderDetails = () => {
       });
   }
 
+  // Format order creation date
+  function formatDateString(inputDateString) {
+    const inputDate = new Date(inputDateString);
+
+    const options = { month: 'short', day: 'numeric', year: 'numeric' };
+    const formattedDate = inputDate.toLocaleDateString('en-US', options);
+
+    return formattedDate;
+}
+
   return (
     <div className="p-4 mt-2">
       <div className="bg-white shadow-md p-4 rounded-lg">
@@ -49,9 +59,9 @@ const OrderDetails = () => {
               <p>
                 <strong>Order ID:</strong> {theOrder.id}
               </p>
-              {/* <p>
-                <strong>Created At:</strong> {theOrder.createdAt}
-              </p> */}
+              <p>
+                <strong>Created At:</strong> {formatDateString(theOrder.createdAt)}
+              </p>
               <p>
                 <strong>Shipping Address:</strong> {theOrder.shippingAddress}
               </p>
