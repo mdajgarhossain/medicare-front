@@ -38,11 +38,16 @@ const OrderDetails = () => {
   function formatDateString(inputDateString) {
     const inputDate = new Date(inputDateString);
 
-    const options = { month: 'short', day: 'numeric', year: 'numeric' };
-    const formattedDate = inputDate.toLocaleDateString('en-US', options);
+    const options = { month: "short", day: "numeric", year: "numeric" };
+    const formattedDate = inputDate.toLocaleDateString("en-US", options);
 
     return formattedDate;
-}
+  }
+
+  // Covert to dollars
+  function convertCentsToDollars(cents) {
+    return cents / 100;
+  }
 
   return (
     <div className="p-4 mt-2">
@@ -78,10 +83,12 @@ const OrderDetails = () => {
                 <strong>Payment Status:</strong> {theOrder.paymentStatus}
               </p>
               <p>
-                <strong>Shipping Cost:</strong> ${theOrder.shippingCost}
+                <strong>Shipping Cost:</strong> $
+                {convertCentsToDollars(theOrder.shippingCost)}
               </p>
               <p>
-                <strong>Total Cost:</strong> ${theOrder.totalCost}
+                <strong>Total Cost:</strong> $
+                {convertCentsToDollars(theOrder.totalCost)}
               </p>
             </div>
           </div>
@@ -111,7 +118,8 @@ const OrderDetails = () => {
                   <strong>Name:</strong> {product.name}
                 </p>
                 <p>
-                  <strong>Description:</strong> {product.description}
+                  <strong>Description:</strong>{" "}
+                  {(product.description && product.description) || "N/A"}
                 </p>
               </div>
             ))}
