@@ -26,7 +26,7 @@ const CreateAccount = () => {
     address: yup.string(),
     city: yup.string(),
     state: yup.string(),
-    zipCode: yup.string(),
+    zip: yup.string(),
   });
 
   // Form validation hooks
@@ -59,7 +59,7 @@ const CreateAccount = () => {
       "address",
       "city",
       "state",
-      "zipCode",
+      "zip",
     ];
 
     // Use a loop to append valid and non-empty fields to formData
@@ -96,7 +96,7 @@ const CreateAccount = () => {
       address: null,
       city: null,
       state: null,
-      zipCode: null,
+      zip: null,
     });
   }
 
@@ -255,14 +255,14 @@ const CreateAccount = () => {
               <div className="mb-4 w-full">
                 <label className="block mb-2 font-medium">Postal Code</label>
                 <input
-                  {...register("zipCode")}
+                  {...register("zip")}
                   type="number"
                   className="w-full p-2 border border-gray-300 rounded-md"
                   placeholder="00000"
                 />
-                {errors.zipCode && (
+                {errors.zip && (
                   <p className="text-sm text-red-500">
-                    {errors.zipCode?.message}
+                    {errors.zip?.message}
                   </p>
                 )}
               </div>
