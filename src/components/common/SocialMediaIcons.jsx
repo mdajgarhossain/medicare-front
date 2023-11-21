@@ -38,6 +38,7 @@ const SocialMediaIcons = () => {
     cookies.remove("token", { path: "/", expires: new Date(0) });
     cookies.remove("user_info", { path: "/", expires: new Date(0) });
     localStorage.removeItem("cart");
+    localStorage.removeItem("contactSellCart");
 
     // Redirect to sign-in page after logging out
     setTimeout(() => {

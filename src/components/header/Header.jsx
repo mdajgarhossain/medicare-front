@@ -10,6 +10,7 @@ import { ChevronDownIcon, UserIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useContactSellCart } from "@/context/ContactSellCartContext";
+import CartDropdown from "../cart/CartDropdown";
 
 const Header = () => {
   const { cart } = useCart();
@@ -17,6 +18,7 @@ const Header = () => {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [cartDropdownOpen, setCartDropdownOpen] = useState(false);
 
   useEffect(() => {
     const authUser = cookies.get("user_info");
@@ -41,6 +43,10 @@ const Header = () => {
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
+  };
+
+  const toggleCartDropdown = () => {
+    setCartDropdownOpen(!cartDropdownOpen);
   };
 
   const closeDropdown = () => {
@@ -119,7 +125,7 @@ const Header = () => {
                   )}
                 </div>
               )}
-              <Link
+              {/* <Link
                 href="/contact-sell-cart"
                 className="relative w-10 h-8 mt-6"
               >
@@ -133,7 +139,16 @@ const Header = () => {
                 <span className="absolute -top-3 right-0 w-5 h-5 text-[12px] justify-center items-center flex text-white rounded-full bg-[#EA2027]">
                   {cart?.length}
                 </span>
-              </Link>
+              </Link> */}
+              {/* Cart Dropdown */}
+              <div
+                className="relative flex gap-2 items-center cursor-pointer mt-6"
+                onClick={toggleCartDropdown}
+              >
+                <FaCartArrowDown className="w-8 h-8 text-white cursor-pointer " />
+                <span className="text-white text-xl">Cart</span>
+                {cartDropdownOpen && <CartDropdown />}
+              </div>
             </div>
           </div>
         </div>
