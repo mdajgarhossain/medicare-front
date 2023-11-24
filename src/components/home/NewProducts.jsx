@@ -20,7 +20,7 @@ const NewProducts = () => {
   const fetchProducts = () => {
     setIsDataLoading(true);
     let params = {
-      limit: 10,
+      limit: 12,
       sortDirection: "desc",
       include:
         "product.stocks,product.attachments,product.category,product.subcategory",
