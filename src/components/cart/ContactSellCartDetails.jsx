@@ -76,11 +76,12 @@ const ContactSellCartDetails = () => {
             <div className="flex-grow">
               <p className="text-lg font-semibold">{item.name}</p>
               <p className="text-gray-600">
-                Quantity: {item.quantity} x $
+                Quantity: {item.quantity} 
+                {/* x $
                 {item?.stocks?.data[0].sellingPrice.toFixed(2) || 0} = $
                 {(
                   item.quantity * (item.stocks?.data[0].sellingPrice || 0)
-                ).toFixed(2)}
+                ).toFixed(2)} */}
               </p>
             </div>
             <div className="flex items-center space-x-2">
@@ -112,10 +113,10 @@ const ContactSellCartDetails = () => {
       {/* Show calculation with grand total */}
       {cart.length > 0 && (
         <div className="mt-4">
-          <p className="text-lg">Shipping: ${shippingCost.toFixed(2)}</p>
+          {/* <p className="text-lg">Shipping: ${shippingCost.toFixed(2)}</p>
           <p className="text-xl font-semibold">
             Grand Total: ${(total + shippingCost).toFixed(2)}
-          </p>
+          </p> */}
 
           <button
             onClick={checkout}

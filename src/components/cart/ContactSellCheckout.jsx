@@ -89,7 +89,7 @@ const ContactSellCheckout = () => {
   return (
     <div className="bg-white p-10 border rounded shadow-md">
       <h2 className="text-2xl font-semibold mb-4">Checkout</h2>
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-10">
         <div>
           <h3 className="text-lg font-semibold mb-4">Billing Details</h3>
           <div className="mb-4">
@@ -126,7 +126,7 @@ const ContactSellCheckout = () => {
             />
           </div>
         </div>
-        <div>
+        <div className="ml-10">
           <h3 className="text-lg font-semibold mb-4">Order Details</h3>
           {cart.map((item) => (
             <div
@@ -136,13 +136,13 @@ const ContactSellCheckout = () => {
               <p className="text-gray-700">
                 {item.name} x {item.quantity}
               </p>
-              <p>
+              {/* <p>
                 $
                 {(item.quantity * item.stocks?.data[0].sellingPrice).toFixed(2)}
-              </p>
+              </p> */}
             </div>
           ))}
-          <div className="mb-6 mt-3">
+          <div className="mb-6 mt-8">
             <h4 className="text-sm font-medium mb-2">Payment Method</h4>
             <div className="flex items-center space-x-4">
               <label className="flex items-center space-x-2">
@@ -156,8 +156,8 @@ const ContactSellCheckout = () => {
               </label>
             </div>
           </div>
-          <p className="text-lg">Shipping: ${shippingCost.toFixed(2)}</p>
-          <p className="text-xl font-semibold">Grand Total: ${grandTotal}</p>
+          {/* <p className="text-lg">Shipping: ${shippingCost.toFixed(2)}</p>
+          <p className="text-xl font-semibold">Grand Total: ${grandTotal}</p> */}
         </div>
       </div>
 
