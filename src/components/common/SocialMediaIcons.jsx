@@ -92,8 +92,8 @@ const SocialMediaIcons = () => {
       </div>
       <a
         // href="https://www.facebook.com/profile.php?id=100063579536034"
-        href="#"
-        // target="_blank"
+        href="https://www.facebook.com"
+        target="_blank"
         rel="noopener noreferrer"
         className="flex rounded-lg items-center lg:px-3 py-2 px-2 my-[2px] lg:my-0 text-white bg-[#1877f2]"
       >
@@ -103,8 +103,8 @@ const SocialMediaIcons = () => {
 
       <a
         // href="https://twitter.com/Mohamma85629351"
-        // target="_blank"
-        href="#"
+        target="_blank"
+        href="https://twitter.com"
         rel="noopener noreferrer"
         className="flex rounded-lg items-center lg:px-3 py-2 px-2 my-[2px] lg:my-0 text-white bg-[#1da1f3]"
       >
@@ -113,8 +113,8 @@ const SocialMediaIcons = () => {
 
       <a
         // href="https://www.instagram.com/hasaninternational2020/"
-        // target="_blank"
-        href="#"
+        target="_blank"
+        href="https://www.instagram.com"
         rel="noopener noreferrer"
         className="flex items-center text-white rounded-lg"
       >
@@ -127,8 +127,8 @@ const SocialMediaIcons = () => {
 
       <a
         // href="https://www.linkedin.com/signup/cold-join?session_redirect=https%3A%2F%2Fwww%2Elinkedin%2Ecom%2Ffeed%2F%3Ftrk%3Donboarding-landing&trk=login_reg_redirect"
-        // target="_blank"
-        href="#"
+        target="_blank"
+        href="https://www.linkedin.com"
         rel="noopener noreferrer"
         className="flex rounded-lg items-center lg:px-3 py-2 px-2 my-[2px] lg:my-0 text-white bg-[#0077b5]"
       >
@@ -136,8 +136,8 @@ const SocialMediaIcons = () => {
       </a>
       <a
         // href="https://www.youtube.com/channel/UCrAQh80mx-kM5Z7lE52mJLw"
-        // target="_blank"
-        href="#"
+        target="_blank"
+        href="https://www.youtube.com"
         rel="noopener noreferrer"
         className="flex rounded-lg items-center lg:px-3 py-2 px-2 my-[2px] lg:my-0 text-white bg-[#ff0000]"
       >
