@@ -132,7 +132,7 @@ const ContactSellCheckout = () => {
               htmlFor="description"
               className="block text-sm font-medium text-gray-600 mb-2"
             >
-              Description
+              Description (Send us your query & requirements)
             </label>
             <textarea
               value={orderDescription}
