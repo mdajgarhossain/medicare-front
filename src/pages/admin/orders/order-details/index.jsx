@@ -90,6 +90,11 @@ const OrderDetails = () => {
                 <strong>Total Cost:</strong> $
                 {convertCentsToDollars(theOrder.totalCost)}
               </p>
+              {theOrder.orderDescription && (
+                <p>
+                  <strong>Description:</strong>  {theOrder.orderDescription}
+                </p>
+              )}
             </div>
           </div>
           <div>

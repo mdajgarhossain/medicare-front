@@ -88,7 +88,7 @@ const Checkout = () => {
 
   return (
     <div className="bg-white p-10 border rounded shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">Checkout</h2>
+      <h2 className="text-2xl font-semibold mb-4">E-Sell Checkout</h2>
       <div className="grid grid-cols-2 gap-6">
         <div>
           <h3 className="text-lg font-semibold mb-4">Billing Details</h3>

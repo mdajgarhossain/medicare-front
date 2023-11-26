@@ -12,6 +12,7 @@ const ContactSellCheckout = () => {
   const [selectedPayment, setSelectedPayment] = useState("cash");
   const [shippingAddress, setShippingAddress] = useState("");
   const [billingAddress, setBillingAddress] = useState("");
+  const [orderDescription, setOrderDescription] = useState("");
   const [processing, setProcessing] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [addressError, setAddressError] = useState("");
@@ -54,6 +55,7 @@ const ContactSellCheckout = () => {
       orderBy: loggedInUser.id,
       shippingAddress: shippingAddress,
       billingAddress: billingAddress,
+      orderDescription: orderDescription,
       subtotal: total,
       shippingCost: shippingCost,
       totalCost: grandTotal,
@@ -88,7 +90,7 @@ const ContactSellCheckout = () => {
 
   return (
     <div className="bg-white p-10 border rounded shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">Checkout</h2>
+      <h2 className="text-2xl font-semibold mb-4">Contact Sell Checkout</h2>
       <div className="grid grid-cols-2 gap-10">
         <div>
           <h3 className="text-lg font-semibold mb-4">Billing Details</h3>
@@ -124,6 +126,22 @@ const ContactSellCheckout = () => {
               onChange={(e) => setBillingAddress(e.target.value)}
               className="w-full px-3 py-2 border border-gray-400 rounded"
             />
+          </div>
+          <div className="mt-4">
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-600 mb-2"
+            >
+              Description
+            </label>
+            <textarea
+              value={orderDescription}
+              onChange={(e) => setOrderDescription(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-400 rounded"
+              id="description"
+              placeholder=""
+              name="description"
+            ></textarea>
           </div>
         </div>
         <div className="ml-10">
@@ -163,7 +181,7 @@ const ContactSellCheckout = () => {
 
       <button
         onClick={placeOrder}
-        className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 mt-3 flex items-center"
+        className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 mt-4 flex items-center"
       >
         {processing ? (
           <div className="flex items-center">
