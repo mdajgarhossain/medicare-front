@@ -145,8 +145,13 @@ const Header = () => {
                 className="relative flex gap-2 items-center cursor-pointer mt-6"
                 onClick={toggleCartDropdown}
               >
-                <FaCartArrowDown className="w-8 h-8 text-white cursor-pointer " />
-                <span className="text-white text-xl">Cart</span>
+                <span className="relative w-9 h-8 mt-6">
+                  <FaCartArrowDown className="w-8 h-8 text-white cursor-pointer " />
+                  <span className="absolute -top-3 right-0 w-5 h-5 text-[12px] justify-center items-center flex text-white rounded-full bg-[#EA2027]">
+                    {cart?.length + contactSellCart?.length}
+                  </span>
+                </span>
+                <span className="text-white text-xl mt-6">Cart</span>
                 {cartDropdownOpen && <CartDropdown />}
               </div>
             </div>
