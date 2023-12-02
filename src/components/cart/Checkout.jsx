@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useCart } from "@/context/CartContext";
-import { SHIPPING_COST } from "@/utils/constants";
+import { CURRENCY_TAKA, SHIPPING_COST } from "@/utils/constants";
 import cookies from "@/utils/cookies";
 import { medicareApi } from "@/utils/http";
 import toast from "react-hot-toast";
@@ -136,8 +136,8 @@ const Checkout = () => {
               <p className="text-gray-700">
                 {item.name} x {item.quantity}
               </p>
-              <p>
-                $
+              <p className="font-inter">
+                {CURRENCY_TAKA}
                 {(item.quantity * item.stocks?.data[0].sellingPrice).toFixed(2)}
               </p>
             </div>
@@ -165,8 +165,8 @@ const Checkout = () => {
               </label>
             </div>
           </div>
-          <p className="text-lg">Shipping: ${shippingCost.toFixed(2)}</p>
-          <p className="text-xl font-semibold">Grand Total: ${grandTotal}</p>
+          <p className="text-lg font-inter">Shipping: {CURRENCY_TAKA}{shippingCost.toFixed(2)}</p>
+          <p className="text-xl font-semibold font-inter">Grand Total: {CURRENCY_TAKA}{grandTotal}</p>
         </div>
       </div>
 

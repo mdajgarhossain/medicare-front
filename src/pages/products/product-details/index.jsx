@@ -5,6 +5,9 @@ import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import DemoImage from "public/images/demo-product-images/demoImage.jpg";
 import { useContactSellCart } from "@/context/ContactSellCartContext";
+import { CurrencyBangladeshiIcon } from "@heroicons/react/outline";
+import { CURRENCY_TAKA } from "@/utils/constants";
+// import { CURRENCY_TAKA } from "@/utils/constants";
 
 const ProductDetails = () => {
   const { cart, addToCart } = useCart();
@@ -112,8 +115,8 @@ const ProductDetails = () => {
           </p>
           {theProduct?.category?.name === "E-sell" && (
             <p className="text-gray-600 mb-2">
-              <span className="font-medium">Price: </span>$
-              {theProduct?.stocks?.data[0]?.sellingPrice ?? "0"}
+              <span className="font-medium">Price: </span>
+              <span className="font-inter mr-0.5">{CURRENCY_TAKA}</span>{theProduct?.stocks?.data[0]?.sellingPrice ?? "0"}
             </p>
           )}
 

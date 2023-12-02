@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import DemoImage from "public/images/demo-product-images/demoImage.jpg";
 import cookies from "@/utils/cookies";
 import { useRouter } from "next/router";
-import { SHIPPING_COST } from "@/utils/constants";
+import { CURRENCY_TAKA, SHIPPING_COST } from "@/utils/constants";
 import toast from "react-hot-toast";
 
 const shippingCost = SHIPPING_COST; // Define the constant shipping cost
@@ -76,11 +76,11 @@ const Cart = () => {
             />
             <div className="flex-grow">
               <p className="text-lg font-semibold">{item.name}</p>
-              <p className="text-gray-600">
+              <p className="text-gray-600 font-inter">
                 {/* Quantity: {item.quantity} x ${item.price.toFixed(2)} = $
                 {(item.quantity * item.price).toFixed(2)} */}
-                Quantity: {item.quantity} x $
-                {item?.stocks?.data[0].sellingPrice.toFixed(2) || 0} = $
+                Quantity: {item.quantity} x {CURRENCY_TAKA}
+                {item?.stocks?.data[0].sellingPrice.toFixed(2) || 0} = {CURRENCY_TAKA}
                 {(
                   item.quantity * (item.stocks?.data[0].sellingPrice || 0)
                 ).toFixed(2)}
@@ -115,9 +115,9 @@ const Cart = () => {
       {/* Show calculation with grand total */}
       {cart.length > 0 && (
         <div className="mt-4">
-          <p className="text-lg">Shipping: ${shippingCost.toFixed(2)}</p>
-          <p className="text-xl font-semibold">
-            Grand Total: ${(total + shippingCost).toFixed(2)}
+          <p className="text-lg font-inter">Shipping: {CURRENCY_TAKA}{shippingCost.toFixed(2)}</p>
+          <p className="text-xl font-semibold font-inter">
+            Grand Total: {CURRENCY_TAKA}{(total + shippingCost).toFixed(2)}
           </p>
 
           <button
