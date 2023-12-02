@@ -1,3 +1,4 @@
+import { CURRENCY_TAKA } from "@/utils/constants";
 import { medicareApi } from "@/utils/http";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -83,11 +84,11 @@ const OrderDetails = () => {
                 <strong>Payment Status:</strong> {theOrder.paymentStatus}
               </p>
               <p>
-                <strong>Shipping Cost:</strong> $
+                <strong>Shipping Cost:</strong> <span className="font-inter mr-0.5">{CURRENCY_TAKA}</span>
                 {convertCentsToDollars(theOrder.shippingCost)}
               </p>
               <p>
-                <strong>Total Cost:</strong> $
+                <strong>Total Cost:</strong> <span className="font-inter mr-0.5">{CURRENCY_TAKA}</span>
                 {convertCentsToDollars(theOrder.totalCost)}
               </p>
               {theOrder.orderDescription && (

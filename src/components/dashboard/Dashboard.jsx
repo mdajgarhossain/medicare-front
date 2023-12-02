@@ -5,8 +5,10 @@ import {
   CubeIcon,
   ViewListIcon,
   CurrencyDollarIcon,
+  CurrencyBangladeshiIcon,
 } from "@heroicons/react/solid";
 import { medicareApi } from "@/utils/http";
+import { CURRENCY_TAKA } from "@/utils/constants";
 
 const Dashboard = () => {
   const [theDashboardData, setTheDashboardData] = useState(null);
@@ -65,8 +67,8 @@ const Dashboard = () => {
         />
         <Card
           title="Total Sales Amount"
-          value={`$${calculateTotalSalesAmount()}`}
-          icon={<CurrencyDollarIcon className="w-6 h-6" />}
+          value={`${CURRENCY_TAKA}${calculateTotalSalesAmount()}`}
+          icon={<CurrencyBangladeshiIcon className="w-6 h-6" />}
         />
       </div>
     </div>

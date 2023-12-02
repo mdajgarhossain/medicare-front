@@ -8,6 +8,7 @@ import {
   UsersIcon,
   CurrencyDollarIcon,
   InboxInIcon,
+  CurrencyBangladeshiIcon,
 } from "@heroicons/react/solid";
 import Link from "next/link";
 
@@ -42,7 +43,7 @@ const Sidebar = () => {
       link: "/admin/stocks",
     },
     {
-      icon: <CurrencyDollarIcon className="w-6 h-6 mr-2" />,
+      icon: <CurrencyBangladeshiIcon className="w-6 h-6 mr-2" />,
       text: "Orders",
       link: "/admin/orders",
     },
